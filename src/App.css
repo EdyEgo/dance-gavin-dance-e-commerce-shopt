@@ -1,15 +1,30 @@
-body {
-  box-sizing: border-box;
-  height: 100vh;
+*,
+*:before,
+*:after {
+  box-sizing: border-box !important;
+  max-width: 100vw;
+  /* outline: 1px solid limegreen !important; */
 }
 
-.left-menu-container {
-  height: 100vh;
+.nav-bar {
+  background-color: #e6433c;
 }
 
-@media only screen and (max-width: 800px) {
-  .issue-created-at,
-  .issue-updated-at {
+/* mobile media settings */
+@media only screen and (max-width: 740px) {
+  /* .mobile {
+    display: block;
+  } */
+  .desktop {
     display: none;
   }
+}
+
+@media only screen and (min-width: 740px) {
+  .mobile {
+    display: none;
+  }
+  /* .desktop {
+    display: block;
+  } */
 }

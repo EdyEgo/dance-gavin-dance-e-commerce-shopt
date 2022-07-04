@@ -1,12 +1,40 @@
 import { Link } from "react-router-dom";
 
+import ShoppingCart from "./ShoppingCart";
+import BurgetMenuMobile from "@mui/icons-material/Menu";
+import SearchIconMobile from "@mui/icons-material/Search";
+
 interface ClientNavBarProps {}
 
 const ClientNavBar: React.FC<ClientNavBarProps> = () => {
   return (
-    <>
-      <nav className="flex justify-around my-2">
-        {/* <Link
+    <nav className="nav-bar text-white">
+      <div className="nav-bar-sections-container p-5 flex items-center justify-between">
+        <div className="nav-bar-section-left">
+          <div className="nav-bar-section-left__mobile-version mobile flex gap-5 items-center">
+            <div className="mobile-menu-icon-container">
+              <BurgetMenuMobile fontSize="small" />
+            </div>
+            <div className="mobile-serach-icon-container">
+              <SearchIconMobile fontSize="small" />
+            </div>
+          </div>
+          <div className="nav-bar-section-left__desktop-version"></div>
+        </div>
+        <div className="nav-bar-section-middle">
+          <div className="nav-bar-section-middle__mobile-version mobile">
+            DANCE GAVIN DANCE
+          </div>
+          <div className="nav-bar-section-middle__desktop-version"></div>
+        </div>
+        <div className="nav-bar-section-right">
+          <div className="nav-bar-section-right__mobile-version mobile">
+            <ShoppingCart />
+          </div>
+          <div className="nav-bar-section-right__desktop-version"></div>
+        </div>
+      </div>
+      {/* <Link
           to="/reduce-issues"
           className="logo-container flex justify-center items-center gap-1 "
         >
@@ -35,8 +63,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
             </Link>
           </div>
         </div> */}
-      </nav>
-    </>
+    </nav>
   );
 };
 

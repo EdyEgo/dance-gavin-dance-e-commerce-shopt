@@ -28,6 +28,16 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
               path="/dance-gavin-dance-edyego-clone/login"
               element={<SignIn />}
             />
+
+            <Route
+              path="*"
+              element={
+                <div>
+                  Ops this page was not so lucky as the rest of them , 404 Error
+                  , page not found
+                </div>
+              }
+            />
           </Routes>
         </div>
         <div className="footer-container"></div>

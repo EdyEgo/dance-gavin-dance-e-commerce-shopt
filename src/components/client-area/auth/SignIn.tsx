@@ -76,7 +76,7 @@ export default function SignIn() {
       return;
     }
 
-    navigateTo("/reduce-issues");
+    navigateTo("/dance-gavin-dance-edyego-clone");
   }
   async function handleProviderSubmit(providerName: string) {
     const providerList: {
@@ -95,7 +95,7 @@ export default function SignIn() {
     const signedInWithProvider = await providerList[providerName]();
     if (signedInWithProvider === undefined || signedInWithProvider?.error)
       return;
-    navigateTo("/reduce-issues");
+    // navigateTo("/dance-gavin-dance-edyego-clone");
 
     // if data.error don t push
   }

@@ -1,8 +1,8 @@
 {
-  "name": "reduce-issues",
+  "name": "dance-gavin-dance-edyego-clone",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://edyego.github.io/reduce-issues/",
+  "homepage": "https://edyego.github.io/dance-gavin-dance-edyego-clone/",
   "dependencies": {
     "@craco/craco": "^5.0.0",
     "@emotion/react": "^11.9.0",
