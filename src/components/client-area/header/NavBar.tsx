@@ -1,16 +1,21 @@
 import { Link } from "react-router-dom";
-
+import ImageWebp from "../../general-helpers/ImageWebp";
+import footerImage from "../../../images/footer.webp";
+import navMiddleImageWbp from "../../../images/left-nav-bar-logo.webp";
+import navMiddleImagePng from "../../../images/nav-bar-middle-logo.png";
+import pngPlaceholder from "../../../images/logo192.png";
 import ShoppingCart from "./ShoppingCart";
 import BurgetMenuMobile from "@mui/icons-material/Menu";
 import SearchIconMobile from "@mui/icons-material/Search";
+import UserProfileIcon from "@mui/icons-material/PersonOutline";
 
 interface ClientNavBarProps {}
 
 const ClientNavBar: React.FC<ClientNavBarProps> = () => {
   return (
     <nav className="nav-bar text-white">
-      <div className="nav-bar-sections-container p-5 flex items-center justify-between">
-        <div className="nav-bar-section-left">
+      <div className="nav-bar-sections-container p-5 flex items-center justify-between md:px-10">
+        <div className="nav-bar-section-left ">
           <div className="nav-bar-section-left__mobile-version mobile flex gap-5 items-center">
             <div className="mobile-menu-icon-container">
               <BurgetMenuMobile fontSize="small" />
@@ -19,19 +24,89 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
               <SearchIconMobile fontSize="small" />
             </div>
           </div>
-          <div className="nav-bar-section-left__desktop-version"></div>
+          <div className="nav-bar-section-left__desktop-version desktop">
+            <div className="band-logo-container">
+              <Link to="/dance-gavin-dance-edyego-clone">
+                <ImageWebp
+                  srcWebp={navMiddleImageWbp}
+                  src={navMiddleImagePng}
+                  width="225"
+                  height="auto"
+                />
+              </Link>
+            </div>
+          </div>
         </div>
         <div className="nav-bar-section-middle">
           <div className="nav-bar-section-middle__mobile-version mobile">
-            DANCE GAVIN DANCE
+            <div className="mobile-phone">
+              <ImageWebp
+                srcWebp={navMiddleImageWbp}
+                src={navMiddleImagePng}
+                width="125"
+                height="auto"
+              />
+            </div>
+            <div className="mobile-tablet">
+              <ImageWebp
+                srcWebp={navMiddleImageWbp}
+                src={navMiddleImagePng}
+                width="225"
+                height="auto"
+              />
+            </div>
           </div>
-          <div className="nav-bar-section-middle__desktop-version"></div>
+          <div className="nav-bar-section-middle__desktop-version desktop">
+            <div className="nav-bar-options-list-middle-desktop text-xl font-bold flex gap-8">
+              <Link
+                className="item-link hover-underline-animation"
+                to="/dance-gavin-dance-edyego-clone"
+              >
+                Shop
+              </Link>
+
+              <Link
+                className="item-link hover-underline-animation"
+                to="/dance-gavin-dance-edyego-clone"
+              >
+                Music
+              </Link>
+
+              <Link
+                className="item-link hover-underline-animation"
+                to="/dance-gavin-dance-edyego-clone"
+              >
+                Tour
+              </Link>
+
+              <Link
+                className="item-link hover-underline-animation"
+                to="/dance-gavin-dance-edyego-clone"
+              >
+                Swanfest
+              </Link>
+
+              <Link
+                className="item-link hover-underline-animation"
+                to="/dance-gavin-dance-edyego-clone"
+              >
+                Tour Merch
+              </Link>
+            </div>
+          </div>
         </div>
         <div className="nav-bar-section-right">
-          <div className="nav-bar-section-right__mobile-version mobile">
+          <div className="nav-bar-section-right__mobile-version mobile flex items-center gap-5">
+            <div className="mobile-tablet">
+              <UserProfileIcon fontSize="small" />
+            </div>
             <ShoppingCart />
           </div>
-          <div className="nav-bar-section-right__desktop-version"></div>
+          <div className="nav-bar-section-right__desktop-version desktop gap-4 flex">
+            <SearchIconMobile fontSize="large" className="cursor-pointer" />
+            <UserProfileIcon fontSize="large" className="cursor-pointer" />
+            <ShoppingCart desktopMode={true} />
+          </div>
         </div>
       </div>
       {/* <Link
