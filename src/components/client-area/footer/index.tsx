@@ -29,23 +29,35 @@ const Footer: React.FC<FooterProps> = () => {
           <div className="title mb-5">FOLLOW</div>
           <div className="items-list flex items-center">
             <div className="social-media-item  border border-gray-50 p-4 py-2">
-              <a href="#" className="social-media-link">
+              <a
+                href="https://www.facebook.com/DanceGavinDance/"
+                className="social-media-link"
+              >
                 <FacebookIcon />
               </a>
             </div>
 
             <div className="social-media-item   border border-gray-50 p-4 py-2">
-              <a href="#" className="social-media-link">
+              <a
+                href="https://twitter.com/dgdtheband"
+                className="social-media-link"
+              >
                 <TwitterIcon />
               </a>
             </div>
             <div className="social-media-item border border-gray-50 p-4 py-2">
-              <a href="#" className="social-media-link">
+              <a
+                href="https://www.instagram.com/dancegavindance/"
+                className="social-media-link"
+              >
                 <InstagramIcon />
               </a>
             </div>
             <div className="social-media-item   border border-gray-50 p-4 py-2">
-              <a href="#" className="social-media-link">
+              <a
+                href="https://www.youtube.com/channel/UCkmEoZbpH7jPCe1_Ym4XJdQ"
+                className="social-media-link"
+              >
                 <YouTubeIcon />
               </a>
             </div>
@@ -69,7 +81,7 @@ const Footer: React.FC<FooterProps> = () => {
           <div className="separator-square flex items-end p-1">
             <div className="square h-1 w-1 bg-gray-100 opacity-50"></div>
           </div>
-          <div>Powered by MerchNow</div>
+          <div>Powered by ExampleHere</div>
           <div className="separator-square flex items-end p-1">
             <div className="square h-1 w-1 bg-gray-100 opacity-50"></div>
           </div>

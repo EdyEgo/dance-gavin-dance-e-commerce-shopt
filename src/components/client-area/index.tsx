@@ -4,6 +4,7 @@ import SignUp from "./auth/SignUp";
 import SignIn from "./auth/SignIn";
 import ClientHome from "./ClientHome";
 import Footer from "./footer/index";
+import MenuDrawer from "./header/MenuDrawer";
 
 interface ClientAreaProps {}
 
@@ -44,6 +45,7 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
         <div className="footer-container">
           <Footer />
         </div>
+        <MenuDrawer />
       </Router>
     </div>
   );

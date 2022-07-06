@@ -8,16 +8,33 @@ import ShoppingCart from "./ShoppingCart";
 import BurgetMenuMobile from "@mui/icons-material/Menu";
 import SearchIconMobile from "@mui/icons-material/Search";
 import UserProfileIcon from "@mui/icons-material/PersonOutline";
+import { useDispatch } from "react-redux";
+import { changeDrawerStateByDirectionId } from "../../../store/drawers";
 
 interface ClientNavBarProps {}
-
+type Anchor = "top" | "left" | "bottom" | "right";
 const ClientNavBar: React.FC<ClientNavBarProps> = () => {
+  const dispatch = useDispatch();
+  function openDrawerByDirection(drawerDirection: Anchor) {
+    dispatch(
+      changeDrawerStateByDirectionId({
+        direction: drawerDirection,
+        newStatus: true,
+      })
+    );
+  }
+
   return (
     <nav className="nav-bar text-white">
       <div className="nav-bar-sections-container p-5 flex items-center justify-between md:px-10">
         <div className="nav-bar-section-left ">
           <div className="nav-bar-section-left__mobile-version mobile flex gap-5 items-center">
-            <div className="mobile-menu-icon-container">
+            <div
+              className="mobile-menu-icon-container cursor-pointer"
+              onClick={() => {
+                openDrawerByDirection("left");
+              }}
+            >
               <BurgetMenuMobile fontSize="small" />
             </div>
             <div className="mobile-serach-icon-container">
@@ -100,12 +117,27 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
             <div className="mobile-tablet">
               <UserProfileIcon fontSize="small" />
             </div>
-            <ShoppingCart />
+
+            <div
+              className="shoping-cart"
+              onClick={() => {
+                openDrawerByDirection("right");
+              }}
+            >
+              <ShoppingCart />
+            </div>
           </div>
           <div className="nav-bar-section-right__desktop-version desktop gap-4 flex">
             <SearchIconMobile fontSize="large" className="cursor-pointer" />
             <UserProfileIcon fontSize="large" className="cursor-pointer" />
-            <ShoppingCart desktopMode={true} />
+            <div
+              className="shoping-cart"
+              onClick={() => {
+                openDrawerByDirection("right");
+              }}
+            >
+              <ShoppingCart desktopMode={true} />
+            </div>
           </div>
         </div>
       </div>
