@@ -2,8 +2,9 @@
 *:before,
 *:after {
   box-sizing: border-box !important;
-
+  outline: none;
   font-family: cooper-black-std, serif;
+
   /* outline: 1px solid limegreen !important; */
 }
 
