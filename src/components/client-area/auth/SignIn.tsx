@@ -112,46 +112,154 @@ export default function SignIn() {
     };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          {
-            <div
-              className={`error-message-container text-center p-1  text-red-600 ${
-                errorMessage === "invisible" ? errorMessage : ""
-              }`}
-            >
-              {errorMessage}
-            </div>
-          }
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <TextField
+    // <ThemeProvider theme={theme}>
+    //   <Container component="main" maxWidth="xs">
+    //     <CssBaseline />
+    //     <Box
+    //       sx={{
+    //         marginTop: 4,
+    //         display: "flex",
+    //         flexDirection: "column",
+    //         alignItems: "center",
+    //       }}
+    //     >
+    //       <div className="title-login">title</div>
+    //       {
+    //         <div
+    //           className={`error-message-container text-center p-1  text-red-600 ${
+    //             errorMessage === "invisible" ? errorMessage : ""
+    //           }`}
+    //         >
+    //           {errorMessage}
+    //         </div>
+    //       }
+    //       <Box
+    //         component="form"
+    //         onSubmit={handleSubmit}
+    //         noValidate
+    //         sx={{ mt: 1 }}
+    //       >
+    // <TextField
+    //   margin="normal"
+    //   value={values.email}
+    //   onChange={handleChange("email")}
+    //   fullWidth
+    //   id="email"
+    //   label="Email"
+    //   name="email"
+    //   autoComplete="email"
+    //   autoFocus
+    // />
+    // <TextField
+    //   margin="normal"
+    //   value={values.password}
+    //   onChange={handleChange("password")}
+    //   fullWidth
+    //   name="password"
+    //   label="Password"
+    //   type="password"
+    //   id="password"
+    //   autoComplete="current-password"
+    // />
+    //         <FormControlLabel
+    //           control={
+    //             <Checkbox
+    //               value={values.remember}
+    //               onChange={() => {
+    //                 setValues({ ...values, remember: !values.remember });
+    //               }}
+    //               color="primary"
+    //             />
+    //           }
+    //           label="Remember me"
+    //         />
+
+    //         {/* <div className="flex items-center justify-center or-sign-method-row ">
+    //           <div className="self-center w-5/12 bg-gray-600 border-t border-b border-gray-600"></div>
+    //           <p className="pb-1 mx-4 mt-1 font-bold text-black">OR</p>
+    //           <div className="self-center w-5/12 bg-gray-600 border-t border-b border-gray-600"></div>
+    //         </div> */}
+
+    //         <div className="flex justify-center provider-sign-method-row ">
+    //           <Stack direction="row" alignItems="center" spacing={2}>
+    //             <label htmlFor="icon-button-file">
+    //               <Input
+    //                 onClick={() => {
+    //                   handleProviderSubmit("google");
+    //                 }}
+    //                 id="icon-button-file"
+    //                 type="button"
+    //               />
+    //               {/* <IconButton
+    //                 color="primary"
+    //                 aria-label="upload picture"
+    //                 component="span"
+    //               >
+    //                 <GoogleIcon />
+    //               </IconButton> */}
+    //             </label>
+    //           </Stack>
+    //         </div>
+
+    //         {loading === false && (
+    //           <Button
+    //             type="submit"
+    //             fullWidth
+    //             variant="contained"
+    //             sx={{ mt: 3, mb: 2 }}
+    //           >
+    //             LOGIN
+    //           </Button>
+    //         )}
+
+    //         {loading && (
+    //           <Button
+    //             type="submit"
+    //             fullWidth
+    //             disabled={true}
+    //             variant="contained"
+    //             sx={{ mt: 3, mb: 2 }}
+    //           >
+    //             <LoadingButton loading={true} variant="text" disabled>
+    //               disabled
+    //             </LoadingButton>
+    //           </Button>
+    //         )}
+
+    //         {/* <Grid container>
+    //           <Grid item xs>
+    //             <Link to="/forgotpassword" variant="body2">
+    //               Forgot password?
+    //             </Link>
+    //           </Grid>
+    //           <Grid item>
+    //             <Link to="signup" variant="body2">
+    //               {"Don't have an account? Sign Up"}
+    //             </Link>
+    //           </Grid>
+    //         </Grid> */}
+    //       </Box>
+    //     </Box>
+    //   </Container>
+    // </ThemeProvider>
+
+    <div className="login-page-container ">
+      <div className="login-container flex flex-col gap-16 justify-center items-center">
+        <div className="login-container__title">
+          <div className="first-title">LOGIN</div>
+          <div className="second-title">
+            Please enter your e-mail and password:
+          </div>
+        </div>
+        <div className="login-container__inputs">
+          <div className="inputs-container">
+            {/* <TextField
               margin="normal"
               value={values.email}
               onChange={handleChange("email")}
-              required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Email"
               name="email"
               autoComplete="email"
               autoFocus
@@ -160,94 +268,31 @@ export default function SignIn() {
               margin="normal"
               value={values.password}
               onChange={handleChange("password")}
-              required
               fullWidth
               name="password"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value={values.remember}
-                  onChange={() => {
-                    setValues({ ...values, remember: !values.remember });
-                  }}
-                  color="primary"
+            /> */}
+
+            <div className="card">
+              <label className="input">
+                <input className="input__field" type="text" placeholder=" " />
+                <span className="input__label">Email</span>
+              </label>
+              <label className="input">
+                <input
+                  className="input__field"
+                  type="password"
+                  placeholder=" "
                 />
-              }
-              label="Remember me"
-            />
-
-            <div className="flex items-center justify-center or-sign-method-row ">
-              <div className="self-center w-5/12 bg-gray-600 border-t border-b border-gray-600"></div>
-              <p className="pb-1 mx-4 mt-1 font-bold text-black">OR</p>
-              <div className="self-center w-5/12 bg-gray-600 border-t border-b border-gray-600"></div>
+                <span className="input__label">Password</span>
+              </label>
             </div>
-
-            <div className="flex justify-center provider-sign-method-row ">
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <label htmlFor="icon-button-file">
-                  <Input
-                    onClick={() => {
-                      handleProviderSubmit("google");
-                    }}
-                    id="icon-button-file"
-                    type="button"
-                  />
-                  <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                  >
-                    <GoogleIcon />
-                  </IconButton>
-                </label>
-              </Stack>
-            </div>
-
-            {loading === false && (
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-            )}
-
-            {loading && (
-              <Button
-                type="submit"
-                fullWidth
-                disabled={true}
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                <LoadingButton loading={true} variant="text" disabled>
-                  disabled
-                </LoadingButton>
-              </Button>
-            )}
-
-            {/* <Grid container>
-              <Grid item xs>
-                <Link to="/forgotpassword" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link to="signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid> */}
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

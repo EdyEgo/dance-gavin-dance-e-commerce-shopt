@@ -1,3 +1,14 @@
+:root {
+  --color-light: #25c3c8;
+  --color-dark: #212121;
+  --color-signal: #212121;
+  --color-background: var(--color-light);
+  --color-text: var(--color-dark);
+  --color-accent: var(--color-signal);
+  --size-bezel: 0.5rem;
+  --size-radius: 4px;
+}
+
 *,
 *:before,
 *:after {
@@ -254,3 +265,59 @@
 
 /* use flex wrap on footer link */
 /* end homepage hero */
+
+/*  inputs styles*/
+input {
+  outline: none;
+}
+.input {
+  position: relative;
+  border: #e6433c;
+}
+.input__label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * 0.5);
+  margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * 0.5);
+  background: pink;
+  white-space: nowrap;
+  transform: translate(0, 0);
+  transform-origin: 0 0;
+  background: var(--color-background);
+  transition: transform 120ms ease-in;
+  font-weight: bold;
+  line-height: 1.2;
+}
+.input__field {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border: 3px solid currentColor;
+  padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
+  color: currentColor;
+  background: transparent;
+  border-radius: var(--size-radius);
+}
+.input__field:not(:-moz-placeholder-shown) + .input__label {
+  transform: translate(0.25rem, -65%) scale(0.8);
+  color: var(--color-accent);
+}
+.input__field:not(:-ms-input-placeholder) + .input__label {
+  transform: translate(0.25rem, -65%) scale(0.8);
+  color: var(--color-accent);
+}
+.input__field:focus + .input__label,
+.input__field:not(:placeholder-shown) + .input__label {
+  transform: translate(0.25rem, -65%) scale(0.8);
+  color: var(--color-accent);
+}
+
+/* end inputs styles */
+
+/* login pag */
+.login-container {
+  background-color: #25c3c8;
+  min-height: 563px;
+}
+/* end login page */

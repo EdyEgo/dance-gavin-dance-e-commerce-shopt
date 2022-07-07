@@ -31,7 +31,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
 
   return (
     <nav className="nav-bar text-white">
-      <div className="nav-bar-sections-container p-6 flex items-center justify-between md:px-10">
+      <div className="nav-bar-sections-container p-6 pt-9 flex  justify-between md:px-10">
         <div className="nav-bar-section-left ">
           <div className="nav-bar-section-left__mobile-version mobile flex gap-5 items-center">
             <div
@@ -200,7 +200,9 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
         <div className="nav-bar-section-right">
           <div className="nav-bar-section-right__mobile-version mobile flex items-center gap-5">
             <div className="mobile-tablet">
-              <UserProfileIcon fontSize="small" />
+              <Link to="/dance-gavin-dance-edyego-clone/login">
+                <UserProfileIcon fontSize="small" />
+              </Link>
             </div>
 
             <div
@@ -214,7 +216,10 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
           </div>
           <div className="nav-bar-section-right__desktop-version desktop gap-4 flex">
             <SearchIconMobile fontSize="large" className="cursor-pointer" />
-            <UserProfileIcon fontSize="large" className="cursor-pointer" />
+            <Link to="/dance-gavin-dance-edyego-clone/login">
+              <UserProfileIcon fontSize="large" className="cursor-pointer" />
+            </Link>
+
             <div
               className="shoping-cart"
               onClick={() => {

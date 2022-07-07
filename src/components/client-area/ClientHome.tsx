@@ -14,6 +14,16 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
           </h1>
         </div>
       </section>
+
+      <section className="current-album-preorders">
+        <div className="current-album-preorders__title">
+          JACKPOT JUICER PREORDERS
+        </div>
+        <div className="current-album-preorders__pruduct-list"></div>
+        <div className="current-album-preorders__action-link">
+          <div className="button-lik-show-all-merch">SHOP ALL MERCH</div>
+        </div>
+      </section>
     </div>
   );
 };
