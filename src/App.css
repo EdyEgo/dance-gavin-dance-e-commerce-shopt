@@ -113,42 +113,144 @@
   background-repeat: no-repeat;
   background: url("./images//footer.webp");
 }
-/* .social-media-item {
-  position: relative;
-  box-shadow: 1px 0 0 0rgb (var(--border-color)),
-    0 1px 0 0 rgb(var(--border-color)), 1px 1px 0 0 rgb(var(--border-color)),
-    1px 0 0 0 rgb(var(--border-color)) inset,
-    0 1px 0 0 rgb(var(--border-color)) inset;
- 
-  transform: translateZ(0);
-} */
-/* .social-media__item:hover:before {
-  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-  transform: scaleY(1);
-} */
-/* .social-media-item::before {
+/* shop drop down menu animated */
+
+.dropdown-menu-shop {
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out;
+  position: absolute;
+  z-index: -1;
+
+  width: 100%;
+  right: 0;
+  top: 100%;
+  background-color: #25c3c8;
+  min-height: 60vh;
+}
+.dropdown-menu-shop:hover {
+  opacity: 1;
+  z-index: 10;
+}
+.shop-hover-link-effect:hover::before {
+  /* create false entity for hover */
   content: "";
   position: absolute;
+  height: 100%;
   top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: calc(100% + 1px);
-  height: calc(100% + 1px);
-  background: currentColor;
-  -webkit-clip-path: polygon(0 25%, 100% 0, 100% 100%, 0% 100%);
-  clip-path: polygon(0 25%, 100% 0, 100% 100%, 0% 100%);
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
-    -webkit-clip-path 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-  transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
-    clip-path 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-  transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
-    clip-path 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
-    -webkit-clip-path 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-  pointer-events: none;
-  z-index: 1;
+  padding-left: 32px;
+  padding-right: 32px;
+  opacity: 0;
+}
+.shop-hover-link-effect:hover ~ .dropdown-menu-shop {
+  opacity: 1;
+  z-index: 10;
+}
+
+/* drop down links list animated */
+
+/* .shop-hover-link-effect:hover
+  ~ .dropdown-menu-shop
+  > .items-list
+  > .animated-list-links {
+  opacity: 0;
 } */
-/*  */
+.animated-list-links {
+  opacity: 0;
+}
+
+.dropdown-menu-shop:hover > .items-list > .animated-list-links {
+  opacity: 1;
+}
+
+.shop-hover-link-effect:hover
+  ~ .dropdown-menu-shop
+  > .items-list
+  > .animated-list-links:nth-child(1) {
+  animation: 1s anim-lineUp ease-out;
+  animation-fill-mode: forwards;
+}
+
+.shop-hover-link-effect:hover
+  ~ .dropdown-menu-shop
+  > .items-list
+  > .animated-list-links:nth-child(2) {
+  animation: 1s anim-lineUp ease-out;
+  animation-delay: 50ms;
+  animation-fill-mode: forwards;
+}
+
+.shop-hover-link-effect:hover
+  ~ .dropdown-menu-shop
+  > .items-list
+  > .animated-list-links:nth-child(3) {
+  animation: 1s anim-lineUp ease-out;
+  animation-delay: 100ms;
+  animation-fill-mode: forwards;
+}
+.shop-hover-link-effect:hover
+  ~ .dropdown-menu-shop
+  > .items-list
+  > .animated-list-links:nth-child(4) {
+  animation: 1s anim-lineUp ease-out;
+  animation-delay: 150ms;
+  animation-fill-mode: forwards;
+}
+
+/* .animated-list-links {
+  animation: 2s anim-lineUp ease-out infinite;
+} */
+@keyframes anim-lineUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40%);
+  }
+  20% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+/* end drop down shop menu animated */
+
+/* zoom image on hover animation */
+.feature-image-zoom {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.feature-image-zoom img {
+  width: 100%;
+  transition: 0.5s all ease-in-out;
+}
+
+.feature-image-zoom:hover img {
+  /* overflow: hidden;
+  transition: transform 0.5s ease;
+  transform: translateZ(0); */
+  transform: scale(1.05);
+}
+/* end zoom image on hover animation */
+
+/* home page  */
+
+/* homepage  hero  */
+
+.hero-section-contianer {
+  /* background: url("./images//home-page-hero.webp") no-repeat; */
+  background: linear-gradient(rgba(43, 40, 40, 0.204), rgba(43, 40, 40, 0.227)),
+    url("./images//home-page-hero.webp");
+  width: 100%;
+  min-height: 716px;
+  /* filter: brightness(80%); */
+}
+
+/* use flex wrap on footer link */
+/* end homepage hero */

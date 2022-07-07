@@ -12,7 +12,7 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
   return (
     <div>
       <Router>
-        <header className="">
+        <header className="header relative">
           <NavBar />
         </header>
 

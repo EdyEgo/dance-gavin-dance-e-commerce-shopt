@@ -7,6 +7,7 @@ const initialState: {
     bottom: boolean;
     right: boolean;
   };
+  navBarDropDawnMenuStatus: boolean;
 } = {
   drawers: {
     bottom: false,
@@ -14,6 +15,7 @@ const initialState: {
     right: false,
     top: false,
   },
+  navBarDropDawnMenuStatus: false,
 };
 
 export const drawersSlice = createSlice({
@@ -25,9 +27,16 @@ export const drawersSlice = createSlice({
       const newStatus: boolean = payload.newStatus;
       state.drawers = { ...state.drawers, [direction]: newStatus };
     },
+    changeNavBarDropDawnMenuStatus: (state, { payload }) => {
+      const newStatus: boolean = payload.newStatus;
+      state.navBarDropDawnMenuStatus = newStatus;
+    },
   },
 });
 
-export const { changeDrawerStateByDirectionId } = drawersSlice.actions;
+export const {
+  changeDrawerStateByDirectionId,
+  changeNavBarDropDawnMenuStatus,
+} = drawersSlice.actions;
 
 export default drawersSlice.reducer;

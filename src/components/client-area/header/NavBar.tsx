@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import ImageWebp from "../../general-helpers/ImageWebp";
 import footerImage from "../../../images/footer.webp";
+import albumImage from "../../../images/album-image.webp";
 import navMiddleImageWbp from "../../../images/left-nav-bar-logo.webp";
 import navMiddleImagePng from "../../../images/nav-bar-middle-logo.png";
 import pngPlaceholder from "../../../images/logo192.png";
@@ -8,6 +9,8 @@ import ShoppingCart from "./ShoppingCart";
 import BurgetMenuMobile from "@mui/icons-material/Menu";
 import SearchIconMobile from "@mui/icons-material/Search";
 import UserProfileIcon from "@mui/icons-material/PersonOutline";
+// import ArrowRightSharpIcon from "@mui/icons-material/ArrowRightSharp";
+import ArrowRightSharpIcon from "@mui/icons-material/PlayArrow";
 import { useDispatch } from "react-redux";
 import { changeDrawerStateByDirectionId } from "../../../store/drawers";
 
@@ -24,9 +27,11 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
     );
   }
 
+  const generalCollectionsLink = "/dance-gavin-dance-edyego-clone/collections/";
+
   return (
     <nav className="nav-bar text-white">
-      <div className="nav-bar-sections-container p-5 flex items-center justify-between md:px-10">
+      <div className="nav-bar-sections-container p-6 flex items-center justify-between md:px-10">
         <div className="nav-bar-section-left ">
           <div className="nav-bar-section-left__mobile-version mobile flex gap-5 items-center">
             <div
@@ -75,13 +80,93 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
           </div>
           <div className="nav-bar-section-middle__desktop-version desktop">
             <div className="nav-bar-options-list-middle-desktop text-xl font-bold flex gap-8">
-              <Link
-                className="item-link hover-underline-animation"
-                to="/dance-gavin-dance-edyego-clone"
-              >
-                Shop
-              </Link>
-
+              <div className="shop-container  ">
+                <div className="link-container item-with-drop-down-menu-hover shop-hover-link-effect">
+                  <Link
+                    className=" item-link hover-underline-animation"
+                    to="/dance-gavin-dance-edyego-clone"
+                  >
+                    Shop
+                  </Link>
+                </div>
+                <div className="dropdown-menu-shop px-48 py-16 text-black">
+                  <div className="items-list flex justify-between items-start relative">
+                    <div className="animated-list-links collections flex flex-col gap-5">
+                      <div className="title-container">Collections</div>
+                      <div className="links-list flex flex-col gap-4 text-lg">
+                        <Link to={generalCollectionsLink + "dance-gavin-dance"}>
+                          SHOP ALL
+                        </Link>
+                        <Link to={generalCollectionsLink + "new-arrivals"}>
+                          NEW ARRIVALS
+                        </Link>
+                        <Link to={generalCollectionsLink + "swanfest"}>
+                          SWANFEST
+                        </Link>
+                        <Link to={generalCollectionsLink + "best-sellers"}>
+                          BEST SELLERS
+                        </Link>
+                        <Link to={generalCollectionsLink + "sale"}>SALE</Link>
+                      </div>
+                    </div>
+                    <div className="animated-list-links apparel flex flex-col gap-5">
+                      <div className="title-container">Apparel</div>
+                      <div className="links-list flex flex-col gap-4 text-lg">
+                        <Link to={generalCollectionsLink + "tees"}>
+                          T-SHIRTS
+                        </Link>
+                        <Link to={generalCollectionsLink + "outerwear"}>
+                          OUTERWEAR
+                        </Link>
+                        <Link to={generalCollectionsLink + "athletic-wear"}>
+                          ATHLETIC WEAR
+                        </Link>
+                        <Link to={generalCollectionsLink + "joggers"}>
+                          JOGGERS
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="animated-list-links accessories flex flex-col gap-4 ">
+                      <Link
+                        to={generalCollectionsLink + "accessories"}
+                        className="title-container"
+                      >
+                        Accessories
+                      </Link>
+                      <div className="links-list text-lg">
+                        <Link
+                          to={generalCollectionsLink + "accessories"}
+                          className="item flex items-center"
+                        >
+                          <div className="text ">ALL ACCESSORIES</div>
+                          <ArrowRightSharpIcon className="mb-1" />
+                        </Link>
+                      </div>
+                    </div>
+                    <Link
+                      to={generalCollectionsLink + "jackpot-juicer"}
+                      className="animated-list-links album-container flex flex-col gap-5"
+                    >
+                      {/* you can extract this one from database  */}
+                      <div className="picture-album-as-title feature-image-zoom">
+                        <ImageWebp
+                          srcWebp={albumImage}
+                          width="280"
+                          height="auto"
+                        />
+                      </div>
+                      <div className="small-description flex flex-col justify-center items-center gap-3">
+                        <div className="first-title text-base tracking-widest">
+                          PREORDERS AVAILABLE
+                        </div>
+                        <div className="second-title text-md">
+                          JACKPOT JUICER
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </div>
               <Link
                 className="item-link hover-underline-animation"
                 to="/dance-gavin-dance-edyego-clone"
