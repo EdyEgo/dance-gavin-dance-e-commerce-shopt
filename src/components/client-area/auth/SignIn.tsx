@@ -255,8 +255,8 @@ export default function SignIn() {
     <div className="login-page-container ">
       <div className="login-container flex flex-col gap-16  items-center ">
         <div className="login-container__title text-center mt-16">
-          <div className="first-title text-[55px]">LOGIN</div>
-          <div className="second-title mt-3 font-sans text-lg">
+          <div className="first-title text-[55px] text-[#1D1D1D]">LOGIN</div>
+          <div className="second-title mt-3 font-sans text-lg text-[#1D1D1D]">
             Please enter your e-mail and password:
           </div>
         </div>
@@ -320,8 +320,17 @@ export default function SignIn() {
                 </span>
               </label>
 
+              <div className="forgot-password-container py-3 flex justify-center">
+                <Link
+                  className="forgot-password font-sans underline text-[#1D1D1D]"
+                  to="/dance-gavin-dance-edyego-clone/forgot-password"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+
               <div
-                className="login-button button-action fill-animation bg-[#E84841]  p-[0.88rem] mt-8"
+                className="login-button button-action fill-animation bg-[#E84841]  p-[0.88rem]"
                 onClick={handleSubmit}
               >
                 <div className="login-action-text text-white text-center">

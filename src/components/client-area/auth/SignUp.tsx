@@ -126,8 +126,8 @@ export default function SignUp() {
     <div className="login-page-container ">
       <div className="login-container flex flex-col gap-16  items-center">
         <div className="login-container__title text-center mt-16 ">
-          <div className="first-title text-[55px]">REGISTER</div>
-          <div className="second-title mt-3  font-sans text-lg">
+          <div className="first-title text-[55px] text-[#1D1D1D]">REGISTER</div>
+          <div className="second-title mt-3  font-sans text-lg text-[#1D1D1D]">
             Please fill in the fields below:
           </div>
         </div>

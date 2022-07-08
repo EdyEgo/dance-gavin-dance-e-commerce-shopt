@@ -5,6 +5,7 @@ import SignIn from "./auth/SignIn";
 import ClientHome from "./ClientHome";
 import Footer from "./footer/index";
 import MenuDrawer from "./header/MenuDrawer";
+import ForgotPassword from "./auth/ForgotPassword";
 
 interface ClientAreaProps {}
 
@@ -26,6 +27,10 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
             <Route
               path="/dance-gavin-dance-edyego-clone/signup"
               element={<SignUp />}
+            />
+            <Route
+              path="/dance-gavin-dance-edyego-clone/forgot-password"
+              element={<ForgotPassword />}
             />
             <Route
               path="/dance-gavin-dance-edyego-clone/login"
