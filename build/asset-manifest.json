@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/dance-gavin-dance-edyego-clone/static/css/main.8205ae1a.css",
+    "main.js": "/dance-gavin-dance-edyego-clone/static/js/main.6434f615.js",
+    "static/js/787.b5002084.chunk.js": "/dance-gavin-dance-edyego-clone/static/js/787.b5002084.chunk.js",
+    "static/media/nav-bar-middle-logo.png": "/dance-gavin-dance-edyego-clone/static/media/nav-bar-middle-logo.6c8b5b59779142a4536d.png",
+    "static/media/home-page-hero.webp": "/dance-gavin-dance-edyego-clone/static/media/home-page-hero.5818bdbe7bbd2f06f9e7.webp",
+    "static/media/footer.webp": "/dance-gavin-dance-edyego-clone/static/media/footer.d22c8e88798eaf293043.webp",
+    "static/media/album-image.webp": "/dance-gavin-dance-edyego-clone/static/media/album-image.654a9574d962467393f9.webp",
+    "static/media/left-nav-bar-logo.webp": "/dance-gavin-dance-edyego-clone/static/media/left-nav-bar-logo.ad6d3d6c1a2adb9020f2.webp",
+    "index.html": "/dance-gavin-dance-edyego-clone/index.html",
+    "main.8205ae1a.css.map": "/dance-gavin-dance-edyego-clone/static/css/main.8205ae1a.css.map",
+    "main.6434f615.js.map": "/dance-gavin-dance-edyego-clone/static/js/main.6434f615.js.map",
+    "787.b5002084.chunk.js.map": "/dance-gavin-dance-edyego-clone/static/js/787.b5002084.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8205ae1a.css",
+    "static/js/main.6434f615.js"
+  ]
+}
