@@ -30,7 +30,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
   const generalCollectionsLink = "/dance-gavin-dance-edyego-clone/collections/";
 
   return (
-    <nav className="nav-bar text-white">
+    <nav className="nav-bar text-white relative">
       <div className="nav-bar-sections-container p-6 pt-9 flex  justify-between md:px-10">
         <div className="nav-bar-section-left ">
           <div className="nav-bar-section-left__mobile-version mobile flex gap-5 items-center">
@@ -89,7 +89,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
                     Shop
                   </Link>
                 </div>
-                <div className="dropdown-menu-shop px-48 py-16 text-black">
+                <div className="dropdown-menu-shop px-48 py-16 text-black shadow-2xl">
                   <div className="items-list flex justify-between items-start relative">
                     <div className="animated-list-links collections flex flex-col gap-5">
                       <div className="title-container">Collections</div>

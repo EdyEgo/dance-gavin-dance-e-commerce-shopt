@@ -12,7 +12,8 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
   return (
     <div>
       <Router>
-        <header className="header relative">
+        <header className="header">
+          {/* was "relative" here but we need : "sticky top-0" */}
           <NavBar />
         </header>
 

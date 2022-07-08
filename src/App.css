@@ -15,6 +15,8 @@
   box-sizing: border-box !important;
   outline: none;
   font-family: cooper-black-std, serif;
+  /* tailwinds  */
+  box-shadow: none !important;
 
   /* outline: 1px solid limegreen !important; */
 }
@@ -87,7 +89,7 @@
 
 /*  */ /* footer styles */
 .social-media-item {
-  box-shadow: inset 0 0 0 0 white;
+  box-shadow: inset 0 0 0 0 white !important;
   color: red;
   /* padding: 0 0.25rem; */
   /* margin: 0 -0.25rem; */
@@ -95,7 +97,7 @@
 }
 .social-media-item:hover {
   color: red;
-  box-shadow: inset 200px 0 0 0 white;
+  box-shadow: inset 200px 0 0 0 white !important;
 }
 
 /* Presentational styles */
@@ -123,6 +125,7 @@
 .footer-container {
   background-repeat: no-repeat;
   background: url("./images//footer.webp");
+  font-family: "Archivo Narrow", sans-serif;
 }
 /* shop drop down menu animated */
 
@@ -274,30 +277,34 @@ input {
   position: relative;
   border: #e6433c;
 }
+
 .input__label {
   position: absolute;
   left: 0;
   top: 0;
   padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * 0.5);
   margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * 0.5);
-  background: pink;
+
   white-space: nowrap;
   transform: translate(0, 0);
   transform-origin: 0 0;
   background: var(--color-background);
   transition: transform 120ms ease-in;
-  font-weight: bold;
+
   line-height: 1.2;
 }
 .input__field {
   box-sizing: border-box;
   display: block;
   width: 100%;
-  border: 3px solid currentColor;
+  border: 2px solid #24acb1;
   padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
   color: currentColor;
   background: transparent;
-  border-radius: var(--size-radius);
+}
+
+.input__field:focus {
+  border: 2px solid black;
 }
 .input__field:not(:-moz-placeholder-shown) + .input__label {
   transform: translate(0.25rem, -65%) scale(0.8);
@@ -318,6 +325,43 @@ input {
 /* login pag */
 .login-container {
   background-color: #25c3c8;
-  min-height: 563px;
+  min-height: 573px;
 }
+
+/* fill animation  */
+
+.button-action {
+  position: relative;
+
+  cursor: pointer;
+  z-index: 1;
+  transition: 0.08s ease-in;
+  -o-transition: 0.08s ease-in;
+  -ms-transition: 0.08s ease-in;
+  -moz-transition: 0.08s ease-in;
+  -webkit-transition: 0.08s ease-in;
+}
+
+.fill-animation:hover {
+  color: whitesmoke;
+}
+
+.fill-animation:before {
+  content: "";
+  position: absolute;
+  background: rgba(63, 61, 60, 0.157);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: -1;
+  -webkit-transition: top 0.09s ease-in;
+}
+
+.fill-animation:hover:before {
+  top: 0;
+}
+
+/* end fill animation  */
+
 /* end login page */

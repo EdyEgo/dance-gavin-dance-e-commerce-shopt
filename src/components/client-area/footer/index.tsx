@@ -13,22 +13,36 @@ const Footer: React.FC<FooterProps> = () => {
     <div className="footer-container  text-white p-12">
       {/* h-96  */}
       <div className="footer-header flex justify-between ">
-        <div className="footer-header__left-half flex flex-col gap-2 mb-16 ">
+        <div className="footer-header__left-half flex flex-col gap-1 mb-16 ">
           <div className="title font-extrabold mb-5">SUPPORT</div>
-          <div className="items-list font-extralight text-sm  flex flex-col gap-3">
-            <Link to="#">SEARCH</Link>
-            <a href="https://merchnow.com/contact/shopifysupport">CONTACT US</a>
-            <a href="https://merchnow.com/about/privacypolicy">
+          <div className="items-list font-extralight flex flex-col gap-3 ">
+            <Link to="#" className="font-serif text-[18px] font-semibold">
+              SEARCH
+            </Link>
+            <a
+              href="https://merchnow.com/contact/shopifysupport"
+              className="font-serif text-[18px] font-semibold"
+            >
+              CONTACT US
+            </a>
+            <a
+              href="https://merchnow.com/about/privacypolicy"
+              className="font-serif text-[18px] font-semibold"
+            >
               PRIVACY POLICY
             </a>
-            <Link to="#">REFUND POLICY</Link>
-            <Link to="#">SHIPPING POLICY</Link>
+            <Link to="#" className="font-serif text-[18px] font-semibold">
+              REFUND POLICY
+            </Link>
+            <Link to="#" className="font-serif text-[18px] font-semibold">
+              SHIPPING POLICY
+            </Link>
           </div>
         </div>
         <div className="footer-header__middle-half">
           <div className="title mb-5">FOLLOW</div>
           <div className="items-list flex items-center">
-            <div className="social-media-item  border border-gray-50 p-4 py-2">
+            <div className="social-media-item  border border-[#EC6A63] p-4 py-2">
               <a
                 href="https://www.facebook.com/DanceGavinDance/"
                 className="social-media-link"
@@ -37,7 +51,7 @@ const Footer: React.FC<FooterProps> = () => {
               </a>
             </div>
 
-            <div className="social-media-item   border border-gray-50 p-4 py-2">
+            <div className="social-media-item   border border-[#EC6A63] p-4 py-2">
               <a
                 href="https://twitter.com/dgdtheband"
                 className="social-media-link"
@@ -45,7 +59,7 @@ const Footer: React.FC<FooterProps> = () => {
                 <TwitterIcon />
               </a>
             </div>
-            <div className="social-media-item border border-gray-50 p-4 py-2">
+            <div className="social-media-item border border-[#EC6A63] p-4 py-2">
               <a
                 href="https://www.instagram.com/dancegavindance/"
                 className="social-media-link"
@@ -53,7 +67,7 @@ const Footer: React.FC<FooterProps> = () => {
                 <InstagramIcon />
               </a>
             </div>
-            <div className="social-media-item   border border-gray-50 p-4 py-2">
+            <div className="social-media-item   border border-[#EC6A63] p-4 py-2">
               <a
                 href="https://www.youtube.com/channel/UCkmEoZbpH7jPCe1_Ym4XJdQ"
                 className="social-media-link"
@@ -61,7 +75,7 @@ const Footer: React.FC<FooterProps> = () => {
                 <YouTubeIcon />
               </a>
             </div>
-            <div className="social-media-item border border-gray-50 p-4 py-2">
+            <div className="social-media-item border border-[#EC6A63] p-4 py-2">
               <a href="#" className="social-media-link">
                 <AppleIcon />
               </a>
@@ -70,22 +84,22 @@ const Footer: React.FC<FooterProps> = () => {
         </div>
         <div className="footer-header__right-half">
           <div className="title mb-5">STAY UP TO DATE</div>
-          <div className="items-list ">
+          <div className="items-list text-[14px]">
             <EmailSubscriptionInput />
           </div>
         </div>
       </div>
       <div className="footer-middle flex justify-between items-center text-sm mb-14">
-        <div className="footer-middle-left-side flex gap-3">
-          <div>Dance Gavin Dance</div>
+        <div className="footer-middle-left-side flex gap-3 text-[17px] font-semibold">
+          <div className="font-serif">Dance Gavin Dance</div>
           <div className="separator-square flex items-end p-1">
             <div className="square h-1 w-1 bg-gray-100 opacity-50"></div>
           </div>
-          <div>Powered by ExampleHere</div>
+          <div className="font-serif">Powered by ExampleHere</div>
           <div className="separator-square flex items-end p-1">
             <div className="square h-1 w-1 bg-gray-100 opacity-50"></div>
           </div>
-          <div>Designed by Prodan Septimiu(EdyEgo)</div>
+          <div className="font-serif">Designed by Prodan Septimiu(EdyEgo)</div>
         </div>
         <div className="footer-middle-right-side flex justify-between items-center gap-5">
           <div className="we-accept-money-title ">We accept</div>
@@ -214,7 +228,7 @@ const Footer: React.FC<FooterProps> = () => {
         </div>
       </div>
       <div className="footer-footer">
-        <div className="footer-message  text-xs mb-2">
+        <div className="footer-message  mb-2  font-serif">
           I am committed to keeping this site accessible to everyone.Feedback is
           welcome for new ways to improve this site's accessibility. If you are
           having issues navigating the site, please contact me at:
