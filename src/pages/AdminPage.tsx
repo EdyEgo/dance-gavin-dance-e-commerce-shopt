@@ -23,7 +23,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
   const defaultsAdminInputs = {
     productName: "",
     productCategory: "",
-    quantity: 1,
+    quantity: "",
     currency: "euro",
     prices: "",
     sizes: "",
@@ -198,16 +198,20 @@ const AdminPage: React.FC<AdminPageProps> = () => {
     const productCurrencyList = currency.includes(",")
       ? currency.trim().split(",")
       : [currency.trim()];
-    const producListBenefits = listBenefits.includes(",")
+    let productListBenefits = listBenefits.includes("|")
       ? listBenefits.trim().split("|")
       : null;
+
+    if (listBenefits.trim() !== "" && !listBenefits.includes("|")) {
+      productListBenefits = [listBenefits.trim()];
+    }
     const productPrice = prices.includes(",") ? null : parseInt(prices);
 
     let productObject: { [key: string]: any } = {
       productName,
       productCategory,
       productCurrencyList,
-      listBenefits: producListBenefits,
+      listBenefits: productListBenefits,
       price: productPrice,
       limited: limitedProduct,
       preorder: preorderProduct,
@@ -412,7 +416,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
                   onChange={handleChange("listBenefits")}
                 />
                 <span className="input__label font-sans text-[18px] text-gray-700">
-                  Product key points description {"("} pipese{"("}|{")"} parated
+                  Product key points description {"("} pipe{"("}|{")"} separated
                   {")"}
                 </span>
               </label>
