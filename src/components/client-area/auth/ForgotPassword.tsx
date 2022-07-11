@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import handleErrorMessage from "../../../api/handleErrorMessages";
-import { signIn, signInWithProvider } from "../../../api/dataBaseAuthMethods";
+
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -63,18 +63,18 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 
     setLoading(true);
 
-    const signedInUserResponse = await signIn(values);
+    //  add here forgot password
 
-    setLoading(false);
+    // setLoading(false);
 
-    if (signedInUserResponse.error) {
-      timeoutErrorSet(
-        setErrorMessage,
-        handleErrorMessage(signedInUserResponse.message),
-        5000
-      );
-      return;
-    }
+    // if (signedInUserResponse.error) {
+    //   timeoutErrorSet(
+    //     setErrorMessage,
+    //     handleErrorMessage(signedInUserResponse.message),
+    //     5000
+    //   );
+    //   return;
+    // }
 
     // navigateTo("/dance-gavin-dance-edyego-clone");
   }

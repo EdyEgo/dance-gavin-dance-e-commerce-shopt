@@ -1,40 +1,20 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import CircularProgress from "@mui/material/CircularProgress";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 import handleErrorMessage from "../../../api/handleErrorMessages";
 import { signIn, signInWithProvider } from "../../../api/dataBaseAuthMethods";
-import IconButton from "@mui/material/IconButton";
+
 import Stack from "@mui/material/Stack";
-import GoogleIcon from "@mui/icons-material/Google";
-import { styled } from "@mui/material/styles";
-import LoadingButton from "@mui/lab/LoadingButton";
-import SaveIcon from "@mui/icons-material/Save";
+
 import {
   timeoutErrorSet,
   validateEmail,
   validatePasswordFormat,
 } from "../../../composables/authFormHelpers";
-import { useNavigate } from "react-router-dom";
+
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-
-const theme = createTheme();
-
-const Input = styled("input")({
-  display: "none",
-});
 
 export default function SignIn() {
   const [values, setValues] = React.useState<any>({
@@ -47,10 +27,6 @@ export default function SignIn() {
   const [loading, setLoading] = React.useState(false);
 
   const [errorMessage, setErrorMessage] = React.useState<null | string>(null);
-
-  const dispatch = useDispatch();
-
-  const navigateTo = useNavigate();
 
   async function handleSubmit(event: any) {
     event.preventDefault();

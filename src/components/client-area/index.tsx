@@ -6,6 +6,9 @@ import ClientHome from "./ClientHome";
 import Footer from "./footer/index";
 import MenuDrawer from "./header/MenuDrawer";
 import ForgotPassword from "./auth/ForgotPassword";
+import MusicPage from "../../pages/MusicPage";
+import FiltereProductsPage from "../../pages/FilteredProductsPage";
+import AdminPage from "../../pages/AdminPage";
 
 interface ClientAreaProps {}
 
@@ -21,8 +24,20 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
         <div className="routes-container">
           <Routes>
             <Route
+              path="/dance-gavin-dance-edyego-clone/admin"
+              element={<AdminPage />}
+            />
+            <Route
               path="/dance-gavin-dance-edyego-clone"
               element={<ClientHome />}
+            />
+            <Route
+              path="/dance-gavin-dance-edyego-clone/pages/music"
+              element={<MusicPage />}
+            />
+            <Route
+              path="/dance-gavin-dance-edyego-clone/collections/:collectionType"
+              element={<FiltereProductsPage />}
             />
             <Route
               path="/dance-gavin-dance-edyego-clone/signup"

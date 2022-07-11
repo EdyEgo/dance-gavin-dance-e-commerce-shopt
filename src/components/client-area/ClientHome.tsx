@@ -15,7 +15,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         </div>
       </section>
 
-      <section className="current-album-preorders">
+      {/* <section className="current-album-preorders">
         <div className="current-album-preorders__title">
           JACKPOT JUICER PREORDERS
         </div>
@@ -23,7 +23,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         <div className="current-album-preorders__action-link">
           <div className="button-lik-show-all-merch">SHOP ALL MERCH</div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

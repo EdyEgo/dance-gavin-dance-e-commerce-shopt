@@ -84,7 +84,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
                 <div className="link-container item-with-drop-down-menu-hover shop-hover-link-effect">
                   <Link
                     className=" item-link hover-underline-animation"
-                    to="/dance-gavin-dance-edyego-clone"
+                    to="/dance-gavin-dance-edyego-clone/collections/dance-gavin-dance"
                   >
                     Shop
                   </Link>
@@ -94,34 +94,63 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
                     <div className="animated-list-links collections flex flex-col gap-5">
                       <div className="title-container">Collections</div>
                       <div className="links-list flex flex-col gap-4 text-lg">
-                        <Link to={generalCollectionsLink + "dance-gavin-dance"}>
+                        <Link
+                          to={generalCollectionsLink + "dance-gavin-dance"}
+                          className="hover:text-gray-700"
+                        >
                           SHOP ALL
                         </Link>
-                        <Link to={generalCollectionsLink + "new-arrivals"}>
+                        <Link
+                          to={generalCollectionsLink + "new-arrivals"}
+                          className="hover:text-gray-700"
+                        >
                           NEW ARRIVALS
                         </Link>
-                        <Link to={generalCollectionsLink + "swanfest"}>
+                        <Link
+                          to={generalCollectionsLink + "swanfest"}
+                          className="hover:text-gray-700"
+                        >
                           SWANFEST
                         </Link>
-                        <Link to={generalCollectionsLink + "best-sellers"}>
+                        <Link
+                          to={generalCollectionsLink + "best-sellers"}
+                          className="hover:text-gray-700"
+                        >
                           BEST SELLERS
                         </Link>
-                        <Link to={generalCollectionsLink + "sale"}>SALE</Link>
+                        <Link
+                          to={generalCollectionsLink + "sale"}
+                          className="hover:text-gray-700"
+                        >
+                          SALE
+                        </Link>
                       </div>
                     </div>
                     <div className="animated-list-links apparel flex flex-col gap-5">
                       <div className="title-container">Apparel</div>
                       <div className="links-list flex flex-col gap-4 text-lg">
-                        <Link to={generalCollectionsLink + "tees"}>
+                        <Link
+                          to={generalCollectionsLink + "tees"}
+                          className="hover:text-gray-700"
+                        >
                           T-SHIRTS
                         </Link>
-                        <Link to={generalCollectionsLink + "outerwear"}>
+                        <Link
+                          to={generalCollectionsLink + "outerwear"}
+                          className="hover:text-gray-700"
+                        >
                           OUTERWEAR
                         </Link>
-                        <Link to={generalCollectionsLink + "athletic-wear"}>
+                        <Link
+                          to={generalCollectionsLink + "athletic-wear"}
+                          className="hover:text-gray-700"
+                        >
                           ATHLETIC WEAR
                         </Link>
-                        <Link to={generalCollectionsLink + "joggers"}>
+                        <Link
+                          to={generalCollectionsLink + "joggers"}
+                          className="hover:text-gray-700"
+                        >
                           JOGGERS
                         </Link>
                       </div>
@@ -169,28 +198,28 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
               </div>
               <Link
                 className="item-link hover-underline-animation"
-                to="/dance-gavin-dance-edyego-clone"
+                to="/dance-gavin-dance-edyego-clone/pages/music"
               >
                 Music
               </Link>
 
               <Link
                 className="item-link hover-underline-animation"
-                to="/dance-gavin-dance-edyego-clone"
+                to="/dance-gavin-dance-edyego-clone/pages/tour"
               >
                 Tour
               </Link>
 
               <Link
                 className="item-link hover-underline-animation"
-                to="/dance-gavin-dance-edyego-clone"
+                to="/dance-gavin-dance-edyego-clone/pages/swanfest"
               >
                 Swanfest
               </Link>
 
               <Link
                 className="item-link hover-underline-animation"
-                to="/dance-gavin-dance-edyego-clone"
+                to="/dance-gavin-dance-edyego-clone/collections/tour-merch"
               >
                 Tour Merch
               </Link>
