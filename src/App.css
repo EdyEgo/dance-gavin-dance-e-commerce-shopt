@@ -366,3 +366,85 @@ input {
 /* end fill animation  */
 
 /* end login page */
+
+/* product item styles */
+.images:hover > .image-two {
+  /* opacity: 1; */
+  animation: 0.2s second-image-showing-up ease-out;
+  animation-fill-mode: forwards;
+}
+
+.image-two {
+  opacity: 0;
+}
+
+/* test */
+/* .image-one {
+  padding: 5px;
+  margin: 5px;
+  background: lightgray;
+}
+
+.image-one img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.image-two {
+  padding: 5px;
+  margin: 5px;
+  background: lightgray;
+}
+
+.image-two img {
+  height: 100%;
+  width: 100%;
+
+  object-fit: contain;
+} */
+/* test */
+
+/* another test */
+.figure {
+  position: relative;
+  width: 360px; /* can be omitted for a regular non-lazy image */
+  max-width: 100%;
+}
+.figure img.image-hover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.figure:hover img.image-hover {
+  opacity: 1;
+}
+/* another test */
+@keyframes second-image-showing-up {
+  0% {
+    opacity: 0;
+    /* transform: translateY(40%); */
+  }
+  20% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+    /* transform: translateY(0%); */
+  }
+
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+    /* transform: translateY(0%); */
+  }
+}
+
+/* end  product item styles */

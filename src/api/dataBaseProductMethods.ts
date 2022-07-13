@@ -1,4 +1,5 @@
 import { postNewDocument } from "../composables/firebase/post/postDocument";
+import { getDocuments } from "../composables/firebase/get/getDocuments";
 import { serverTimestamp } from "firebase/firestore";
 
 export async function postProduct({
@@ -42,6 +43,22 @@ export async function updatePostedProduct({
       noRegister: true,
     });
     return { error: false, data: postedProduct };
+  } catch (e: any) {
+    return { error: true, message: e.message };
+  }
+}
+
+export async function getAllProducts() {
+  try {
+    const products: any = await getDocuments({
+      path: "collections",
+      orderByKey: "registeredAt",
+    });
+
+    const data = products.docs.map((product: any) => {
+      return { id: product.id, ...product.data() };
+    });
+    return { error: false, data };
   } catch (e: any) {
     return { error: true, message: e.message };
   }

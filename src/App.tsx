@@ -7,8 +7,10 @@ import {
   changeErrorStatus,
 } from "./store/auth";
 import { userState } from "./api/dataBaseAuthMethods";
+import { getAllProducts } from "./api/dataBaseProductMethods";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
+import { chageProductsListValue } from "./store/products";
 import {} from "@reduxjs/toolkit";
 import { useState, useEffect } from "react";
 import "./styles/signButtons.css";
@@ -18,8 +20,15 @@ function App() {
 
   // const [currentUser,setCurrentUser] = useState<null | {email:string}>(null)
   const currentUser = useSelector((state: any) => state.auth.user);
+  const productsList = useSelector((state: any) => state.products.productsList);
 
   const [loading, setLoading] = useState(true);
+
+  async function loadProductListFromDatabase() {
+    const productsListData = await getAllProducts();
+    if (productsListData.error) return;
+    dispatch(chageProductsListValue(productsListData.data));
+  }
 
   useEffect(() => {
     function setStatusCurrentUser(user: { email: string; uid: string } | null) {
@@ -29,6 +38,12 @@ function App() {
     }
 
     const { error, data } = userState(setStatusCurrentUser);
+
+    if (productsList === null) {
+      // load product list from database
+
+      loadProductListFromDatabase();
+    }
 
     if (error) {
       dispatch(changeErrorStatus(error));

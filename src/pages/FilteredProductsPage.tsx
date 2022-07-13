@@ -1,12 +1,29 @@
+import * as React from "react";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { changeSortBy } from "../store/productFiltersSearch";
 import AccordionList from "../composables/generalHelpers/accordionList";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MenuItem from "@mui/material/MenuItem";
+import CheckIcon from "@mui/icons-material/Check";
+import DashBoard from "../composables/generalHelpers/dashBoard";
 
 interface FilteredProductsPageProps {}
 
 const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
   const params = useParams();
+  const dispatch = useDispatch();
+  const useId = React.useId();
+
+  const sortBySelectedValues = useSelector(
+    (state: any) => state.productFiltersSearch.sortBy
+  );
 
   const titleUpperCase = extractParamsCollectionType();
+
+  const sortByAnchorTitleRef = React.useRef(null);
+
+  const [openSortByStatus, setOpenSortByStatus] = React.useState(false);
 
   function extractParamsCollectionType() {
     if (params?.collectionType == null) return null;
@@ -17,7 +34,40 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     return params.collectionType.toUpperCase();
   }
 
-  console.log("my params are", params);
+  const sortByOptions = [
+    {
+      name: "Featured",
+      type: "featured",
+    },
+    {
+      name: "Best selling",
+      type: "bestSelling",
+    },
+    {
+      name: "Alphabetically, A-Z",
+      type: "fromAtoZ",
+    },
+    {
+      name: "Alphabetically, Z-A",
+      type: "fromZtoA",
+    },
+    {
+      name: "Price, low to high",
+      type: "fromLowtoHigh",
+    },
+    {
+      name: "Price, high to low",
+      type: "fromHightoLow",
+    },
+    {
+      name: "Date, old to new",
+      type: "fromOldtoNew",
+    },
+    {
+      name: "Date, new to old",
+      type: "fromNewtoOld",
+    },
+  ];
 
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
@@ -42,12 +92,58 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
           <div className="filters-view-container">
             <div className="filters flex justify-between">
               <div className="total-products">x number of products</div>
-              <div className="filter-by-list">filter by drop down menu</div>
+              <div className="filter-by-list flex gap-2 ">
+                <div className="title text-gray-600 font-sans">Sort by</div>
+                <div
+                  className="selected-sort flex items-center cursor-pointer"
+                  onClick={() => {
+                    setOpenSortByStatus(true);
+                  }}
+                  ref={sortByAnchorTitleRef}
+                >
+                  <div className="name-sort font-sans">
+                    {sortBySelectedValues.name}
+                  </div>
+                  <div className="carret-down ">
+                    <ExpandMoreIcon />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="product-list-container"></div>
         </div>
       </div>
+
+      <DashBoard
+        open={openSortByStatus}
+        anchorRef={sortByAnchorTitleRef}
+        setOpen={setOpenSortByStatus}
+        children={sortByOptions.map(({ name, type }, index) => {
+          return (
+            <MenuItem
+              key={useId + index}
+              onClick={() => {
+                dispatch(changeSortBy({ name, type }));
+                setOpenSortByStatus(false);
+              }}
+            >
+              <div className="option-name">{name}</div>
+              {sortBySelectedValues.type === type && (
+                <div className="option-checked">
+                  <CheckIcon />
+                </div>
+              )}
+
+              {sortBySelectedValues.type !== type && (
+                <div className="option-checked invisible">
+                  <CheckIcon />
+                </div>
+              )}
+            </MenuItem>
+          );
+        })}
+      />
     </div>
   );
 };
