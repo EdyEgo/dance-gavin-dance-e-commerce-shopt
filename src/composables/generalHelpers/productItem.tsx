@@ -45,7 +45,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
       const sizeAutoSelected: any = Object.entries(
         productPropertiesValues.sizesAvailable
       )[0];
-      console.log("ce e asta maica", sizeAutoSelected);
+
       if (sizeAutoSelected[1].price.includes(",")) {
         const splitedPrices = sizeAutoSelected[1].price.split(",");
         const correctPriceForSelectedCurrency = parseInt(

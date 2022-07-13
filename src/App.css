@@ -408,7 +408,7 @@ input {
 /* another test */
 .figure {
   position: relative;
-  width: 360px; /* can be omitted for a regular non-lazy image */
+  /* can be omitted for a regular non-lazy image */
   max-width: 100%;
 }
 .figure img.image-hover {
@@ -448,3 +448,9 @@ input {
 }
 
 /* end  product item styles */
+
+/* 
+home slider test
+*/
+
+/* end home slider  test*/
