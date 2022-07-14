@@ -447,6 +447,33 @@ input {
   }
 }
 
+@keyframes arrows-slider-showing-up {
+  0% {
+    opacity: 0;
+    padding: 0.2em 0.2em;
+    /* transform: translateY(40%); */
+  }
+  20% {
+    opacity: 0.25;
+    padding: 0.4em 0.4em;
+  }
+  50% {
+    opacity: 0.5;
+    padding: 0.6em 0.6em;
+    /* transform: translateY(0%); */
+  }
+
+  75% {
+    padding: 0.8em 0.8em;
+    opacity: 0.75;
+  }
+  100% {
+    padding: 1em 1em;
+    opacity: 1;
+    /* transform: translateY(0%); */
+  }
+}
+
 /* end  product item styles */
 
 /* 
@@ -454,3 +481,13 @@ home slider test
 */
 
 /* end home slider  test*/
+
+/* slider client home */
+.arrow-slider {
+  opacity: 0;
+}
+.slider-container:hover > .arrow-slider {
+  animation: 0.1s arrows-slider-showing-up ease-out;
+  animation-fill-mode: forwards;
+}
+/* end slider client home  */

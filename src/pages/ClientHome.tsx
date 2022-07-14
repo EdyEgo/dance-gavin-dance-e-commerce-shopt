@@ -65,11 +65,6 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
     return productListElements;
   }
 
-  function returnSixTeenSliderItems() {
-    return (
-      <div className="test">just a test item no filtered product here</div>
-    );
-  }
   return (
     <div className="container-home bg-[#E84A42] py-4">
       <section className="hero-section-contianer text-white flex justify-center items-center ">
@@ -147,7 +142,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
           />
         </div>
         <div className="all-merch__products-list my-4">
-          <ItemsSlider childrenItemsList={returnSixTeenSliderItems()} />
+          <ItemsSlider childrenItemsList={returnTwentyProducts()} />
         </div>
         <Link
           to="collections/dance-gavin-dance"
