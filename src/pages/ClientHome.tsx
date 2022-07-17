@@ -5,6 +5,8 @@ import { useState, useId } from "react";
 import ProductItem from "../composables/generalHelpers/productItem";
 import TabsList from "../composables/generalHelpers/tabsList";
 import ItemsSlider from "../composables/generalHelpers/itemsSlider";
+import AlbumSlider from "../composables/generalHelpers/albumsSlider";
+import TourTable from "../composables/generalHelpers/tourTable";
 import Tab from "@mui/material/Tab";
 interface ClientHomeProps {}
 
@@ -117,7 +119,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
             ALL MERCH
           </div>
         </div>
-        <div className="all-merch__tabs flex items-center justify-center my-4">
+        <div className="all-merch__tabs flex items-center justify-center my-12">
           <TabsList
             children={Object.entries(allMerchList).map(
               ([merchName, merchValues], index) => {
@@ -153,6 +155,36 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
           </div>
         </Link>
       </section>
+
+      <section className="tour-tickets px-[3.5em] py-[3em] text-white">
+        <div className="title-container text-center text-[2.7rem] my-10">
+          TOUR DATES
+        </div>
+        <div className="table-container">
+          <TourTable />
+        </div>
+        <div className="show-all-dates-action-button-container my-6 ">
+          <div className="link-container border-white border text-center p-4 cursor-pointer hover:bg-red-600 hover:border-gray-200 transition-all ease-out">
+            <Link
+              to="/dance-gavin-dance-edyego-clone/collections/dance-gavin-dance"
+              className="show-all-dates-btn "
+            >
+              VISIT OUR SHOP
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="recent-releases bg-black">
+        <div className="title-container text-center text-[2.7rem] my-10 text-[#27C6CB]">
+          RECENT RELEASES
+        </div>
+        <div className="albums-slide-show-container">
+          <AlbumSlider />
+        </div>
+        <div className="albums-tabs-container"></div>
+      </section>
+
       {/* <section className="current-album-preorders">
         <div className="current-album-preorders__title">
           JACKPOT JUICER PREORDERS

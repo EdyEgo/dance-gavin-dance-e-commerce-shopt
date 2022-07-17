@@ -8,24 +8,41 @@ interface ItemsSliderProps {
 
 const ItemsSlider: React.FC<ItemsSliderProps> = ({ childrenItemsList }) => {
   const [transformNumber, setTransformNumber] = useState(0);
+  // const maximumOfSlides = childrenItemsList.length;
+
+  const [slidesMade, setSlidesMade] = useState(0);
 
   function incrementOrDecrementPercentageTransformNumber(increment: boolean) {
     if (increment) {
-      setTransformNumber(transformNumber + 10);
+      if (slidesMade - 1 < 0) {
+        // bigger than 24 return
+        return;
+      }
+      setTransformNumber(transformNumber + 34.1);
+      setSlidesMade(slidesMade - 1);
+
       return;
     }
-    setTransformNumber(transformNumber - 10);
+
+    if (slidesMade + 1 > 2) {
+      // smaller than 12 return
+      return;
+    }
+    setTransformNumber(transformNumber - 34.1);
+    setSlidesMade(slidesMade + 1);
   }
 
   const styles = {
     transform: `translateX(${transformNumber}%)`,
     transition: "all 600ms ease-in-out",
   };
+  // let calculate the number of items we received in pairs of four so we know the number of slides
+  // or just use intersections
 
   return (
-    <div className="slider-container relative h-[600px] overflow-hidden ">
+    <div className="slider-container relative h-[469px] overflow-hidden ">
       <div
-        className={` arrow-left-container arrow-slider  absolute left-0 z-10 cursor-pointer top-[20%] bg-[#25c3c8]  border border-gray-600`}
+        className={` arrow-left-container arrow-slider  absolute left-[0.5%] z-10 cursor-pointer top-[30%] bg-[#25c3c8]  border border-gray-600`}
         onClick={() => {
           incrementOrDecrementPercentageTransformNumber(true);
         }}
@@ -34,12 +51,12 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ childrenItemsList }) => {
       </div>
       <div
         style={styles}
-        className={`slider-items flex absolute w-[220%] gap-8 `}
+        className={`slider-items flex absolute w-[305%] gap-8 `}
       >
         {childrenItemsList}
       </div>
       <div
-        className={` arrow-right-container arrow-slider absolute right-0 top-[20%] z-10 cursor-pointer bg-[#25c3c8]  border border-gray-600`}
+        className={` arrow-right-container arrow-slider absolute right-[0.5%] top-[30%] z-10 cursor-pointer bg-[#25c3c8]  border border-gray-600`}
         onClick={() => {
           incrementOrDecrementPercentageTransformNumber(false);
         }}
