@@ -7,6 +7,7 @@ import TabsList from "../composables/generalHelpers/tabsList";
 import ItemsSlider from "../composables/generalHelpers/itemsSlider";
 import AlbumSlider from "../composables/generalHelpers/albumsSlider";
 import TourTable from "../composables/generalHelpers/tourTable";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Tab from "@mui/material/Tab";
 interface ClientHomeProps {}
 
@@ -238,6 +239,23 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
           </Link>
         </div>
       </section>
+
+      <div className="section-song-autoplay relative">
+        <iframe
+          className="pointer-events-none"
+          width="100%"
+          height="745"
+          src="https://www.youtube.com/embed/GvHDaSw8k74?autoplay=1&mute=1&controls=0"
+        ></iframe>
+        <div className="play-button-link-container absolute top-[40%] right-[46%] flex items-center justify-center">
+          <a
+            href="https://www.youtube.com/watch?v=GvHDaSw8k74&ab_channel=riserecords"
+            className="play-button-link p-10 border rounded-full bg-[#ffffffd6]"
+          >
+            <PlayArrowIcon fontSize="large" />
+          </a>
+        </div>
+      </div>
 
       {/* <section className="current-album-preorders">
         <div className="current-album-preorders__title">
