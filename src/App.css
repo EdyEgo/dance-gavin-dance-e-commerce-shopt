@@ -490,4 +490,20 @@ home slider test
   animation: 0.1s arrows-slider-showing-up ease-out;
   animation-fill-mode: forwards;
 }
+
+/* album slider */
+
+.album-show-container {
+  transition: all ease 1s;
+}
+
+.album-item-slide-light {
+  opacity: 1;
+}
+.album-item-slide-shadow {
+  opacity: 0.2;
+}
+
+/* end album slider */
+
 /* end slider client home  */

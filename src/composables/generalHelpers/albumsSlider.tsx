@@ -1,4 +1,5 @@
 import React, { useState, useId } from "react";
+import { Link } from "react-router-dom";
 import ImageWebp from "../../components/general-helpers/ImageWebp";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -13,6 +14,8 @@ interface ItemsSliderProps {}
 const ItemsSlider: React.FC<ItemsSliderProps> = () => {
   const useid = useId();
   const [transformNumber, setTransformNumber] = useState(0);
+
+  const SLIDE_NUMBER = 19.1;
   // const maximumOfSlides = childrenItemsList.length;
 
   const [slidesMade, setSlidesMade] = useState(0);
@@ -20,20 +23,19 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
   function incrementOrDecrementPercentageTransformNumber(increment: boolean) {
     if (increment) {
       if (slidesMade - 1 < 0) {
-        // bigger than 24 return
         return;
       }
-      setTransformNumber(transformNumber + 34.1);
+      setTransformNumber(transformNumber + SLIDE_NUMBER);
       setSlidesMade(slidesMade - 1);
 
       return;
     }
 
-    if (slidesMade + 1 > 2) {
+    if (slidesMade + 1 > 4) {
       // smaller than 12 return
       return;
     }
-    setTransformNumber(transformNumber - 34.1);
+    setTransformNumber(transformNumber - SLIDE_NUMBER);
     setSlidesMade(slidesMade + 1);
   }
 
@@ -83,7 +85,9 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
   return (
     <div className="slider-container relative h-[469px] overflow-hidden ">
       <div
-        className={` arrow-left-container arrow-slider  absolute left-[0.5%] z-10 cursor-pointer top-[30%] bg-[#25c3c8]  border border-gray-600`}
+        className={`${
+          slidesMade === 0 ? "text-gray-600" : ""
+        } arrow-left-container arrow-slider  absolute right-[1%] z-10 cursor-pointer top-[27.5%] bg-[#25c3c8]  border border-gray-600`}
         onClick={() => {
           incrementOrDecrementPercentageTransformNumber(true);
         }}
@@ -96,68 +100,173 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
       >
         {/* {createAlbumsElements()} */}
 
-        <div className="album-show-container">
+        <div
+          className={`album-show-container flex ${
+            slidesMade === 0
+              ? "album-item-slide-light"
+              : "album-item-slide-shadow"
+          }`}
+        >
           <div className="image-container">
             <ImageWebp
               srcWebp={AlbumAfterBurner}
               src={AlbumAfterBurner}
-              width="225"
+              width="442"
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB]"></div>
+          <div className="details-container bg-[#27C6CB] w-[442px] flex items-center justify-center">
+            <div className="details-wrapper w-[100%]">
+              <div className="details flex flex-col gap-8 justify-start items-start ml-16">
+                <div className="album-name font-sans font-bold text-[19px]">
+                  AFTERBURNER
+                </div>
+                <Link
+                  to="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
+                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                >
+                  STREAM
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="album-show-container">
+        <div
+          className={`album-show-container flex ${
+            slidesMade === 1
+              ? "album-item-slide-light"
+              : "album-item-slide-shadow"
+          }`}
+        >
           <div className="image-container">
             <ImageWebp
               srcWebp={AlbumArtificialSelection}
               src={AlbumArtificialSelection}
-              width="225"
+              width="442"
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB]"></div>
+          <div className="details-container bg-[#27C6CB] w-[442px] flex items-center justify-center">
+            <div className="details-wrapper w-[100%]">
+              <div className="details flex flex-col gap-8 justify-start items-start ml-16">
+                <div className="album-name font-sans font-bold text-[19px]">
+                  ARTIFICIAL SELECTION
+                </div>
+                <Link
+                  to="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
+                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                >
+                  STREAM
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="album-show-container">
+        <div
+          className={`album-show-container flex ${
+            slidesMade === 2
+              ? "album-item-slide-light"
+              : "album-item-slide-shadow"
+          }`}
+        >
           <div className="image-container">
             <ImageWebp
               srcWebp={AlbumInstantGratification}
               src={AlbumInstantGratification}
-              width="225"
+              width="442"
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB]"></div>
+          <div className="details-container bg-[#27C6CB] w-[442px] flex items-center justify-center">
+            <div className="details-wrapper w-[100%]">
+              <div className="details flex flex-col gap-8 justify-start items-start ml-16">
+                <div className="album-name font-sans font-bold text-[19px]">
+                  INSTANT GRATIFICATION
+                </div>
+                <Link
+                  to="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
+                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                >
+                  STREAM
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="album-show-container">
+        <div
+          className={`album-show-container flex ${
+            slidesMade === 3
+              ? "album-item-slide-light"
+              : "album-item-slide-shadow"
+          }`}
+        >
           <div className="image-container">
             <ImageWebp
               srcWebp={AlbumMotherShip}
               src={AlbumMotherShip}
-              width="225"
+              width="442"
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB]"></div>
+          <div className="details-container bg-[#27C6CB] w-[442px] flex items-center justify-center">
+            <div className="details-wrapper w-[100%]">
+              <div className="details flex flex-col gap-8 justify-start items-start ml-16">
+                <div className="album-name font-sans font-bold text-[19px]">
+                  MOTHERSHIP
+                </div>
+                <Link
+                  to="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
+                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                >
+                  STREAM
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="album-show-container">
+        <div
+          className={`album-show-container flex ${
+            slidesMade === 4
+              ? "album-item-slide-light"
+              : "album-item-slide-shadow"
+          }`}
+        >
           <div className="image-container">
             <ImageWebp
               srcWebp={TreeCitySessions}
               src={TreeCitySessions}
-              width="225"
+              width="442"
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB]"></div>
+          <div className="details-container bg-[#27C6CB] w-[442px] flex items-center justify-center">
+            <div className="details-wrapper w-[100%]">
+              <div className="details flex flex-col gap-8 justify-start items-start ml-16">
+                <div className="album-name font-sans font-bold text-[19px]">
+                  TREE CITY SESSIONS 2
+                </div>
+                <Link
+                  to="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
+                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                >
+                  STREAM
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      {/* <div className="shadow-body absolute  w-[44%] h-full top-0 bg-[#0000004e] right-0">
+      
+      </div> */}
       <div
-        className={` arrow-right-container arrow-slider absolute right-[0.5%] top-[30%] z-10 cursor-pointer bg-[#25c3c8]  border border-gray-600`}
+        className={`${
+          slidesMade === 4 ? "text-gray-600" : ""
+        } arrow-right-container arrow-slider absolute  right-[1%] top-[40%] z-10 cursor-pointer bg-[#25c3c8]  border border-gray-600`}
         onClick={() => {
           incrementOrDecrementPercentageTransformNumber(false);
         }}

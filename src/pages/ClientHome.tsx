@@ -35,13 +35,35 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
     },
   };
 
+  // const albumsYearsList = {
+  //   2020: {
+  //     typeDatabaseName: "2020",
+  //     siteShowedName: "2020",
+  //     type: "2020",
+  //   },
+  //   "2020_sec": {
+  //     typeDatabaseName: "2020",
+  //     siteShowedName: "2020",
+  //     type: "2020_sec",
+  //   },
+  //   2018: {
+  //     typeDatabaseName: "2018",
+  //     siteShowedName: "2018",
+  //     type: "2018",
+  //   },
+  //   2016: {
+  //     typeDatabaseName: "2016",
+  //     siteShowedName: "2016",
+  //     type: "2016",
+  //   },
+  //   2015: {
+  //     typeDatabaseName: "2015",
+  //     siteShowedName: "2015",
+  //     type: "2015",
+  //   },
+  // };
+
   const [allMerchSelectedTab, setAllMerchSelectedTab] = useState("tees");
-  console.log(
-    "my product list is ",
-    productsList,
-    "and selected",
-    selectedCurrency
-  );
 
   function returnTwentyProducts() {
     if (productsList == null || productsList.length <= 0) {
@@ -176,13 +198,45 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
       </section>
 
       <section className="recent-releases bg-black">
-        <div className="title-container text-center text-[2.7rem] my-10 text-[#27C6CB]">
+        <div className="title-container text-center text-[2.7rem] py-16 text-[#27C6CB]">
           RECENT RELEASES
         </div>
-        <div className="albums-slide-show-container">
+        <div className="albums-slide-show-container px-8">
           <AlbumSlider />
         </div>
-        <div className="albums-tabs-container"></div>
+        <div className="albums-tabs-container p-4">
+          {/* <TabsList
+            children={Object.entries(albumsYearsList).map(
+              ([merchName, merchValues], index) => {
+                return (
+                  <Tab
+                    style={{
+                      width: "16%",
+                      fontSize: "18px",
+                      color: "#25C3C8",
+                      fontWeight: 900,
+                      fontFamily: " serif",
+                      // cooper-black-std,// old font family
+                    }}
+                    value={merchValues.type}
+                    label={merchValues.siteShowedName}
+                    key={useid + index}
+                  />
+                );
+              }
+            )}
+            setValue={setAllMerchSelectedTab}
+            value={allMerchSelectedTab}
+          /> */}
+        </div>
+        <div className="view-discography-container py-20 flex items-center justify-center">
+          <Link
+            to="/dance-gavin-dance-edyego-clone/pages/music"
+            className="view-music-page-link-btn text-white bg-[#22BDC3] p-5 px-12 fill-animation login-button button-action"
+          >
+            VIEW DISCOGRAPHY
+          </Link>
+        </div>
       </section>
 
       {/* <section className="current-album-preorders">
