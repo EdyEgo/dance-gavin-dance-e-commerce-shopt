@@ -7,6 +7,11 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuItem from "@mui/material/MenuItem";
 import CheckIcon from "@mui/icons-material/Check";
 import DashBoard from "../composables/generalHelpers/dashBoard";
+import ProductListByFilter from "../composables/pages/filteredProductsPage/ProductsListByFilter";
+import {
+  productsAvailableFilters,
+  findFitFilteringType,
+} from "../composables/generalHelpers/filterProductsByDetails";
 
 interface FilteredProductsPageProps {}
 
@@ -69,6 +74,14 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     },
   ];
 
+  const productFilterType =
+    params?.collectionType != null
+      ? findFitFilteringType(params?.collectionType)
+      : "all";
+
+  const { availabilityOptions, priceOptions, productTypeOptions, sizeOptions } =
+    productsAvailableFilters(productFilterType);
+  // extract available filters
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
       <div className="bread-container p-8">
@@ -85,7 +98,12 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
         <div className="filters-container w-[20%]">
           <div className="filters-title">FILTERS</div>
           <div className="accordions-filters-list">
-            <AccordionList />
+            <AccordionList
+              availabilityOptions={availabilityOptions}
+              priceOptions={priceOptions}
+              productTypeOptions={productTypeOptions}
+              sizeOptions={sizeOptions}
+            />
           </div>
         </div>
         <div className="products-container  w-[80%]">
@@ -111,7 +129,11 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
               </div>
             </div>
           </div>
-          <div className="product-list-container"></div>
+          <div className="product-list-container">
+            {params?.collectionType != null && (
+              <ProductListByFilter type={params.collectionType} />
+            )}
+          </div>
         </div>
       </div>
 
