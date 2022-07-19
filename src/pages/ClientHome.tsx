@@ -91,7 +91,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
   }
 
   return (
-    <div className="container-home bg-[#E84A42] py-4">
+    <div className="container-home bg-[#E84A42] ">
       <section className="hero-section-contianer text-white flex justify-center items-center ">
         <div className="hero-titles-container text-center flex flex-col gap-7 ">
           <div className="hero-titles__first-title tracking-widest">
@@ -243,12 +243,15 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
       <div className="section-song-autoplay relative">
         <iframe
           className="pointer-events-none"
+          allowFullScreen
           width="100%"
-          height="745"
-          src="https://www.youtube.com/embed/GvHDaSw8k74?autoplay=1&mute=1&controls=0"
+          height="655"
+          src="https://www.youtube.com/embed/GvHDaSw8k74?autoplay=1&mute=1&controls=0&loop=0"
         ></iframe>
+
         <div className="play-button-link-container absolute top-[40%] right-[46%] flex items-center justify-center">
           <a
+            title="Play video"
             href="https://www.youtube.com/watch?v=GvHDaSw8k74&ab_channel=riserecords"
             className="play-button-link p-10 border rounded-full bg-[#ffffffd6]"
           >

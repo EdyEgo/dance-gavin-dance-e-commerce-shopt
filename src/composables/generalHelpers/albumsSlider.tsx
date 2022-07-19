@@ -104,7 +104,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
           className={`album-show-container flex ${
             slidesMade === 0
               ? "album-item-slide-light"
-              : "album-item-slide-shadow"
+              : "album-item-slide-shadow pointer-events-none"
           }`}
         >
           <div className="image-container">
@@ -136,7 +136,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
           className={`album-show-container flex ${
             slidesMade === 1
               ? "album-item-slide-light"
-              : "album-item-slide-shadow"
+              : "album-item-slide-shadow pointer-events-none"
           }`}
         >
           <div className="image-container">
@@ -168,7 +168,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
           className={`album-show-container flex ${
             slidesMade === 2
               ? "album-item-slide-light"
-              : "album-item-slide-shadow"
+              : "album-item-slide-shadow pointer-events-none"
           }`}
         >
           <div className="image-container">
@@ -200,7 +200,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
           className={`album-show-container flex ${
             slidesMade === 3
               ? "album-item-slide-light"
-              : "album-item-slide-shadow"
+              : "album-item-slide-shadow pointer-events-none"
           }`}
         >
           <div className="image-container">
@@ -232,7 +232,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
           className={`album-show-container flex ${
             slidesMade === 4
               ? "album-item-slide-light"
-              : "album-item-slide-shadow"
+              : "album-item-slide-shadow pointer-events-none"
           }`}
         >
           <div className="image-container">
