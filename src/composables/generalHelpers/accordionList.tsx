@@ -7,13 +7,19 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function SimpleAccordion({
   availabilityOptions,
-  priceOptions,
+  priceRange,
   productTypeOptions,
   sizeOptions,
 }: {
   productTypeOptions: any[];
-  sizeOptions: any[];
-  priceOptions: any[];
+  sizeOptions: {
+    [key: string]: {
+      value: string;
+      name: string;
+      itemsNumberAvailable: number;
+    };
+  };
+  priceRange: [number, number];
   availabilityOptions: any[];
 }) {
   const [filtersSelected, setFiltersSelected] = useState<any>();
@@ -75,16 +81,8 @@ export default function SimpleAccordion({
           <Typography>Size</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {sizeOptions.map(
-            ({
-              name,
-              value,
-              itemsNumberAvailable,
-            }: {
-              value: string;
-              name: string;
-              itemsNumberAvailable: number;
-            }) => {
+          {Object.entries(sizeOptions).map(
+            ([nameSize, { itemsNumberAvailable, name, value }]) => {
               return (
                 <div
                   className="option"
@@ -103,6 +101,26 @@ export default function SimpleAccordion({
               );
             }
           )}
+          {/* {Object.entries(sizeOptions).map(
+           [sizeName,{}]) => {
+              return (
+                <div
+                  className="option"
+                  onClick={() => {
+                    selectOptionToFilterBy(value);
+                  }}
+                >
+                  <div className="check-box"></div>
+                  <div className="name">{name}</div>
+                  <div className="items-available">
+                    {"("}
+                    {itemsNumberAvailable}
+                    {")"}
+                  </div>
+                </div>
+              );
+            }
+          )} */}
         </AccordionDetails>
       </Accordion>
 
@@ -114,36 +132,7 @@ export default function SimpleAccordion({
         >
           <Typography>Price</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          {priceOptions.map(
-            ({
-              name,
-              value,
-              itemsNumberAvailable,
-            }: {
-              value: string;
-              name: string;
-              itemsNumberAvailable: number;
-            }) => {
-              return (
-                <div
-                  className="option"
-                  onClick={() => {
-                    selectOptionToFilterBy(value);
-                  }}
-                >
-                  <div className="check-box"></div>
-                  <div className="name">{name}</div>
-                  <div className="items-available">
-                    {"("}
-                    {itemsNumberAvailable}
-                    {")"}
-                  </div>
-                </div>
-              );
-            }
-          )}
-        </AccordionDetails>
+        <AccordionDetails>{priceRange} some price range</AccordionDetails>
       </Accordion>
       <Accordion style={{ backgroundColor: "#25c3c8" }}>
         <AccordionSummary

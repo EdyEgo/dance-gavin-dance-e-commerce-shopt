@@ -23,6 +23,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
   const sortBySelectedValues = useSelector(
     (state: any) => state.productFiltersSearch.sortBy
   );
+  const productsList = useSelector((state: any) => state.products.productsList);
 
   const titleUpperCase = extractParamsCollectionType();
 
@@ -79,8 +80,8 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       ? findFitFilteringType(params?.collectionType)
       : "all";
 
-  const { availabilityOptions, priceOptions, productTypeOptions, sizeOptions } =
-    productsAvailableFilters(productFilterType);
+  const { availabilityOptions, priceRange, productTypeOptions, sizeOptions } =
+    productsAvailableFilters(productFilterType, productsList);
   // extract available filters
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
@@ -100,7 +101,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
           <div className="accordions-filters-list">
             <AccordionList
               availabilityOptions={availabilityOptions}
-              priceOptions={priceOptions}
+              priceRange={priceRange}
               productTypeOptions={productTypeOptions}
               sizeOptions={sizeOptions}
             />

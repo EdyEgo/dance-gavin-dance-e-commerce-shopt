@@ -1,5 +1,11 @@
 // availabilityOptions={} priceOptions={} productTypeOptions={} sizeOptions={}
 
+interface itemFilterObject {
+  value: string;
+  name: string;
+  itemsNumberAvailable: number;
+}
+
 export function findFitFilteringType(
   collectionTypeParams: string
 ):
@@ -29,6 +35,177 @@ export function findFitFilteringType(
   return "all";
 }
 
+function excludeProductsByfilterType(
+  filterType:
+    | "all"
+    | "swanfest"
+    | "sale"
+    | "tour"
+    | "best"
+    | "newest"
+    | "productCategory",
+  productsList: any[]
+) {
+  if (filterType === "all") {
+    return productsList;
+  }
+}
+
+function findIfProductIsAvailable(productObject: {
+  numberItemsAvailable: null | number;
+  sizesAvailable: null | {
+    [key: string]: {
+      price: string;
+      numberItemsAvailable: string;
+      sold: number;
+    };
+  };
+}) {
+  const { numberItemsAvailable, sizesAvailable } = productObject;
+  let isAvailable = false;
+  if (numberItemsAvailable != null && numberItemsAvailable > 0) {
+    return true;
+  }
+  if (sizesAvailable != null) {
+    const sizesAvailableArray = Object.entries(sizesAvailable);
+    for (const sizeIndex of sizesAvailableArray) {
+      const sizeObject = sizeIndex[1];
+      const numberItemsAvailableNumber =
+        typeof sizeObject.numberItemsAvailable === "string"
+          ? parseInt(sizeObject.numberItemsAvailable)
+          : sizeObject.numberItemsAvailable;
+      if (numberItemsAvailableNumber > 0) {
+        isAvailable = true;
+        break;
+      }
+    }
+
+    return isAvailable;
+  }
+  // if a size has even an size with numberItmesAvailable bigger than 0 than break and return true
+}
+
+function modifyPriceRange(
+  productObject: {
+    price: null | number;
+    sizesAvailable: null | {
+      [key: string]: {
+        price: string;
+        numberItemsAvailable: string;
+        sold: number;
+      };
+    };
+  },
+  currentPriceRange: [number, number]
+) {
+  const newPriceRange = [...currentPriceRange];
+
+  const { price, sizesAvailable } = productObject;
+  if (price != null && currentPriceRange[0] <= 0) {
+    // if price is zero than add a first price
+    newPriceRange.splice(0, 1, price);
+  }
+
+  if (price != null && price < currentPriceRange[0]) {
+    // / if there is a smaller price than add that price
+    newPriceRange.splice(0, 1, price);
+  }
+
+  if (price != null && price > currentPriceRange[1]) {
+    // if there is a bigger price then add than price as the new limit of the price range
+    newPriceRange.splice(1, 1, price);
+  }
+
+  if (sizesAvailable != null) {
+    const sizesAvailableArray = Object.entries(sizesAvailable);
+
+    for (const sizeIndex of sizesAvailableArray) {
+      const sizeObject = sizeIndex[1];
+      const priceNumber =
+        typeof sizeObject.price === "string"
+          ? parseInt(sizeObject.price)
+          : sizeObject.price;
+      const numberItemsAvailableNumber =
+        typeof sizeObject.numberItemsAvailable === "string"
+          ? parseInt(sizeObject.numberItemsAvailable)
+          : sizeObject.numberItemsAvailable;
+
+      if (currentPriceRange[0] <= 0 && numberItemsAvailableNumber > 0) {
+        // if price is zero than add a first price
+        newPriceRange.splice(0, 1, priceNumber);
+      }
+
+      if (
+        priceNumber < currentPriceRange[0] &&
+        numberItemsAvailableNumber > 0
+      ) {
+        // / if there is a smaller price than add that price
+        newPriceRange.splice(0, 1, priceNumber);
+      }
+
+      if (
+        priceNumber > currentPriceRange[1] &&
+        numberItemsAvailableNumber > 0
+      ) {
+        // if there is a bigger price then add than price as the new limit of the price range
+        newPriceRange.splice(1, 1, priceNumber);
+      }
+    }
+  }
+
+  return newPriceRange;
+}
+
+function modifySizeOptions(
+  productObject: {
+    sizesAvailable: null | {
+      [key: string]: {
+        price: string;
+        numberItemsAvailable: string;
+        sold: number;
+      };
+    };
+  },
+  currentSizeList: { [key: string]: itemFilterObject }
+) {
+  const { sizesAvailable } = productObject;
+  if (sizesAvailable == null) {
+    return currentSizeList;
+  }
+  const newSizeList = { ...currentSizeList };
+  // this does not make any sens , why don't i just edit the object itself without makeing a copy :/ bruh
+  const sizesAvailableArray = Object.entries(sizesAvailable);
+
+  for (const sizeIndex of sizesAvailableArray) {
+    const sizeName: any = sizeIndex[0];
+    const sizeObject = sizeIndex[1];
+
+    const numberItemsAvailableNumber =
+      typeof sizeObject.numberItemsAvailable === "string"
+        ? parseInt(sizeObject.numberItemsAvailable)
+        : sizeObject.numberItemsAvailable;
+
+    const isSizeNameInSizeList = Object.hasOwn(newSizeList, sizeName);
+
+    if (numberItemsAvailableNumber > 0 && isSizeNameInSizeList) {
+      // add to an allready existing size
+      newSizeList[sizeName] = {
+        ...newSizeList[sizeName],
+        itemsNumberAvailable: newSizeList[sizeName].itemsNumberAvailable + 1,
+      };
+    }
+    if (numberItemsAvailableNumber > 0 && isSizeNameInSizeList === false) {
+      newSizeList[sizeName] = {
+        itemsNumberAvailable: numberItemsAvailableNumber,
+        name: sizeName,
+        value: sizeName.toLowerString(),
+      };
+    }
+  }
+
+  return newSizeList;
+}
+
 export function productsAvailableFilters(
   filterType:
     | "all"
@@ -38,13 +215,52 @@ export function productsAvailableFilters(
     | "best"
     | "newest"
     | "productCategory",
+  productsList: any[],
   productCategory?: string
 ) {
-  const availabilityOptions: any = [];
-  const priceOptions: any = [];
-  const productTypeOptions: any = [];
-  const sizeOptions: any = [];
+  const availabilityOptions: itemFilterObject[] = [];
+  let priceRange: [number, number] = [0, 0];
+  const productTypeOptions: itemFilterObject[] = [];
+  const sizeOptions: { [key: string]: itemFilterObject } = {};
   // every item must have these properties :  value: string;name: string;itemsNumberAvailable: number;
   // left here
-  return { availabilityOptions, priceOptions, productTypeOptions, sizeOptions };
+
+  const filteredProducts: any[] = [];
+
+  // productsList.forEach((productObjectValue: any) => {
+  //   if (
+  //     filterType === "newest" &&
+  //     productObjectValue?.new != null &&
+  //     productObjectValue.new
+  //   ) {
+  //     filteredProducts.push(productObjectValue);
+  //   }
+
+  // });
+
+  for (const productIndex of productsList) {
+    const productObjectValue = productsList[productIndex];
+    if (
+      filterType === "newest" &&
+      productObjectValue?.new != null &&
+      productObjectValue.new
+    ) {
+      filteredProducts.push(productObjectValue);
+      // left here
+      //  const productAvailable =  findIfProductIsAvailable(productObjectValue)
+      // const newPriceRange = modifyPriceRange(productObjectValue,priceRange)
+      //  const newSizesAvailable = modifySizeOptions(productObjectValue,sizeOptions)
+      // const newProductTypeOptions // left here
+    }
+
+    // after the ifs add the products to filters
+  }
+
+  console.log("my products are", productsList);
+  return {
+    availabilityOptions,
+    priceRange,
+    productTypeOptions,
+    sizeOptions,
+  };
 }
