@@ -82,7 +82,15 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
 
   const { availabilityOptions, priceRange, productTypeOptions, sizeOptions } =
     productsAvailableFilters(productFilterType, productsList);
-  // extract available filters
+
+  console.log(
+    "result is",
+    availabilityOptions,
+    priceRange,
+    productTypeOptions,
+    sizeOptions
+  );
+
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
       <div className="bread-container p-8">

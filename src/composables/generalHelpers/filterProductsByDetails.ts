@@ -61,6 +61,7 @@ function findIfProductIsAvailable(productObject: {
     };
   };
 }) {
+  console.log("idk anymore", productObject);
   const { numberItemsAvailable, sizesAvailable } = productObject;
   let isAvailable = false;
   if (numberItemsAvailable != null && numberItemsAvailable > 0) {
@@ -180,6 +181,8 @@ function modifySizeOptions(
     const sizeName: any = sizeIndex[0];
     const sizeObject = sizeIndex[1];
 
+    console.log("what is me ", sizeIndex, "|||", sizeName);
+
     const numberItemsAvailableNumber =
       typeof sizeObject.numberItemsAvailable === "string"
         ? parseInt(sizeObject.numberItemsAvailable)
@@ -198,12 +201,38 @@ function modifySizeOptions(
       newSizeList[sizeName] = {
         itemsNumberAvailable: numberItemsAvailableNumber,
         name: sizeName,
-        value: sizeName.toLowerString(),
+        value: sizeName.toLowerCase(),
       };
     }
   }
 
   return newSizeList;
+}
+
+function modifyProductTypeOptions(
+  productObject: {
+    productCategory: string;
+  },
+  currentProductTypeList: { [key: string]: itemFilterObject }
+) {
+  const { productCategory } = productObject;
+
+  const newProductTypeList = { ...currentProductTypeList };
+
+  if (Object.hasOwn(newProductTypeList, productCategory)) {
+    newProductTypeList[productCategory] = {
+      ...newProductTypeList[productCategory],
+      itemsNumberAvailable:
+        newProductTypeList[productCategory].itemsNumberAvailable + 1,
+    };
+    return newProductTypeList;
+  }
+  newProductTypeList[productCategory] = {
+    itemsNumberAvailable: 1,
+    name: productCategory,
+    value: productCategory.toLowerCase(),
+  };
+  return newProductTypeList;
 }
 
 export function productsAvailableFilters(
@@ -218,10 +247,17 @@ export function productsAvailableFilters(
   productsList: any[],
   productCategory?: string
 ) {
-  const availabilityOptions: itemFilterObject[] = [];
+  console.log("my product list is ", productsList);
+  const availabilityOptions: {
+    inStock: { name: "In stock"; numberItems: number };
+    outOfStock: { name: "Out of Stock"; numberItems: number };
+  } = {
+    inStock: { name: "In stock", numberItems: 0 },
+    outOfStock: { name: "Out of Stock", numberItems: 0 },
+  };
   let priceRange: [number, number] = [0, 0];
-  const productTypeOptions: itemFilterObject[] = [];
-  const sizeOptions: { [key: string]: itemFilterObject } = {};
+  let productTypeOptions: { [key: string]: itemFilterObject } = {};
+  let sizeOptions: { [key: string]: itemFilterObject } = {};
   // every item must have these properties :  value: string;name: string;itemsNumberAvailable: number;
   // left here
 
@@ -238,25 +274,70 @@ export function productsAvailableFilters(
 
   // });
 
-  for (const productIndex of productsList) {
-    const productObjectValue = productsList[productIndex];
-    if (
-      filterType === "newest" &&
-      productObjectValue?.new != null &&
-      productObjectValue.new
-    ) {
-      filteredProducts.push(productObjectValue);
+  function addToRangesNumbers(productObjectValue: any) {
+    const productAvailable = findIfProductIsAvailable(productObjectValue);
+    const newPriceRange: any = modifyPriceRange(productObjectValue, priceRange);
+    const newSizesAvailable = modifySizeOptions(
+      productObjectValue,
+      sizeOptions
+    );
+    const newProductTypeOptions: any = modifyProductTypeOptions(
+      productObjectValue,
+      productTypeOptions
+    );
+
+    if (productAvailable) {
+      availabilityOptions.inStock.numberItems += 1;
       // left here
-      //  const productAvailable =  findIfProductIsAvailable(productObjectValue)
-      // const newPriceRange = modifyPriceRange(productObjectValue,priceRange)
-      //  const newSizesAvailable = modifySizeOptions(productObjectValue,sizeOptions)
-      // const newProductTypeOptions // left here
+    }
+    if (!productAvailable) {
+      availabilityOptions.outOfStock.numberItems += 1;
     }
 
-    // after the ifs add the products to filters
+    priceRange = newPriceRange;
+    productTypeOptions = newProductTypeOptions;
+    sizeOptions = newSizesAvailable;
   }
 
-  console.log("my products are", productsList);
+  const filterTypes: { [key: string]: (productObjectValue: any) => void } = {
+    all: (productObjectValue: any) => {
+      filteredProducts.push(productObjectValue);
+      addToRangesNumbers(productObjectValue);
+    },
+    sale: (productObjectValue: any) => {
+      filteredProducts.push(productObjectValue);
+      addToRangesNumbers(productObjectValue);
+    },
+    best: (productObjectValue: any) => {
+      if (
+        productObjectValue?.best != null &&
+        productObjectValue.best === true
+      ) {
+        filteredProducts.push(productObjectValue);
+        addToRangesNumbers(productObjectValue);
+      }
+    },
+    tour: (productObjectValue: any) => {
+      if (
+        productObjectValue?.tour != null &&
+        productObjectValue.tour === true
+      ) {
+        filteredProducts.push(productObjectValue);
+        addToRangesNumbers(productObjectValue);
+      }
+    },
+    newest: (productObjectValue: any) => {
+      if (productObjectValue?.new != null && productObjectValue.new) {
+        filteredProducts.push(productObjectValue);
+        addToRangesNumbers(productObjectValue);
+      }
+    },
+  };
+
+  for (const productObjectValue of productsList) {
+    filterTypes[filterType](productObjectValue);
+  }
+
   return {
     availabilityOptions,
     priceRange,
