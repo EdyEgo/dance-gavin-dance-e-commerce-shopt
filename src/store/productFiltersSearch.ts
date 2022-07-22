@@ -1,8 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface itemFilter {
+  value: string;
+  name: string;
+  itemsNumberAvailable: number;
+  selected?: boolean;
+}
+
 const initialState: {
-  productTypeFiltersSelected: { [key: string]: any };
-  sizeFiltersSelected: { [key: string]: any };
+  productTypeFiltersSelected: { [key: string]: itemFilter };
+  sizeFiltersSelected: { [key: string]: itemFilter };
   priceRangeNumberSelected: [number, number];
   availabilitySelected: {
     inStock: boolean;
@@ -46,12 +53,30 @@ export const productFiltersSlice = createSlice({
       const newPriceRange = payload.newPriceRange;
       state.priceRangeNumberSelected = newPriceRange;
     },
-    changeAroductTypeFiltersSelected() {
-      // copy the object and change the selected value
+    changeProductTypeFiltersSelected(state, { payload }) {
+      const productTypeName = payload.productTypeName;
+      const productSelectedNewValue = payload.productTypeNewValue;
+
+      state.productTypeFiltersSelected = {
+        ...state.productTypeFiltersSelected,
+        [productTypeName]: {
+          ...state.productTypeFiltersSelected[productTypeName],
+          selected: productSelectedNewValue,
+        },
+      };
     },
 
-    changeSizeFiltersSelected() {
-      // copy the object and change the selected value
+    changeSizeFiltersSelected(state, { payload }) {
+      const productSizeName = payload.productTypeName;
+      const productSelectedNewValue = payload.productTypeNewValue;
+
+      state.sizeFiltersSelected = {
+        ...state.sizeFiltersSelected,
+        [productSizeName]: {
+          ...state.sizeFiltersSelected[productSizeName],
+          selected: productSelectedNewValue,
+        },
+      };
     },
   },
 });
@@ -61,6 +86,8 @@ export const {
   changeSelectedCurrency,
   changeAvailabilitySelected,
   changePriceRangeNumberSelected,
+  changeProductTypeFiltersSelected,
+  changeSizeFiltersSelected,
 } = productFiltersSlice.actions;
 
 export default productFiltersSlice.reducer;
