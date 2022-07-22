@@ -13,6 +13,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
 import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+
 export default function SimpleAccordion({
   availabilityOptions,
   priceRange,
@@ -44,6 +47,10 @@ export default function SimpleAccordion({
   );
 
   const [filtersSelected, setFiltersSelected] = useState<any>(priceRange);
+
+  const [availabilityOptionsValue, setAvailabilityOptionsValue] = useState();
+  const [productTypeOptionsValue, setProductTypeOptionsValue] = useState();
+  const [sizeOptionsValue, setSizeOptionsValue] = useState();
 
   const [rangeValue, setRangeValue] = useState(priceRange);
   // const sortBySelectedValues = useSelector(
