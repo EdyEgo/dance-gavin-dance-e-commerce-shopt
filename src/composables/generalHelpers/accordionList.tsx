@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useId } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -12,54 +12,111 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
 import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
+import {
+  changeAvailabilitySelected,
+  changePriceRangeNumberSelected,
+  changePriceRangeAvailableToSelect,
+  changeProductTypeFiltersSelected,
+  changeSizeFiltersSelected,
+} from "../../store/productFiltersSearch";
 
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
-export default function SimpleAccordion({
-  availabilityOptions,
-  priceRange,
-  productTypeOptions,
-  sizeOptions,
-}: {
-  productTypeOptions: {
-    [key: string]: {
-      value: string;
-      name: string;
-      itemsNumberAvailable: number;
-    };
-  };
-  sizeOptions: {
-    [key: string]: {
-      value: string;
-      name: string;
-      itemsNumberAvailable: number;
-    };
-  };
-  priceRange: [number, number];
-  availabilityOptions: {
-    inStock: { name: "In stock"; numberItems: number };
-    outOfStock: { name: "Out of Stock"; numberItems: number };
-  };
-}) {
+// interface listValuesFiltersItems{
+//   value: string;
+//   name: string;
+//   itemsNumberAvailable: number;
+//   selected: boolean;
+// }
+
+export default function SimpleAccordion() {
+  //   {
+  //   availabilityOptions,
+  //   priceRange,
+  //   productTypeOptions,
+  //   sizeOptions,
+  // }: {
+  //   productTypeOptions: {
+  //     [key: string]: listValuesFiltersItems
+  //   };
+  //   sizeOptions: {
+  //     [key: string]: listValuesFiltersItems
+  //   };
+  //   priceRange: [number, number];
+  //   availabilityOptions: {
+  //     inStock: { name: "In stock"; numberItems: number; selected: boolean };
+  //     outOfStock: {
+  //       name: "Out of Stock";
+  //       numberItems: number;
+  //       selected: boolean;
+  //     };
+  //   };
+  // }
+  const dispatch = useDispatch();
+  const useid = useId();
   const productsSelectedCurrency = useSelector(
     (state: any) => state.productFiltersSearch.selectedCurrency
   );
 
-  const [filtersSelected, setFiltersSelected] = useState<any>(priceRange);
+  const productTypeOptions: any = useSelector(
+    (state: any) => state.productFiltersSearch.productTypeFiltersSelected
+  );
 
-  const [availabilityOptionsValue, setAvailabilityOptionsValue] = useState();
-  const [productTypeOptionsValue, setProductTypeOptionsValue] = useState();
-  const [sizeOptionsValue, setSizeOptionsValue] = useState();
+  const sizeOptions: any = useSelector(
+    (state: any) => state.productFiltersSearch.sizeFiltersSelected
+  );
 
-  const [rangeValue, setRangeValue] = useState(priceRange);
+  const priceRangeAvailable = useSelector(
+    (state: any) => state.productFiltersSearch.priceRangeAvailableToSelect
+  );
+  const priceRangSelected = useSelector(
+    (state: any) => state.productFiltersSearch.priceRangeNumberSelected
+  );
+
+  const [inputsPriceRange, setInputsPriceRange] = useState(priceRangSelected);
+
+  const availabilityOptions = useSelector(
+    (state: any) => state.productFiltersSearch.availabilitySelected
+  );
+
+  function setRangeValue(newPriceRange: any) {
+    dispatch(changePriceRangeNumberSelected({ newPriceRange }));
+    setInputsPriceRange(newPriceRange);
+  }
+
+  function setPriceRangeWithInput(newValue: number, typeInput: "min" | "max") {
+    const inputTypes = {
+      min: () => {
+        if (
+          newValue < priceRangeAvailable[0] ||
+          newValue > priceRangeAvailable[1]
+        ) {
+          setInputsPriceRange([newValue, inputsPriceRange[1]]);
+          return;
+        }
+        setRangeValue([newValue, priceRangSelected[1]]);
+
+        // call setRangeValue when the value is in the right parameters
+      },
+      max: () => {
+        if (
+          newValue > priceRangeAvailable[1] ||
+          newValue < priceRangeAvailable[0]
+        ) {
+          setInputsPriceRange([inputsPriceRange[0], newValue]);
+          return;
+        }
+        setRangeValue([priceRangSelected[0], newValue]);
+      },
+    };
+
+    inputTypes[typeInput]();
+  }
+
   // const sortBySelectedValues = useSelector(
   //   (state: any) => state.productFiltersSearch.sortBy
   // );
-
-  function selectOptionToFilterBy(value: string) {
-    // here dispatch the change in filters options , there is no need to use the store , lets just use an useState
-  }
 
   const returnFitCurrencyIcon = () => {
     const iconsList: { [key: string]: any } = {
@@ -83,36 +140,42 @@ export default function SimpleAccordion({
           <Typography> Product type</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {Object.entries(productTypeOptions).map(
-            ([nameProductType, { itemsNumberAvailable, name, value }]) => {
-              return (
-                <div
-                  className="option flex gap-4 items-center"
-                  onClick={() => {
-                    selectOptionToFilterBy(value);
-                  }}
-                >
-                  <div className="check-box">
-                    {" "}
-                    <Checkbox
-                      sx={{
-                        color: "black",
-                        "&.Mui-checked": {
-                          color: "black",
-                        },
-                      }}
-                    />
+          {productTypeOptions != null &&
+            Object.entries(productTypeOptions).map(
+              (
+                [
+                  nameProductType,
+                  { itemsNumberAvailable, name, value, selected },
+                ]: any,
+                index
+              ) => {
+                return (
+                  <div
+                    className="option flex gap-4 items-center  cursor-pointer"
+                    key={useid + index}
+                    onClick={() => {
+                      dispatch(
+                        changeProductTypeFiltersSelected({
+                          productTypeName: name,
+                          productTypeNewValue: !selected,
+                        })
+                      );
+                    }}
+                  >
+                    <div className="check-box">
+                      {selected && <CheckBoxIcon />}
+                      {!selected && <CheckBoxOutlineBlankIcon />}
+                    </div>
+                    <div className="name">{name}</div>
+                    <div className="items-available">
+                      {"("}
+                      {itemsNumberAvailable}
+                      {")"}
+                    </div>
                   </div>
-                  <div className="name">{name}</div>
-                  <div className="items-available">
-                    {"("}
-                    {itemsNumberAvailable}
-                    {")"}
-                  </div>
-                </div>
-              );
-            }
-          )}
+                );
+              }
+            )}
         </AccordionDetails>
       </Accordion>
       <Accordion style={{ backgroundColor: "#25c3c8" }}>
@@ -124,55 +187,42 @@ export default function SimpleAccordion({
           <Typography>Size</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {Object.entries(sizeOptions).map(
-            ([nameSize, { itemsNumberAvailable, name, value }]) => {
-              return (
-                <div
-                  className="option flex gap-4 items-center"
-                  onClick={() => {
-                    selectOptionToFilterBy(value);
-                  }}
-                >
-                  <div className="check-box">
-                    <Checkbox
-                      sx={{
-                        color: "black",
-                        "&.Mui-checked": {
-                          color: "black",
-                        },
-                      }}
-                    />
+          {sizeOptions != null &&
+            Object.entries(sizeOptions).map(
+              (
+                [
+                  nameSize,
+                  { itemsNumberAvailable, name, value, selected },
+                ]: any,
+                index
+              ) => {
+                return (
+                  <div
+                    className="option flex gap-4 items-center cursor-pointer"
+                    key={useid + index}
+                    onClick={() => {
+                      dispatch(
+                        changeSizeFiltersSelected({
+                          productTypeName: name,
+                          productTypeNewValue: !selected,
+                        })
+                      );
+                    }}
+                  >
+                    <div className="check-box">
+                      {selected && <CheckBoxIcon />}
+                      {!selected && <CheckBoxOutlineBlankIcon />}
+                    </div>
+                    <div className="name">{name}</div>
+                    <div className="items-available">
+                      {"("}
+                      {itemsNumberAvailable}
+                      {")"}
+                    </div>
                   </div>
-                  <div className="name">{name}</div>
-                  <div className="items-available">
-                    {"("}
-                    {itemsNumberAvailable}
-                    {")"}
-                  </div>
-                </div>
-              );
-            }
-          )}
-          {/* {Object.entries(sizeOptions).map(
-           [sizeName,{}]) => {
-              return (
-                <div
-                  className="option"
-                  onClick={() => {
-                    selectOptionToFilterBy(value);
-                  }}
-                >
-                  <div className="check-box"></div>
-                  <div className="name">{name}</div>
-                  <div className="items-available">
-                    {"("}
-                    {itemsNumberAvailable}
-                    {")"}
-                  </div>
-                </div>
-              );
-            }
-          )} */}
+                );
+              }
+            )}
         </AccordionDetails>
       </Accordion>
 
@@ -186,13 +236,13 @@ export default function SimpleAccordion({
           <Typography>Price</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <div className="price-range-container">
+          <div className="price-range-container flex flex-col gap-4">
             <RangeSlider
-              availableRange={priceRange}
+              availableRange={priceRangeAvailable}
               setValue={setRangeValue}
-              value={rangeValue}
+              value={priceRangSelected}
             />
-            <div className="price-range-inputs flex gap-4">
+            <div className="price-range-inputs flex gap-4 items-center">
               <div>
                 <TextField
                   InputProps={{
@@ -203,6 +253,10 @@ export default function SimpleAccordion({
                     ),
                   }}
                   type="number"
+                  onChange={(event) => {
+                    setPriceRangeWithInput(parseInt(event.target.value), "min");
+                  }}
+                  value={inputsPriceRange[0]}
                   id="outlined-basic"
                   variant="outlined"
                 />
@@ -218,6 +272,10 @@ export default function SimpleAccordion({
                     ),
                   }}
                   type="number"
+                  onChange={(event) => {
+                    setPriceRangeWithInput(parseInt(event.target.value), "max");
+                  }}
+                  value={inputsPriceRange[1]}
                   id="outlined-basic"
                   variant="outlined"
                 />
@@ -235,42 +293,66 @@ export default function SimpleAccordion({
           <Typography>Availability</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <div className="in-stock flex gap-4 items-center">
-            <div className="check-box">
-              <Checkbox
+          {availabilityOptions?.inStock != null && (
+            <div
+              className="in-stock flex gap-4 items-center  cursor-pointer"
+              onClick={() => {
+                dispatch(
+                  changeAvailabilitySelected({
+                    type: "inStock",
+                    newValue: !availabilityOptions.inStock.selected,
+                  })
+                );
+              }}
+            >
+              <div className="check-box">
+                {/* <Checkbox
                 sx={{
                   color: "black",
                   "&.Mui-checked": {
                     color: "black",
                   },
                 }}
-              />
+              /> */}
+                {availabilityOptions.inStock.selected && <CheckBoxIcon />}
+                {!availabilityOptions.inStock.selected && (
+                  <CheckBoxOutlineBlankIcon />
+                )}
+              </div>
+              <div className="name">{availabilityOptions.inStock.name}</div>
+              <div className="number-items">
+                {"("}
+                {availabilityOptions.inStock.numberItems}
+                {")"}
+              </div>
             </div>
-            <div className="name">{availabilityOptions.inStock.name}</div>
-            <div className="number-items">
-              {"("}
-              {availabilityOptions.inStock.numberItems}
-              {")"}
+          )}
+          {availabilityOptions?.outOfStock != null && (
+            <div
+              className="out-of-stock flex gap-4 items-center  cursor-pointer"
+              onClick={() => {
+                dispatch(
+                  changeAvailabilitySelected({
+                    type: "outOfStock",
+                    newValue: !availabilityOptions.outOfStock.selected,
+                  })
+                );
+              }}
+            >
+              <div className="check-box">
+                {availabilityOptions.outOfStock.selected && <CheckBoxIcon />}
+                {!availabilityOptions.outOfStock.selected && (
+                  <CheckBoxOutlineBlankIcon />
+                )}
+              </div>
+              <div className="name">{availabilityOptions.outOfStock.name}</div>
+              <div className="number-items">
+                {"("}
+                {availabilityOptions.outOfStock.numberItems}
+                {")"}
+              </div>
             </div>
-          </div>
-          <div className="out-of-stock flex gap-4 items-center">
-            <div className="check-box">
-              <Checkbox
-                sx={{
-                  color: "black",
-                  "&.Mui-checked": {
-                    color: "black",
-                  },
-                }}
-              />
-            </div>
-            <div className="name">{availabilityOptions.outOfStock.name}</div>
-            <div className="number-items">
-              {"("}
-              {availabilityOptions.outOfStock.numberItems}
-              {")"}
-            </div>
-          </div>
+          )}
         </AccordionDetails>
       </Accordion>
       {/* <Accordion disabled>

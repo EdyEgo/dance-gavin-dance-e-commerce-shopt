@@ -106,7 +106,7 @@ export default function StickyHeadTable() {
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
-                      console.log("my column is", column, "value is", value);
+
                       const usedClass =
                         value === "TICKETS"
                           ? "text-white border border-white hover:border-gray-800"

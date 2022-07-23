@@ -4,6 +4,7 @@ interface itemFilterObject {
   value: string;
   name: string;
   itemsNumberAvailable: number;
+  selected: boolean;
 }
 
 export function findFitFilteringType(
@@ -61,7 +62,6 @@ function findIfProductIsAvailable(productObject: {
     };
   };
 }) {
-  console.log("idk anymore", productObject);
   const { numberItemsAvailable, sizesAvailable } = productObject;
   let isAvailable = false;
   if (numberItemsAvailable != null && numberItemsAvailable > 0) {
@@ -181,8 +181,6 @@ function modifySizeOptions(
     const sizeName: any = sizeIndex[0];
     const sizeObject = sizeIndex[1];
 
-    console.log("what is me ", sizeIndex, "|||", sizeName);
-
     const numberItemsAvailableNumber =
       typeof sizeObject.numberItemsAvailable === "string"
         ? parseInt(sizeObject.numberItemsAvailable)
@@ -202,6 +200,7 @@ function modifySizeOptions(
         itemsNumberAvailable: numberItemsAvailableNumber,
         name: sizeName,
         value: sizeName.toLowerCase(),
+        selected: false,
       };
     }
   }
@@ -231,6 +230,7 @@ function modifyProductTypeOptions(
     itemsNumberAvailable: 1,
     name: productCategory,
     value: productCategory.toLowerCase(),
+    selected: false,
   };
   return newProductTypeList;
 }
@@ -247,13 +247,16 @@ export function productsAvailableFilters(
   productsList: any[],
   productCategory?: string
 ) {
-  console.log("my product list is ", productsList);
   const availabilityOptions: {
-    inStock: { name: "In stock"; numberItems: number };
-    outOfStock: { name: "Out of Stock"; numberItems: number };
+    inStock: { name: "In stock"; numberItems: number; selected: boolean };
+    outOfStock: {
+      name: "Out of Stock";
+      numberItems: number;
+      selected: boolean;
+    };
   } = {
-    inStock: { name: "In stock", numberItems: 0 },
-    outOfStock: { name: "Out of Stock", numberItems: 0 },
+    inStock: { name: "In stock", numberItems: 0, selected: false },
+    outOfStock: { name: "Out of Stock", numberItems: 0, selected: false },
   };
   let priceRange: [number, number] = [0, 0];
   let productTypeOptions: { [key: string]: itemFilterObject } = {};
@@ -343,5 +346,6 @@ export function productsAvailableFilters(
     priceRange,
     productTypeOptions,
     sizeOptions,
+    filteredProducts,
   };
 }

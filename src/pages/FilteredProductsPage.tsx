@@ -1,7 +1,16 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { changeSortBy } from "../store/productFiltersSearch";
+import {
+  addFilteredProducts,
+  changeSortBy,
+  addAvailabilitySelected,
+  addPriceRangeNumberSelected,
+  addPriceRangeAvailableToSelect,
+  addProductTypeFiltersSelected,
+  addSizeFiltersSelected,
+} from "../store/productFiltersSearch";
 import AccordionList from "../composables/generalHelpers/accordionList";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuItem from "@mui/material/MenuItem";
@@ -25,11 +34,36 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
   );
   const productsList = useSelector((state: any) => state.products.productsList);
 
+  const filteredProducts: any = useSelector(
+    (state: any) => state.productFiltersSearch.filteredProducts
+  );
+
   const titleUpperCase = extractParamsCollectionType();
 
   const sortByAnchorTitleRef = React.useRef(null);
 
   const [openSortByStatus, setOpenSortByStatus] = React.useState(false);
+
+  useEffect(() => {
+    const {
+      availabilityOptions,
+      priceRange,
+      productTypeOptions,
+      sizeOptions,
+      filteredProducts,
+    } = productsAvailableFilters(productFilterType, productsList);
+    // return the number of products too mate
+
+    dispatch(addFilteredProducts(filteredProducts));
+
+    dispatch(addAvailabilitySelected(availabilityOptions));
+    dispatch(addPriceRangeNumberSelected(priceRange));
+    dispatch(addPriceRangeAvailableToSelect(priceRange));
+
+    dispatch(addProductTypeFiltersSelected(productTypeOptions));
+
+    dispatch(addSizeFiltersSelected(sizeOptions));
+  }, []);
 
   function extractParamsCollectionType() {
     if (params?.collectionType == null) return null;
@@ -80,17 +114,6 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       ? findFitFilteringType(params?.collectionType)
       : "all";
 
-  const { availabilityOptions, priceRange, productTypeOptions, sizeOptions } =
-    productsAvailableFilters(productFilterType, productsList);
-
-  console.log(
-    "result is",
-    availabilityOptions,
-    priceRange,
-    productTypeOptions,
-    sizeOptions
-  );
-
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
       <div className="bread-container p-8">
@@ -108,17 +131,33 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
           <div className="filters-title">FILTERS</div>
           <div className="accordions-filters-list">
             <AccordionList
-              availabilityOptions={availabilityOptions}
-              priceRange={priceRange}
-              productTypeOptions={productTypeOptions}
-              sizeOptions={sizeOptions}
+            // availabilityOptions={availabilityOptions}
+            // priceRange={priceRange}
+            // productTypeOptions={productTypeOptions}
+            // sizeOptions={sizeOptions}
             />
           </div>
         </div>
         <div className="products-container  w-[80%]">
           <div className="filters-view-container">
             <div className="filters flex justify-between">
-              <div className="total-products">x number of products</div>
+              <div className="total-products">
+                {filteredProducts.length > 0 && (
+                  <div className="contains-products flex gap-2 ">
+                    <div className="font-sans">{filteredProducts.length}</div>
+                    <div className="font-sans">
+                      {filteredProducts.length > 1 ? "products" : "product"}
+                    </div>
+                  </div>
+                )}
+
+                {filteredProducts.length <= 0 && (
+                  <div className="no-products flex gap-2">
+                    <div className="font-sans">no</div>
+                    <div className="font-sans">products</div>
+                  </div>
+                )}
+              </div>
               <div className="filter-by-list flex gap-2 ">
                 <div className="title text-gray-600 font-sans">Sort by</div>
                 <div
