@@ -16,6 +16,7 @@ import {
   changeAvailabilitySelected,
   changePriceRangeNumberSelected,
   changePriceRangeAvailableToSelect,
+  // changeAppliedFilters,
   changeProductTypeFiltersSelected,
   changeSizeFiltersSelected,
 } from "../../store/productFiltersSearch";
@@ -126,6 +127,10 @@ export default function SimpleAccordion() {
     return iconsList[productsSelectedCurrency];
   };
 
+  function capitalizeFirstLetter(word: string) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
   // and on click on an filter option the check box to check or uncheck , not just when you press the check button
   // maybe just use icons instead of actuall radio inputs
 
@@ -213,7 +218,11 @@ export default function SimpleAccordion() {
                       {selected && <CheckBoxIcon />}
                       {!selected && <CheckBoxOutlineBlankIcon />}
                     </div>
-                    <div className="name">{name}</div>
+                    <div className="name">
+                      {name.includes("_")
+                        ? capitalizeFirstLetter(name.split("_").join(" "))
+                        : capitalizeFirstLetter(name)}
+                    </div>
                     <div className="items-available">
                       {"("}
                       {itemsNumberAvailable}
@@ -297,6 +306,14 @@ export default function SimpleAccordion() {
             <div
               className="in-stock flex gap-4 items-center  cursor-pointer"
               onClick={() => {
+                // dispatch(
+                //   changeAppliedFilters({
+                //     filterName: "Availability",
+                //     filterValue: "In stock",
+                //     // typeSelected:"avaiabilitySelected"
+                //   })
+                // );
+
                 dispatch(
                   changeAvailabilitySelected({
                     type: "inStock",
@@ -331,6 +348,14 @@ export default function SimpleAccordion() {
             <div
               className="out-of-stock flex gap-4 items-center  cursor-pointer"
               onClick={() => {
+                // if is not selected then selected
+                // dispatch(
+                //   changeAppliedFilters({
+                //     filterName: "Availability",
+                //     filterValue: "Out of stock",
+                //   })
+                // );
+
                 dispatch(
                   changeAvailabilitySelected({
                     type: "outOfStock",

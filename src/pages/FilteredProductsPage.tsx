@@ -5,17 +5,20 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   addFilteredProducts,
   changeSortBy,
+  // changeAppliedFilters,
   addAvailabilitySelected,
   addPriceRangeNumberSelected,
   addPriceRangeAvailableToSelect,
   addProductTypeFiltersSelected,
   addSizeFiltersSelected,
 } from "../store/productFiltersSearch";
+import ProductItem from "../composables/generalHelpers/productItem";
 import AccordionList from "../composables/generalHelpers/accordionList";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuItem from "@mui/material/MenuItem";
 import CheckIcon from "@mui/icons-material/Check";
 import DashBoard from "../composables/generalHelpers/dashBoard";
+import ClearIcon from "@mui/icons-material/Clear";
 import ProductListByFilter from "../composables/pages/filteredProductsPage/ProductsListByFilter";
 import {
   productsAvailableFilters,
@@ -29,6 +32,10 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
   const dispatch = useDispatch();
   const useId = React.useId();
 
+  const selectedCurrency = useSelector(
+    (state: any) => state.productFiltersSearch.selectedCurrency
+  );
+
   const sortBySelectedValues = useSelector(
     (state: any) => state.productFiltersSearch.sortBy
   );
@@ -36,6 +43,10 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
 
   const filteredProducts: any = useSelector(
     (state: any) => state.productFiltersSearch.filteredProducts
+  );
+
+  const appliedFilters: any = useSelector(
+    (state: any) => state.productFiltersSearch.appliedFilters
   );
 
   const titleUpperCase = extractParamsCollectionType();
@@ -113,7 +124,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     params?.collectionType != null
       ? findFitFilteringType(params?.collectionType)
       : "all";
-
+  console.log("applied filters", appliedFilters);
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
       <div className="bread-container p-8">
@@ -126,16 +137,56 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       <div className="title text-center text-[45px] my-8 font-bold">
         {titleUpperCase}
       </div>
-      <div className="content-filtered-container flex p-11 ">
+      <div className="content-filtered-container flex p-11 gap-8">
         <div className="filters-container w-[20%]">
           <div className="filters-title">FILTERS</div>
           <div className="accordions-filters-list">
-            <AccordionList
-            // availabilityOptions={availabilityOptions}
-            // priceRange={priceRange}
-            // productTypeOptions={productTypeOptions}
-            // sizeOptions={sizeOptions}
-            />
+            <div className="applied-filters">
+              {appliedFilters != null &&
+                Object.entries(appliedFilters).map(
+                  ([nameFilter, valueFilter]: any, index) => {
+                    return valueFilter.list.map(
+                      (filterNameSelected: any, indexValueFilter: number) => {
+                        return (
+                          <div
+                            className="filter-item flex gap-2 items-center bg-[#1fafb4] p-4"
+                            key={
+                              useId + index + "filter-item" + indexValueFilter
+                            }
+                          >
+                            <div
+                              className="cancel-filter cursor-pointer"
+                              onClick={() => {
+                                // dispatch(
+                                //   changeAppliedFilters({
+                                //     filterName: nameFilter,
+                                //     filterValue: filterNameSelected,
+                                //   })
+                                // );
+                              }}
+                            >
+                              <ClearIcon fontSize="small" />
+                            </div>
+                            <div className="filter-item__details flex gap-1">
+                              <div className="name-filter font-sans">
+                                {filterNameSelected.typeSelected}
+                              </div>
+                              <div className="space-between font-sans">:</div>
+                              <div className="filter-selected font-sans">
+                                {filterNameSelected.name}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+                    );
+                  }
+                )}
+            </div>
+
+            <div className="accordion-container">
+              <AccordionList />
+            </div>
           </div>
         </div>
         <div className="products-container  w-[80%]">
@@ -181,6 +232,17 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
             {params?.collectionType != null && (
               <ProductListByFilter type={params.collectionType} />
             )}
+            <div className="product-list flex flex-wrap gap-8  justify-evenly ">
+              {filteredProducts.length > 0 &&
+                filteredProducts.map((productItemObject: any) => {
+                  return (
+                    <ProductItem
+                      selectedCurrency={selectedCurrency}
+                      productPropertiesValues={productItemObject}
+                    />
+                  );
+                })}
+            </div>
           </div>
         </div>
       </div>
