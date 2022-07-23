@@ -5,7 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   addFilteredProducts,
   changeSortBy,
-  // changeAppliedFilters,
+  changeAvailabilitySelected,
+  changePriceRangeNumberSelected,
+  changeProductTypeFiltersSelected,
+  changeSizeFiltersSelected,
   addAvailabilitySelected,
   addPriceRangeNumberSelected,
   addPriceRangeAvailableToSelect,
@@ -125,6 +128,125 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       ? findFitFilteringType(params?.collectionType)
       : "all";
   console.log("applied filters", appliedFilters);
+
+  function cancelFilterByTabData(filterNameSelected: any, type: any) {
+    const types: { [key: string]: () => void } = {
+      availability: () => {
+        const availabilityTypes: { [key: string]: () => void } = {
+          inStock: () => {
+            dispatch(
+              changeAvailabilitySelected({
+                type: "inStock",
+                newValue: !filterNameSelected.selected,
+              })
+            );
+          },
+          outOfStock: () => {
+            dispatch(
+              changeAvailabilitySelected({
+                type: "outOfStock",
+                newValue: !filterNameSelected.selected,
+              })
+            );
+          },
+        };
+        availabilityTypes[filterNameSelected.typeSelected]();
+      },
+      size: () => {
+        dispatch(
+          changeSizeFiltersSelected({
+            productTypeName: filterNameSelected.name,
+            productTypeNewValue: !filterNameSelected.selected,
+          })
+        );
+      },
+      productType: () => {
+        dispatch(
+          changeProductTypeFiltersSelected({
+            productTypeName: filterNameSelected.name,
+            productTypeNewValue: !filterNameSelected.selected,
+          })
+        );
+      },
+    };
+
+    types[type]();
+  }
+
+  function productObjectPassesAllFilters(productItemObject: any) {
+    // appliedFilters
+
+    const passesByFiltersCategories: { [key: string]: any } = {
+      availability: true,
+      size: true,
+      price: true,
+      productType: true,
+    };
+
+    if (appliedFilters.availability.list.length > 0) {
+      //numberItemsAvailable , if null and has size search for the first positive number of items
+    }
+    if (appliedFilters.size.list.length > 0) {
+      const productHasSizes = Object.hasOwn(
+        productItemObject,
+        "sizesAvailable"
+      );
+      if (!productHasSizes) {
+        return false;
+      }
+
+      const enteriesProductSizes = Object.entries(
+        productItemObject.sizesAvailable
+      );
+
+      for (const [sizeName, sizeValueObject] of enteriesProductSizes) {
+        // let objectValue: any = sizeValueObject;
+
+        // const numberOfSize = parseInt(objectValue.numberItemsAvailable)
+
+        const listIncludesSize = appliedFilters.size.list.findIndex(
+          (itemObject: any) => {
+            if (itemObject.name === sizeName) {
+              return true;
+            }
+          }
+        );
+
+        passesByFiltersCategories.size = listIncludesSize !== -1;
+      }
+    }
+    if (appliedFilters.price.list.length > 0) {
+    }
+    if (appliedFilters.productType.list.length > 0) {
+      // productCategory
+      const productItemIncludesCategory =
+        appliedFilters.productType.list.findIndex((productTypeName: any) => {
+          if (productTypeName.name === productItemObject.productCategory) {
+            return true;
+          }
+        });
+
+      // .includes(
+      //   productItemObject.productCategory
+      // );
+
+      passesByFiltersCategories.productType =
+        productItemIncludesCategory !== -1;
+    }
+
+    if (
+      passesByFiltersCategories.availability === false ||
+      passesByFiltersCategories.size === false ||
+      passesByFiltersCategories.price === false ||
+      passesByFiltersCategories.productType === false
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  console.log("filtered products", filteredProducts);
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
       <div className="bread-container p-8">
@@ -157,6 +279,11 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                             <div
                               className="cancel-filter cursor-pointer"
                               onClick={() => {
+                                cancelFilterByTabData(
+                                  filterNameSelected,
+                                  nameFilter
+                                );
+
                                 // dispatch(
                                 //   changeAppliedFilters({
                                 //     filterName: nameFilter,
@@ -233,8 +360,16 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
               <ProductListByFilter type={params.collectionType} />
             )}
             <div className="product-list flex flex-wrap gap-8  justify-evenly ">
-              {filteredProducts.length > 0 &&
+              {filteredProducts.length != null &&
+                filteredProducts.length > 0 &&
                 filteredProducts.map((productItemObject: any) => {
+                  const productPassesAllFilters =
+                    productObjectPassesAllFilters(productItemObject);
+
+                  if (!productPassesAllFilters) {
+                    return "";
+                  }
+
                   return (
                     <ProductItem
                       selectedCurrency={selectedCurrency}

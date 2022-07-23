@@ -212,6 +212,7 @@ export const productFiltersSlice = createSlice({
       state.appliedFilters.productType.list.push({
         ...state.productTypeFiltersSelected[productTypeName],
         typeSelected: "Product Type",
+
         name: productTypeName,
       });
     },
@@ -243,6 +244,7 @@ export const productFiltersSlice = createSlice({
       state.appliedFilters.size.list.push({
         ...state.sizeFiltersSelected[productSizeName],
         typeSelected: "Size",
+
         name: productSizeName,
       });
     },
