@@ -187,10 +187,13 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       //numberItemsAvailable , if null and has size search for the first positive number of items
     }
     if (appliedFilters.size.list.length > 0) {
+      passesByFiltersCategories.size = false;
+
       const productHasSizes = Object.hasOwn(
         productItemObject,
         "sizesAvailable"
       );
+
       if (!productHasSizes) {
         return false;
       }
@@ -199,6 +202,8 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
         productItemObject.sizesAvailable
       );
 
+      // let hasIncludeASizeBefore: null | boolean = null;
+
       for (const [sizeName, sizeValueObject] of enteriesProductSizes) {
         // let objectValue: any = sizeValueObject;
 
@@ -206,13 +211,24 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
 
         const listIncludesSize = appliedFilters.size.list.findIndex(
           (itemObject: any) => {
-            if (itemObject.name === sizeName) {
+            if (itemObject.name.trim() === sizeName.trim()) {
               return true;
             }
           }
         );
+        const includesSize = listIncludesSize !== -1;
+        if (includesSize) {
+          passesByFiltersCategories.size = true;
+          break;
+        }
+        //   if (includesSize === true) {
+        //     hasIncludeASizeBefore = true;
+        //   }
 
-        passesByFiltersCategories.size = listIncludesSize !== -1;
+        //   if (hasIncludeASizeBefore === null) {
+        //     // gurad so the included size to remain
+        //     passesByFiltersCategories.size = includesSize;
+        //   }
       }
     }
     if (appliedFilters.price.list.length > 0) {
@@ -225,10 +241,6 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
             return true;
           }
         });
-
-      // .includes(
-      //   productItemObject.productCategory
-      // );
 
       passesByFiltersCategories.productType =
         productItemIncludesCategory !== -1;
@@ -300,7 +312,9 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                               </div>
                               <div className="space-between font-sans">:</div>
                               <div className="filter-selected font-sans">
-                                {filterNameSelected.name}
+                                {filterNameSelected.name.includes("_")
+                                  ? filterNameSelected.name.split("_").join(" ")
+                                  : filterNameSelected.name}
                               </div>
                             </div>
                           </div>
@@ -366,6 +380,12 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                   const productPassesAllFilters =
                     productObjectPassesAllFilters(productItemObject);
 
+                  console.log(
+                    "how",
+                    appliedFilters,
+                    "PPP",
+                    productPassesAllFilters
+                  );
                   if (!productPassesAllFilters) {
                     return "";
                   }

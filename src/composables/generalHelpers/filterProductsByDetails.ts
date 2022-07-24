@@ -178,9 +178,11 @@ function modifySizeOptions(
   const sizesAvailableArray = Object.entries(sizesAvailable);
 
   for (const sizeIndex of sizesAvailableArray) {
-    const sizeName: any = sizeIndex[0];
+    const sizeName: any = sizeIndex[0].trim();
     const sizeObject = sizeIndex[1];
+    console.log("new size list is ", newSizeList);
 
+    // here add the model as number of available items not the number of sizes available
     const numberItemsAvailableNumber =
       typeof sizeObject.numberItemsAvailable === "string"
         ? parseInt(sizeObject.numberItemsAvailable)
@@ -197,7 +199,7 @@ function modifySizeOptions(
     }
     if (numberItemsAvailableNumber > 0 && isSizeNameInSizeList === false) {
       newSizeList[sizeName] = {
-        itemsNumberAvailable: numberItemsAvailableNumber,
+        itemsNumberAvailable: 1, // numberItemsAvailableNumber,
         name: sizeName,
         value: sizeName.toLowerCase(),
         selected: false,
