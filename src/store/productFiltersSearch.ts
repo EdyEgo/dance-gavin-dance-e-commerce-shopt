@@ -149,6 +149,27 @@ export const productFiltersSlice = createSlice({
     addSizeFiltersSelected(state, { payload }) {
       state.sizeFiltersSelected = payload;
     },
+
+    resetAppliedFilters(state) {
+      state.appliedFilters = {
+        availability: {
+          list: [],
+          name: "Availability",
+        },
+        size: {
+          list: [],
+          name: "Size",
+        },
+        price: {
+          list: [],
+          name: "Price",
+        },
+        productType: {
+          list: [],
+          name: "Product type",
+        },
+      };
+    },
     changeAvailabilitySelected(state, { payload }) {
       if (!state.availabilitySelected) {
         return;
@@ -255,6 +276,7 @@ export const {
   changeSortBy,
   // changeAppliedFilters,
   // deleteAppliedFilter,
+  resetAppliedFilters,
   addFilteredProducts,
   changeSelectedCurrency,
   addAvailabilitySelected,

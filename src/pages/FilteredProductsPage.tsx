@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addFilteredProducts,
+  resetAppliedFilters,
   changeSortBy,
   changeAvailabilitySelected,
   changePriceRangeNumberSelected,
@@ -70,6 +71,8 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
   const [openSortByStatus, setOpenSortByStatus] = React.useState(false);
 
   useEffect(() => {
+    dispatch(resetAppliedFilters());
+
     const {
       availabilityOptions,
       priceRange,
