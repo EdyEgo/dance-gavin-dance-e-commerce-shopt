@@ -66,6 +66,56 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
 
   const [allMerchSelectedTab, setAllMerchSelectedTab] = useState("tees");
 
+  function returnPriceAndSizeAutoSelected(productItemObject: any) {
+    // this should return the number of  items available
+    const productCurrencyList: string[] = productItemObject.productCurrencyList;
+
+    const indexPriceForCurrentSelectedCurrencyByUser =
+      productCurrencyList.findIndex(
+        (currency) => currency === productItemObject
+      );
+    if (productItemObject.price !== null) {
+      return {
+        autoSelectedSize: null,
+        correctPriceForSelectedCurrency: parseInt(productItemObject.price),
+        numberItemsAvailable: productItemObject.numberItemsAvailable,
+      };
+    }
+    if (
+      productItemObject.price === null &&
+      productItemObject.sizesAvailable !== null
+    ) {
+      const sizeAutoSelected: any = Object.entries(
+        productItemObject.sizesAvailable
+      )[0];
+
+      if (sizeAutoSelected[1].price.includes(",")) {
+        const splitedPrices = sizeAutoSelected[1].price.split(",");
+        const correctPriceForSelectedCurrency = parseInt(
+          splitedPrices[indexPriceForCurrentSelectedCurrencyByUser]
+        );
+        return {
+          autoSelectedSize: sizeAutoSelected[0],
+          correctPriceForSelectedCurrency,
+          numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
+        };
+        //productsSelectedCurrency
+      }
+
+      return {
+        autoSelectedSize: sizeAutoSelected[0],
+        correctPriceForSelectedCurrency: parseInt(sizeAutoSelected[1].price),
+        numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
+      };
+    }
+
+    return {
+      autoSelectedSize: null,
+      correctPriceForSelectedCurrency: null,
+      numberItemsAvailable: null,
+    };
+  }
+
   function returnTwentyProducts() {
     if (productsList == null || productsList.length <= 0) {
       return [];
@@ -80,8 +130,16 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         break;
       }
       const productItemObject = productsList[productIndex];
+
+      const {
+        numberItemsAvailable,
+
+        correctPriceForSelectedCurrency,
+      } = returnPriceAndSizeAutoSelected(productItemObject);
       productListElements.push(
         <ProductItem
+          correctPriceForSelectedCurrency={correctPriceForSelectedCurrency}
+          numberItemsAvailable={numberItemsAvailable}
           selectedCurrency={selectedCurrency}
           productPropertiesValues={productItemObject}
         />

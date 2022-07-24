@@ -10,68 +10,72 @@ import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 interface ProductItemProps {
   productPropertiesValues: any;
   selectedCurrency: string;
+  numberItemsAvailable: number;
+  correctPriceForSelectedCurrency: any;
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({
   productPropertiesValues,
   selectedCurrency,
+  numberItemsAvailable,
+  correctPriceForSelectedCurrency,
 }) => {
   const productsSelectedCurrency = useSelector(
     (state: any) => state.productFiltersSearch.selectedCurrency
   );
 
-  function returnPriceAndSizeAutoSelected() {
-    // this should return the number of  items available
-    const productCurrencyList: string[] =
-      productPropertiesValues.productCurrencyList;
+  // function returnPriceAndSizeAutoSelected() {
+  //   // this should return the number of  items available
+  //   const productCurrencyList: string[] =
+  //     productPropertiesValues.productCurrencyList;
 
-    const indexPriceForCurrentSelectedCurrencyByUser =
-      productCurrencyList.findIndex(
-        (currency) => currency === productsSelectedCurrency
-      );
-    if (productPropertiesValues.price !== null) {
-      return {
-        autoSelectedSize: null,
-        correctPriceForSelectedCurrency: parseInt(
-          productPropertiesValues.price
-        ),
-        numberItemsAvailable: productPropertiesValues.numberItemsAvailable,
-      };
-    }
-    if (
-      productPropertiesValues.price === null &&
-      productPropertiesValues.sizesAvailable !== null
-    ) {
-      const sizeAutoSelected: any = Object.entries(
-        productPropertiesValues.sizesAvailable
-      )[0];
+  //   const indexPriceForCurrentSelectedCurrencyByUser =
+  //     productCurrencyList.findIndex(
+  //       (currency) => currency === productsSelectedCurrency
+  //     );
+  //   if (productPropertiesValues.price !== null) {
+  //     return {
+  //       autoSelectedSize: null,
+  //       correctPriceForSelectedCurrency: parseInt(
+  //         productPropertiesValues.price
+  //       ),
+  //       numberItemsAvailable: productPropertiesValues.numberItemsAvailable,
+  //     };
+  //   }
+  //   if (
+  //     productPropertiesValues.price === null &&
+  //     productPropertiesValues.sizesAvailable !== null
+  //   ) {
+  //     const sizeAutoSelected: any = Object.entries(
+  //       productPropertiesValues.sizesAvailable
+  //     )[0];
 
-      if (sizeAutoSelected[1].price.includes(",")) {
-        const splitedPrices = sizeAutoSelected[1].price.split(",");
-        const correctPriceForSelectedCurrency = parseInt(
-          splitedPrices[indexPriceForCurrentSelectedCurrencyByUser]
-        );
-        return {
-          autoSelectedSize: sizeAutoSelected[0],
-          correctPriceForSelectedCurrency,
-          numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
-        };
-        //productsSelectedCurrency
-      }
+  //     if (sizeAutoSelected[1].price.includes(",")) {
+  //       const splitedPrices = sizeAutoSelected[1].price.split(",");
+  //       const correctPriceForSelectedCurrency = parseInt(
+  //         splitedPrices[indexPriceForCurrentSelectedCurrencyByUser]
+  //       );
+  //       return {
+  //         autoSelectedSize: sizeAutoSelected[0],
+  //         correctPriceForSelectedCurrency,
+  //         numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
+  //       };
+  //       //productsSelectedCurrency
+  //     }
 
-      return {
-        autoSelectedSize: sizeAutoSelected[0],
-        correctPriceForSelectedCurrency: parseInt(sizeAutoSelected[1].price),
-        numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
-      };
-    }
+  //     return {
+  //       autoSelectedSize: sizeAutoSelected[0],
+  //       correctPriceForSelectedCurrency: parseInt(sizeAutoSelected[1].price),
+  //       numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
+  //     };
+  //   }
 
-    return {
-      autoSelectedSize: null,
-      correctPriceForSelectedCurrency: null,
-      numberItemsAvailable: null,
-    };
-  }
+  //   return {
+  //     autoSelectedSize: null,
+  //     correctPriceForSelectedCurrency: null,
+  //     numberItemsAvailable: null,
+  //   };
+  // }
 
   const returnFitCurrencyIcon = () => {
     const iconsList: { [key: string]: any } = {
@@ -81,11 +85,11 @@ const ProductItem: React.FC<ProductItemProps> = ({
     return iconsList[productsSelectedCurrency];
   };
 
-  const {
-    numberItemsAvailable,
-    autoSelectedSize, // no need for this one actually there are the same pictures for all sizes
-    correctPriceForSelectedCurrency,
-  } = returnPriceAndSizeAutoSelected();
+  // const {
+  //   numberItemsAvailable,
+  //   autoSelectedSize, // no need for this one actually there are the same pictures for all sizes
+  //   correctPriceForSelectedCurrency,
+  // } = returnPriceAndSizeAutoSelected();
 
   return (
     <Link

@@ -15,6 +15,9 @@ import {
   addProductTypeFiltersSelected,
   addSizeFiltersSelected,
 } from "../store/productFiltersSearch";
+
+import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
+import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import ProductItem from "../composables/generalHelpers/productItem";
 import AccordionList from "../composables/generalHelpers/accordionList";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -52,6 +55,14 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     (state: any) => state.productFiltersSearch.appliedFilters
   );
 
+  const priceRangeAvailable = useSelector(
+    (state: any) => state.productFiltersSearch.priceRangeAvailableToSelect
+  );
+
+  const priceRangeSelected = useSelector(
+    (state: any) => state.productFiltersSearch.priceRangeNumberSelected
+  );
+
   const titleUpperCase = extractParamsCollectionType();
 
   const sortByAnchorTitleRef = React.useRef(null);
@@ -67,6 +78,8 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       filteredProducts,
     } = productsAvailableFilters(productFilterType, productsList);
     // return the number of products too mate
+
+    dispatch(changePriceRangeNumberSelected({ newPriceRange: priceRange }));
 
     dispatch(addFilteredProducts(filteredProducts));
 
@@ -127,7 +140,6 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     params?.collectionType != null
       ? findFitFilteringType(params?.collectionType)
       : "all";
-  console.log("applied filters", appliedFilters);
 
   function cancelFilterByTabData(filterNameSelected: any, type: any) {
     const types: { [key: string]: () => void } = {
@@ -183,6 +195,11 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       productType: true,
     };
 
+    // const priceRangeFit: { maxFit: boolean; minFit: boolean } = {
+    //   maxFit: false,
+    //   minFit: false,
+    // };
+
     if (appliedFilters.availability.list.length > 0) {
       //numberItemsAvailable , if null and has size search for the first positive number of items
     }
@@ -205,9 +222,19 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       // let hasIncludeASizeBefore: null | boolean = null;
 
       for (const [sizeName, sizeValueObject] of enteriesProductSizes) {
-        // let objectValue: any = sizeValueObject;
+        let objectValue: any = sizeValueObject;
 
         // const numberOfSize = parseInt(objectValue.numberItemsAvailable)
+
+        // const priceNumber = parseInt(objectValue.price);
+
+        // if (priceNumber <= priceRangSelected[1]) {
+        //   priceRangeFit.maxFit = true;
+        // }
+
+        // if (priceNumber >= priceRangSelected[0]) {
+        //   priceRangeFit.minFit = true;
+        // }
 
         const listIncludesSize = appliedFilters.size.list.findIndex(
           (itemObject: any) => {
@@ -231,8 +258,20 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
         //   }
       }
     }
-    if (appliedFilters.price.list.length > 0) {
-    }
+
+    // better make an showned price on the product object
+
+    // if (
+    //   productItemObject.price != null &&
+    //   productItemObject?.sizesAvailable == null
+    // ) {
+    //   const fitMax = productItemObject.price <= priceRangSelected[1];
+    //   const fitMin = productItemObject.price >= priceRangSelected[0];
+
+    //   priceRangeFit.maxFit = fitMax;
+    //   priceRangeFit.minFit = fitMin;
+    // }
+
     if (appliedFilters.productType.list.length > 0) {
       // productCategory
       const productItemIncludesCategory =
@@ -246,11 +285,16 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
         productItemIncludesCategory !== -1;
     }
 
+    // const productContainsACorrectPrice =
+    //   priceRangeFit.maxFit === true || priceRangeFit.minFit === true;
+
     if (
       passesByFiltersCategories.availability === false ||
       passesByFiltersCategories.size === false ||
       passesByFiltersCategories.price === false ||
       passesByFiltersCategories.productType === false
+      // ||
+      // productContainsACorrectPrice === false
     ) {
       return false;
     }
@@ -258,7 +302,70 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     return true;
   }
 
+  const returnFitCurrencyIcon = () => {
+    const iconsList: { [key: string]: any } = {
+      euro: <EuroRoundedIcon fontSize="small" />,
+      dollar: <DollarRoundedIcon fontSize="small" />,
+    };
+    return iconsList[selectedCurrency];
+  };
+
+  const displayPriceFilterSelected =
+    priceRangeSelected[0] !== priceRangeAvailable[0] ||
+    priceRangeSelected[1] !== priceRangeAvailable[1];
+
   console.log("filtered products", filteredProducts);
+
+  function returnPriceAndSizeAutoSelected(productItemObject: any) {
+    // this should return the number of  items available
+    const productCurrencyList: string[] = productItemObject.productCurrencyList;
+
+    const indexPriceForCurrentSelectedCurrencyByUser =
+      productCurrencyList.findIndex(
+        (currency) => currency === productItemObject
+      );
+    if (productItemObject.price !== null) {
+      return {
+        autoSelectedSize: null,
+        correctPriceForSelectedCurrency: parseInt(productItemObject.price),
+        numberItemsAvailable: productItemObject.numberItemsAvailable,
+      };
+    }
+    if (
+      productItemObject.price === null &&
+      productItemObject.sizesAvailable !== null
+    ) {
+      const sizeAutoSelected: any = Object.entries(
+        productItemObject.sizesAvailable
+      )[0];
+
+      if (sizeAutoSelected[1].price.includes(",")) {
+        const splitedPrices = sizeAutoSelected[1].price.split(",");
+        const correctPriceForSelectedCurrency = parseInt(
+          splitedPrices[indexPriceForCurrentSelectedCurrencyByUser]
+        );
+        return {
+          autoSelectedSize: sizeAutoSelected[0],
+          correctPriceForSelectedCurrency,
+          numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
+        };
+        //productsSelectedCurrency
+      }
+
+      return {
+        autoSelectedSize: sizeAutoSelected[0],
+        correctPriceForSelectedCurrency: parseInt(sizeAutoSelected[1].price),
+        numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
+      };
+    }
+
+    return {
+      autoSelectedSize: null,
+      correctPriceForSelectedCurrency: null,
+      numberItemsAvailable: null,
+    };
+  }
+
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
       <div className="bread-container p-8">
@@ -274,8 +381,43 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       <div className="content-filtered-container flex p-11 gap-8">
         <div className="filters-container w-[20%]">
           <div className="filters-title">FILTERS</div>
-          <div className="accordions-filters-list">
-            <div className="applied-filters">
+          <div className="accordions-filtcorrectPriceForSelectedCurrencyers-list">
+            <div className="applied-filters flex flex-col gap-4 p-2 ">
+              {displayPriceFilterSelected && (
+                <div className="filter-item flex gap-2 items-center bg-[#1fafb4] p-4 ">
+                  <div
+                    className="cancel-filter cursor-pointer"
+                    onClick={() => {
+                      // make the selected price be equal with the available price
+                    }}
+                  >
+                    <ClearIcon fontSize="small" />
+                  </div>
+                  <div className="filter-item__details flex gap-1">
+                    <div className="name-filter font-sans">Price:</div>
+                    {/* <div className="space-between font-sans">:</div> */}
+                    <div className="filter-selected font-sans flex gap-2">
+                      <div className="min-price flex gap-2">
+                        <div className="currency">
+                          {returnFitCurrencyIcon()}
+                        </div>
+                        <div className="price-number font-sans">
+                          {priceRangeSelected[0]}
+                        </div>
+                      </div>
+                      <div className="line-between-range">-</div>
+                      <div className="max-range flex gap-2">
+                        <div className="currency">
+                          {returnFitCurrencyIcon()}
+                        </div>
+                        <div className="price-number font-sans">
+                          {priceRangeSelected[1]}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               {appliedFilters != null &&
                 Object.entries(appliedFilters).map(
                   ([nameFilter, valueFilter]: any, index) => {
@@ -283,7 +425,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                       (filterNameSelected: any, indexValueFilter: number) => {
                         return (
                           <div
-                            className="filter-item flex gap-2 items-center bg-[#1fafb4] p-4"
+                            className="filter-item flex gap-2 items-center bg-[#1fafb4] p-4 "
                             key={
                               useId + index + "filter-item" + indexValueFilter
                             }
@@ -308,9 +450,9 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                             </div>
                             <div className="filter-item__details flex gap-1">
                               <div className="name-filter font-sans">
-                                {filterNameSelected.typeSelected}
+                                {filterNameSelected.typeSelected}:
                               </div>
-                              <div className="space-between font-sans">:</div>
+                              {/* <div className="space-between font-sans">:</div> */}
                               <div className="filter-selected font-sans">
                                 {filterNameSelected.name.includes("_")
                                   ? filterNameSelected.name.split("_").join(" ")
@@ -380,22 +522,37 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                   const productPassesAllFilters =
                     productObjectPassesAllFilters(productItemObject);
 
-                  console.log(
-                    "how",
-                    appliedFilters,
-                    "PPP",
-                    productPassesAllFilters
-                  );
+                  // const productPassesPriceFilter =
+
                   if (!productPassesAllFilters) {
                     return "";
                   }
 
-                  return (
-                    <ProductItem
-                      selectedCurrency={selectedCurrency}
-                      productPropertiesValues={productItemObject}
-                    />
-                  );
+                  const {
+                    numberItemsAvailable,
+
+                    correctPriceForSelectedCurrency,
+                  } = returnPriceAndSizeAutoSelected(productItemObject);
+
+                  const fitMax =
+                    correctPriceForSelectedCurrency != null &&
+                    correctPriceForSelectedCurrency <= priceRangeSelected[1];
+                  const fitMin =
+                    correctPriceForSelectedCurrency != null &&
+                    correctPriceForSelectedCurrency >= priceRangeSelected[0];
+                  if (fitMax && fitMin) {
+                    return (
+                      <ProductItem
+                        correctPriceForSelectedCurrency={
+                          correctPriceForSelectedCurrency
+                        }
+                        numberItemsAvailable={numberItemsAvailable}
+                        selectedCurrency={selectedCurrency}
+                        productPropertiesValues={productItemObject}
+                      />
+                    );
+                  }
+                  return "";
                 })}
             </div>
           </div>
