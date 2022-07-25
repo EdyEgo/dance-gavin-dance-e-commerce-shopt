@@ -225,7 +225,9 @@ export default function SimpleAccordion() {
                     </div>
                     <div className="items-available">
                       {"("}
-                      {itemsNumberAvailable}
+                      {itemsNumberAvailable > 1
+                        ? itemsNumberAvailable - 1
+                        : itemsNumberAvailable}
                       {")"}
                     </div>
                   </div>
@@ -339,7 +341,7 @@ export default function SimpleAccordion() {
               <div className="name">{availabilityOptions.inStock.name}</div>
               <div className="number-items">
                 {"("}
-                {availabilityOptions.inStock.numberItems}
+                {availabilityOptions.inStock.numberItems - 1}
                 {")"}
               </div>
             </div>
@@ -373,7 +375,7 @@ export default function SimpleAccordion() {
               <div className="name">{availabilityOptions.outOfStock.name}</div>
               <div className="number-items">
                 {"("}
-                {availabilityOptions.outOfStock.numberItems}
+                {availabilityOptions.outOfStock.numberItems + 1}
                 {")"}
               </div>
             </div>

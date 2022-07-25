@@ -291,11 +291,11 @@ export function productsAvailableFilters(
       productTypeOptions
     );
 
-    if (productAvailable) {
+    if (productAvailable === true) {
       availabilityOptions.inStock.numberItems += 1;
       // left here
     }
-    if (!productAvailable) {
+    if (productAvailable === false) {
       availabilityOptions.outOfStock.numberItems += 1;
     }
 

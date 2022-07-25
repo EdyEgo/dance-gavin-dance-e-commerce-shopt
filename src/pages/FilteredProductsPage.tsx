@@ -188,6 +188,81 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     types[type]();
   }
 
+  function filterByAvailability(productItemObject: any) {
+    //////////////////////////////////
+    if (appliedFilters.availability.list.length > 0) {
+      const tipesOfAvailability = {
+        inStock: false,
+        outOfStock: false,
+      };
+
+      const inStockFilter = appliedFilters.availability.list.findIndex(
+        (availabilityItem: any) => availabilityItem.typeSelected === "inStock"
+      );
+
+      const outOfStockFilter = appliedFilters.availability.list.findIndex(
+        (availabilityItem: any) =>
+          availabilityItem.typeSelected === "outOfStock"
+      );
+
+      if (inStockFilter > -1) {
+        tipesOfAvailability.inStock = true;
+      }
+
+      if (outOfStockFilter > -1) {
+        tipesOfAvailability.outOfStock = true;
+      }
+
+      const productHasSizes = Object.hasOwn(
+        productItemObject,
+        "sizesAvailable"
+      );
+
+      if (
+        productItemObject?.numberItemsAvailable != null &&
+        typeof productItemObject.numberItemsAvailable === "number"
+      ) {
+        if (
+          productItemObject.numberItemsAvailable <= 0 &&
+          tipesOfAvailability.outOfStock === true
+        ) {
+          return true;
+        }
+
+        if (
+          productItemObject.numberItemsAvailable > 0 &&
+          tipesOfAvailability.inStock === true
+        ) {
+          return true;
+        }
+      }
+
+      if (productHasSizes) {
+        const enteriesProductSizes = Object.entries(
+          productItemObject.sizesAvailable
+        );
+
+        for (const [sizeName, sizeValueObject] of enteriesProductSizes) {
+          let objectValue: any = sizeValueObject;
+
+          const numberOfSize = parseInt(objectValue.numberItemsAvailable);
+
+          if (numberOfSize <= 0 && tipesOfAvailability.outOfStock === true) {
+            return true;
+          }
+
+          if (numberOfSize > 0 && tipesOfAvailability.inStock === true) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    return true;
+  }
+
   function productObjectPassesAllFilters(productItemObject: any) {
     // appliedFilters
 
@@ -203,16 +278,10 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     //   minFit: false,
     // };
 
-    if (appliedFilters.availability.list.length > 0) {
-      //numberItemsAvailable , if null and has size search for the first positive number of items
-    }
+    const productHasSizes = Object.hasOwn(productItemObject, "sizesAvailable");
+
     if (appliedFilters.size.list.length > 0) {
       passesByFiltersCategories.size = false;
-
-      const productHasSizes = Object.hasOwn(
-        productItemObject,
-        "sizesAvailable"
-      );
 
       if (!productHasSizes) {
         return false;
@@ -316,8 +385,6 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
   const displayPriceFilterSelected =
     priceRangeSelected[0] !== priceRangeAvailable[0] ||
     priceRangeSelected[1] !== priceRangeAvailable[1];
-
-  console.log("filtered products", filteredProducts);
 
   function returnPriceAndSizeAutoSelected(productItemObject: any) {
     // this should return the number of  items available
@@ -480,11 +547,22 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
             <div className="filters flex justify-between">
               <div className="total-products">
                 {filteredProducts.length > 0 && (
-                  <div className="contains-products flex gap-2 ">
-                    <div className="font-sans">{filteredProducts.length}</div>
-                    <div className="font-sans">
-                      {filteredProducts.length > 1 ? "products" : "product"}
-                    </div>
+                  <div className="contains-products  ">
+                    {filteredProducts.length > 1 ? (
+                      <div className="flex gap-2">
+                        <div className="font-sans">
+                          {filteredProducts.length - 1}
+                        </div>
+                        <div className="font-sans">products</div>
+                      </div>
+                    ) : (
+                      <div className="flex gap-2">
+                        <div className="font-sans">
+                          {filteredProducts.length}
+                        </div>
+                        <div className="font-sans">product</div>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -543,7 +621,11 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                   const fitMin =
                     correctPriceForSelectedCurrency != null &&
                     correctPriceForSelectedCurrency >= priceRangeSelected[0];
-                  if (fitMax && fitMin) {
+
+                  const passesAvailability =
+                    filterByAvailability(productItemObject);
+
+                  if (fitMax && fitMin && passesAvailability) {
                     return (
                       <ProductItem
                         correctPriceForSelectedCurrency={
