@@ -1,4 +1,4 @@
-import { useState, useId } from "react";
+import { useState, useId, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -77,6 +77,11 @@ export default function SimpleAccordion() {
 
   const [inputsPriceRange, setInputsPriceRange] = useState(priceRangSelected);
 
+  useEffect(() => {
+    // when you select with the range bar or clear all the inputs on the price must change too
+    setInputsPriceRange(priceRangSelected);
+  }, [priceRangSelected]);
+
   const availabilityOptions = useSelector(
     (state: any) => state.productFiltersSearch.availabilitySelected
   );
@@ -134,6 +139,8 @@ export default function SimpleAccordion() {
   // and on click on an filter option the check box to check or uncheck , not just when you press the check button
   // maybe just use icons instead of actuall radio inputs
 
+  console.log("test clear all", priceRangSelected);
+
   return (
     <div className="bg-[#25c3c8]">
       <Accordion style={{ backgroundColor: "#25c3c8" }}>
@@ -144,7 +151,7 @@ export default function SimpleAccordion() {
         >
           <Typography> Product type</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className="gap-2 flex flex-col">
           {productTypeOptions != null &&
             Object.entries(productTypeOptions).map(
               (
@@ -171,8 +178,8 @@ export default function SimpleAccordion() {
                       {selected && <CheckBoxIcon />}
                       {!selected && <CheckBoxOutlineBlankIcon />}
                     </div>
-                    <div className="name">{name}</div>
-                    <div className="items-available">
+                    <div className="name font-sans">{name}</div>
+                    <div className="items-available font-sans">
                       {"("}
                       {itemsNumberAvailable}
                       {")"}
@@ -191,7 +198,7 @@ export default function SimpleAccordion() {
         >
           <Typography>Size</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className="gap-2 flex flex-col">
           {sizeOptions != null &&
             Object.entries(sizeOptions).map(
               (
@@ -218,12 +225,12 @@ export default function SimpleAccordion() {
                       {selected && <CheckBoxIcon />}
                       {!selected && <CheckBoxOutlineBlankIcon />}
                     </div>
-                    <div className="name">
+                    <div className="name font-sans">
                       {name.includes("_")
                         ? capitalizeFirstLetter(name.split("_").join(" "))
                         : capitalizeFirstLetter(name)}
                     </div>
-                    <div className="items-available">
+                    <div className="items-available font-sans">
                       {"("}
                       {itemsNumberAvailable > 1
                         ? itemsNumberAvailable - 1
@@ -303,7 +310,7 @@ export default function SimpleAccordion() {
         >
           <Typography>Availability</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className="gap-2 flex flex-col">
           {availabilityOptions?.inStock != null && (
             <div
               className="in-stock flex gap-4 items-center  cursor-pointer"
@@ -324,7 +331,7 @@ export default function SimpleAccordion() {
                 );
               }}
             >
-              <div className="check-box">
+              <div className="check-box font-sans">
                 {/* <Checkbox
                 sx={{
                   color: "black",
@@ -338,8 +345,10 @@ export default function SimpleAccordion() {
                   <CheckBoxOutlineBlankIcon />
                 )}
               </div>
-              <div className="name">{availabilityOptions.inStock.name}</div>
-              <div className="number-items">
+              <div className="name font-sans">
+                {availabilityOptions.inStock.name}
+              </div>
+              <div className="number-items font-sans">
                 {"("}
                 {availabilityOptions.inStock.numberItems - 1}
                 {")"}
@@ -372,8 +381,10 @@ export default function SimpleAccordion() {
                   <CheckBoxOutlineBlankIcon />
                 )}
               </div>
-              <div className="name">{availabilityOptions.outOfStock.name}</div>
-              <div className="number-items">
+              <div className="name font-sans">
+                {availabilityOptions.outOfStock.name}
+              </div>
+              <div className="number-items font-sans">
                 {"("}
                 {availabilityOptions.outOfStock.numberItems + 1}
                 {")"}

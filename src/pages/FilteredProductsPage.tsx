@@ -56,6 +56,8 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     (state: any) => state.productFiltersSearch.appliedFilters
   );
 
+  const entriesAppliedFilters = Object.entries(appliedFilters);
+
   const priceRangeAvailable = useSelector(
     (state: any) => state.productFiltersSearch.priceRangeAvailableToSelect
   );
@@ -436,6 +438,87 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     };
   }
 
+  function clearAllFilters() {
+    // shows only when there are more than one filter
+
+    dispatch(
+      changePriceRangeNumberSelected({
+        newPriceRange: priceRangeAvailable,
+      })
+    );
+    // displayPriceFilterSelected , priceRangeNumberSelected
+
+    if (appliedFilters != null) {
+      entriesAppliedFilters.map(([nameFilter, valueFilter]: any, index) => {
+        return valueFilter.list.map(
+          (filterNameSelected: any, indexValueFilter: number) => {
+            cancelFilterByTabData(filterNameSelected, nameFilter);
+          }
+        );
+      });
+    }
+  }
+
+  let countNumberOfFiltersSelected = displayPriceFilterSelected ? 1 : 0;
+
+  function createFilteredProducts() {
+    let productsNumber = 0;
+    let filteredProductsCreatedArray: any[] = [];
+    if (filteredProducts.length != null && filteredProducts.length > 0) {
+      filteredProductsCreatedArray = filteredProducts.map(
+        (productItemObject: any) => {
+          const productPassesAllFilters =
+            productObjectPassesAllFilters(productItemObject);
+
+          // const productPassesPriceFilter =
+
+          if (!productPassesAllFilters) {
+            return "";
+          }
+
+          const {
+            numberItemsAvailable,
+
+            correctPriceForSelectedCurrency,
+          } = returnPriceAndSizeAutoSelected(productItemObject);
+
+          const fitMax =
+            correctPriceForSelectedCurrency != null &&
+            correctPriceForSelectedCurrency <= priceRangeSelected[1];
+          const fitMin =
+            correctPriceForSelectedCurrency != null &&
+            correctPriceForSelectedCurrency >= priceRangeSelected[0];
+
+          const passesAvailability = filterByAvailability(productItemObject);
+
+          if (fitMax && fitMin && passesAvailability) {
+            productsNumber += 1;
+            return (
+              <ProductItem
+                correctPriceForSelectedCurrency={
+                  correctPriceForSelectedCurrency
+                }
+                numberItemsAvailable={numberItemsAvailable}
+                selectedCurrency={selectedCurrency}
+                productPropertiesValues={productItemObject}
+              />
+            );
+          }
+          return "";
+        }
+      );
+    }
+
+    if (productsNumber >= 1) {
+      return filteredProductsCreatedArray;
+    }
+    return [];
+  }
+
+  const filteredProductsList = createFilteredProducts();
+
+  console.log("my filtered products list are ", filteredProductsList);
+
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
       <div className="bread-container p-8">
@@ -452,13 +535,18 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
         <div className="filters-container w-[20%]">
           <div className="filters-title">FILTERS</div>
           <div className="accordions-filtcorrectPriceForSelectedCurrencyers-list">
-            <div className="applied-filters flex flex-col gap-4 p-2 ">
+            <div className="applied-filters flex flex-wrap gap-4 p-2 items-center">
               {displayPriceFilterSelected && (
                 <div className="filter-item flex gap-2 items-center bg-[#1fafb4] p-4 ">
                   <div
                     className="cancel-filter cursor-pointer"
                     onClick={() => {
                       // make the selected price be equal with the available price
+                      dispatch(
+                        changePriceRangeNumberSelected({
+                          newPriceRange: priceRangeAvailable,
+                        })
+                      );
                     }}
                   >
                     <ClearIcon fontSize="small" />
@@ -489,19 +577,22 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                 </div>
               )}
               {appliedFilters != null &&
-                Object.entries(appliedFilters).map(
+                entriesAppliedFilters.map(
                   ([nameFilter, valueFilter]: any, index) => {
+                    if (valueFilter.list.length > 0) {
+                      countNumberOfFiltersSelected += valueFilter.list.length;
+                    }
                     return valueFilter.list.map(
                       (filterNameSelected: any, indexValueFilter: number) => {
                         return (
                           <div
-                            className="filter-item flex gap-2 items-center bg-[#1fafb4] p-4 "
+                            className="filter-item flex gap-1 items-center bg-[#1fafb4] p-4 justify-start"
                             key={
                               useId + index + "filter-item" + indexValueFilter
                             }
                           >
                             <div
-                              className="cancel-filter cursor-pointer"
+                              className="cancel-filter cursor-pointer flex items-center"
                               onClick={() => {
                                 cancelFilterByTabData(
                                   filterNameSelected,
@@ -523,7 +614,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                                 {filterNameSelected.typeSelected}:
                               </div>
                               {/* <div className="space-between font-sans">:</div> */}
-                              <div className="filter-selected font-sans">
+                              <div className="filter-selected font-sans ">
                                 {filterNameSelected.name.includes("_")
                                   ? filterNameSelected.name.split("_").join(" ")
                                   : filterNameSelected.name}
@@ -535,6 +626,19 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                     );
                   }
                 )}
+
+              {countNumberOfFiltersSelected > 1 && (
+                <div className="clear-all-filters-container">
+                  <div
+                    className="clear-all-btn font-sans underline cursor-pointer text-[1.2em] text-gray-700 hover:text-black transition-all ease-in duration-200"
+                    onClick={() => {
+                      clearAllFilters();
+                    }}
+                  >
+                    Clear all
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="accordion-container">
@@ -565,13 +669,6 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                     )}
                   </div>
                 )}
-
-                {filteredProducts.length <= 0 && (
-                  <div className="no-products flex gap-2">
-                    <div className="font-sans">no</div>
-                    <div className="font-sans">products</div>
-                  </div>
-                )}
               </div>
               <div className="filter-by-list flex gap-2 ">
                 <div className="title text-gray-600 font-sans">Sort by</div>
@@ -597,7 +694,27 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
               <ProductListByFilter type={params.collectionType} />
             )}
             <div className="product-list flex flex-wrap gap-8  justify-evenly ">
-              {filteredProducts.length != null &&
+              {filteredProductsList.length <= 0 && (
+                <div className="no-products flex flex-col gap-8 items-center mt-[10%]">
+                  <div className="text-[2rem] tracking-wide">NO RESULTS</div>
+                  <div className="font-sans font-semibold tracking-wider">
+                    Sorry, your search did not yield any results.
+                  </div>
+
+                  <div className="clear-all-filters-btn-container">
+                    <div
+                      className="fill-animation button-action  clear-all-filters bg-[#E6443D] p-4 text-white font-bold text-[1.2rem] tracking-widest cursor-pointer"
+                      onClick={() => {
+                        clearAllFilters();
+                      }}
+                    >
+                      Reset Filters
+                    </div>
+                  </div>
+                </div>
+              )}
+              {filteredProductsList}
+              {/* {filteredProducts.length != null &&
                 filteredProducts.length > 0 &&
                 filteredProducts.map((productItemObject: any) => {
                   const productPassesAllFilters =
@@ -638,7 +755,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                     );
                   }
                   return "";
-                })}
+                })} */}
             </div>
           </div>
         </div>
