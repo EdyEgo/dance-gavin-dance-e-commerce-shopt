@@ -461,7 +461,32 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
 
   let countNumberOfFiltersSelected = displayPriceFilterSelected ? 1 : 0;
 
+  function productSortTypes(productList: any[]) {
+    // LEFT HERE
+    // sortBySelectedValues
+
+    const sortTypes = {
+      featured: () => {},
+      bestSelling: () => {},
+
+      fromAToZ: () => {
+        // some ex users.sort((a, b) => a.firstname.localeCompare(b.firstname))
+      },
+      fromZToA: () => {},
+      fromLowToHigh: () => {},
+      fromHighToLow: () => {},
+      fromOldToNew: () => {},
+      fromNewToOld: () => {},
+    };
+
+    return productList;
+  }
+
+  console.log("sort by is", sortBySelectedValues);
+
   function createFilteredProducts() {
+    // make them in order by sortBySelectedValues
+
     let productsNumber = 0;
     let filteredProductsCreatedArray: any[] = [];
     if (filteredProducts.length != null && filteredProducts.length > 0) {
@@ -510,14 +535,17 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     }
 
     if (productsNumber >= 1) {
-      return filteredProductsCreatedArray;
+      return productSortTypes(filteredProductsCreatedArray);
     }
     return [];
   }
 
   const filteredProductsList = createFilteredProducts();
 
-  console.log("my filtered products list are ", filteredProductsList);
+  console.log(
+    "you still need to have the sort filtering man  :))), yup  ",
+    filteredProductsList
+  );
 
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
@@ -531,9 +559,11 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       <div className="title text-center text-[45px] my-8 font-bold">
         {titleUpperCase}
       </div>
-      <div className="content-filtered-container flex p-11 gap-8">
-        <div className="filters-container w-[20%]">
-          <div className="filters-title">FILTERS</div>
+      <div className="content-filtered-container flex p-11 gap-8 relative overflow-visible">
+        <div className="filters-container w-[20%] sticky top-[15%] self-start">
+          <div className="filters-title tracking-widest text-[1.2rem] p-4 border-b border-[#20ABB0]">
+            FILTERS
+          </div>
           <div className="accordions-filtcorrectPriceForSelectedCurrencyers-list">
             <div className="applied-filters flex flex-wrap gap-4 p-2 items-center">
               {displayPriceFilterSelected && (
@@ -641,7 +671,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
               )}
             </div>
 
-            <div className="accordion-container">
+            <div className="accordion-container  ">
               <AccordionList />
             </div>
           </div>
@@ -655,7 +685,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                     {filteredProducts.length > 1 ? (
                       <div className="flex gap-2">
                         <div className="font-sans">
-                          {filteredProducts.length - 1}
+                          {filteredProducts.length}
                         </div>
                         <div className="font-sans">products</div>
                       </div>
@@ -689,7 +719,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
               </div>
             </div>
           </div>
-          <div className="product-list-container">
+          <div className="product-list-container mt-[1.1em]">
             {params?.collectionType != null && (
               <ProductListByFilter type={params.collectionType} />
             )}
@@ -774,18 +804,22 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                 setOpenSortByStatus(false);
               }}
             >
-              <div className="option-name">{name}</div>
-              {sortBySelectedValues.type === type && (
-                <div className="option-checked">
-                  <CheckIcon />
+              <div className="contianer-sort-item flex items-center gap-2">
+                <div className="option-name text font-sans font-medium">
+                  {name}
                 </div>
-              )}
+                {sortBySelectedValues.type === type && (
+                  <div className="option-checked">
+                    <CheckIcon fontSize="small" />
+                  </div>
+                )}
 
-              {sortBySelectedValues.type !== type && (
-                <div className="option-checked invisible">
-                  <CheckIcon />
-                </div>
-              )}
+                {sortBySelectedValues.type !== type && (
+                  <div className="option-checked invisible">
+                    <CheckIcon fontSize="small" />
+                  </div>
+                )}
+              </div>
             </MenuItem>
           );
         })}

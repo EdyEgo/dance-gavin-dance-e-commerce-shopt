@@ -194,6 +194,11 @@ export default function MenuListComposition({
                     sx={{
                       overflow: "visible",
                       backgroundColor: "#25c3c8",
+                      padding: "1em 1em",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.5rem",
+
                       border: "1px solid #21A5AA",
                       filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                       mt: 1.5,

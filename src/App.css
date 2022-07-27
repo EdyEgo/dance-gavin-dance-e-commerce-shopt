@@ -146,7 +146,7 @@ input[type="number"] {
   transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out;
   position: absolute;
   z-index: -1;
-
+  pointer-events: none;
   box-shadow: 25px 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
   width: 100%;
   right: 0;
@@ -157,6 +157,7 @@ input[type="number"] {
 .dropdown-menu-shop:hover {
   opacity: 1;
   z-index: 10;
+  pointer-events: all;
 }
 .shop-hover-link-effect:hover::before {
   /* create false entity for hover */
@@ -171,6 +172,7 @@ input[type="number"] {
 .shop-hover-link-effect:hover ~ .dropdown-menu-shop {
   opacity: 1;
   z-index: 10;
+  pointer-events: all;
 }
 
 /* drop down links list animated */
@@ -546,3 +548,7 @@ home slider test
 }
 
 /* end video animations client home  */
+
+/*  */
+
+/*  */

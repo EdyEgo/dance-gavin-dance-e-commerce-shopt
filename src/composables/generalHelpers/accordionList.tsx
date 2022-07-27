@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Checkbox from "@mui/material/Checkbox";
-import { pink } from "@mui/material/colors";
+
 import RangeSlider from "./rangeSlider";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -15,7 +14,7 @@ import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import {
   changeAvailabilitySelected,
   changePriceRangeNumberSelected,
-  changePriceRangeAvailableToSelect,
+
   // changeAppliedFilters,
   changeProductTypeFiltersSelected,
   changeSizeFiltersSelected,
@@ -139,8 +138,6 @@ export default function SimpleAccordion() {
   // and on click on an filter option the check box to check or uncheck , not just when you press the check button
   // maybe just use icons instead of actuall radio inputs
 
-  console.log("test clear all", priceRangSelected);
-
   return (
     <div className="bg-[#25c3c8]">
       <Accordion style={{ backgroundColor: "#25c3c8" }}>
@@ -149,7 +146,10 @@ export default function SimpleAccordion() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography> Product type</Typography>
+          {/* <Typography> Product type</Typography> */}
+          <div className="accordion-title font-medium font-sans">
+            Product type
+          </div>
         </AccordionSummary>
         <AccordionDetails className="gap-2 flex flex-col">
           {productTypeOptions != null &&
@@ -196,7 +196,7 @@ export default function SimpleAccordion() {
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>Size</Typography>
+          <div className="accordion-title font-medium font-sans">Size</div>
         </AccordionSummary>
         <AccordionDetails className="gap-2 flex flex-col">
           {sizeOptions != null &&
@@ -251,7 +251,8 @@ export default function SimpleAccordion() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>Price</Typography>
+          {/* <Typography>Price</Typography> */}
+          <div className="accordion-title font-medium font-sans">Price</div>
         </AccordionSummary>
         <AccordionDetails>
           <div className="price-range-container flex flex-col gap-4">
@@ -308,7 +309,10 @@ export default function SimpleAccordion() {
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>Availability</Typography>
+          {/* <Typography>Availability</Typography> */}
+          <div className="accordion-title font-medium font-sans">
+            Avaiability
+          </div>
         </AccordionSummary>
         <AccordionDetails className="gap-2 flex flex-col">
           {availabilityOptions?.inStock != null && (
