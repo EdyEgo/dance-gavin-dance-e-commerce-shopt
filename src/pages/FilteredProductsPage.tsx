@@ -399,6 +399,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     if (productItemObject.price !== null) {
       return {
         autoSelectedSize: null,
+        sold: productItemObject?.sold !== null ? productItemObject.sold : 0,
         correctPriceForSelectedCurrency: parseInt(productItemObject.price),
         numberItemsAvailable: productItemObject.numberItemsAvailable,
       };
@@ -419,6 +420,8 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
         return {
           autoSelectedSize: sizeAutoSelected[0],
           correctPriceForSelectedCurrency,
+          sold:
+            sizeAutoSelected[1]?.sold !== null ? sizeAutoSelected[1].sold : 0,
           numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
         };
         //productsSelectedCurrency
@@ -427,12 +430,14 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       return {
         autoSelectedSize: sizeAutoSelected[0],
         correctPriceForSelectedCurrency: parseInt(sizeAutoSelected[1].price),
+        sold: sizeAutoSelected[1]?.sold !== null ? sizeAutoSelected[1].sold : 0,
         numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
       };
     }
 
     return {
       autoSelectedSize: null,
+      sold: null,
       correctPriceForSelectedCurrency: null,
       numberItemsAvailable: null,
     };
@@ -461,34 +466,89 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
 
   let countNumberOfFiltersSelected = displayPriceFilterSelected ? 1 : 0;
 
-  function productSortTypes(productList: any[]) {
-    // LEFT HERE
-    // sortBySelectedValues
-
-    const sortTypes = {
-      featured: () => {},
-      bestSelling: () => {},
-
-      fromAToZ: () => {
-        // some ex users.sort((a, b) => a.firstname.localeCompare(b.firstname))
+  function productSortTypes(
+    productList: {
+      productItemObject: any;
+      price: string;
+      sold: number;
+      numberItemsAvailable: number;
+      ProductElement: any;
+    }[]
+  ) {
+    const sortTypes: any = {
+      featured: () => {
+        return productList;
       },
-      fromZToA: () => {},
-      fromLowToHigh: () => {},
-      fromHighToLow: () => {},
-      fromOldToNew: () => {},
-      fromNewToOld: () => {},
+      bestSelling: () => {
+        return productList.sort(
+          (productPrev, productNext) => productPrev.sold - productNext.sold
+        );
+      },
+
+      fromAtoZ: () => {
+        // some ex users.sort((a, b) => a.firstname.localeCompare(b.firstname))
+        return productList.sort((productPrev, productNext) =>
+          productPrev.productItemObject.productName
+            .toLowerCase()
+            .localeCompare(
+              productNext.productItemObject.productName.toLowerCase()
+            )
+        );
+      },
+      fromZtoA: () => {
+        return productList.sort((productPrev, productNext) =>
+          productNext.productItemObject.productName
+            .toLowerCase()
+            .localeCompare(
+              productPrev.productItemObject.productName.toLowerCase()
+            )
+        );
+      },
+      fromLowtoHigh: () => {
+        return productList.sort((productPrev, productNext) =>
+          parseInt(productPrev.price) > parseInt(productNext.price) ? 1 : -1
+        );
+      },
+      fromHightoLow: () => {
+        return productList.sort((productPrev, productNext) =>
+          parseInt(productPrev.price) > parseInt(productNext.price) ? -1 : 1
+        );
+      },
+      fromOldtoNew: () => {
+        //registeredAt
+        return productList.sort((productPrev, productNext) =>
+          productPrev.productItemObject.registeredAt.toDate() >
+          productNext.productItemObject.registeredAt.toDate()
+            ? 1
+            : -1
+        );
+      },
+      fromNewtoOld: () => {
+        return productList.sort((productPrev, productNext) =>
+          productPrev.productItemObject.registeredAt.toDate() >
+          productNext.productItemObject.registeredAt.toDate()
+            ? -1
+            : 1
+        );
+      },
     };
+    const sortedProducts = sortTypes[sortBySelectedValues.type]();
+    return sortedProducts;
+    // if(sortedProducts !=null){
+    //   return sortedProducts
+    // }
 
-    return productList;
+    // return productList;
   }
-
-  console.log("sort by is", sortBySelectedValues);
 
   function createFilteredProducts() {
     // make them in order by sortBySelectedValues
 
     let productsNumber = 0;
     let filteredProductsCreatedArray: any[] = [];
+
+    // const filteredProductsObjects: any[] = [];
+
     if (filteredProducts.length != null && filteredProducts.length > 0) {
       filteredProductsCreatedArray = filteredProducts.map(
         (productItemObject: any) => {
@@ -503,7 +563,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
 
           const {
             numberItemsAvailable,
-
+            sold,
             correctPriceForSelectedCurrency,
           } = returnPriceAndSizeAutoSelected(productItemObject);
 
@@ -518,16 +578,46 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
 
           if (fitMax && fitMin && passesAvailability) {
             productsNumber += 1;
-            return (
-              <ProductItem
-                correctPriceForSelectedCurrency={
-                  correctPriceForSelectedCurrency
-                }
-                numberItemsAvailable={numberItemsAvailable}
-                selectedCurrency={selectedCurrency}
-                productPropertiesValues={productItemObject}
-              />
-            );
+            // filteredProductsObjects.push({
+            //   productItemObject,
+            //   price: correctPriceForSelectedCurrency,
+            //   numberItemsAvailable,
+            //   ProductElement: <ProductItem
+            //     correctPriceForSelectedCurrency={
+            //       correctPriceForSelectedCurrency
+            //     }
+            //     numberItemsAvailable={numberItemsAvailable}
+            //     selectedCurrency={selectedCurrency}
+            //     productPropertiesValues={productItemObject}
+            //   />
+            // });
+            return {
+              productItemObject,
+              price: correctPriceForSelectedCurrency,
+              sold,
+              numberItemsAvailable,
+              ProductElement: (
+                <ProductItem
+                  correctPriceForSelectedCurrency={
+                    correctPriceForSelectedCurrency
+                  }
+                  numberItemsAvailable={numberItemsAvailable}
+                  selectedCurrency={selectedCurrency}
+                  productPropertiesValues={productItemObject}
+                />
+              ),
+            };
+
+            // (
+            //   <ProductItem
+            //     correctPriceForSelectedCurrency={
+            //       correctPriceForSelectedCurrency
+            //     }
+            //     numberItemsAvailable={numberItemsAvailable}
+            //     selectedCurrency={selectedCurrency}
+            //     productPropertiesValues={productItemObject}
+            //   />
+            // );
           }
           return "";
         }
@@ -541,11 +631,6 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
   }
 
   const filteredProductsList = createFilteredProducts();
-
-  console.log(
-    "you still need to have the sort filtering man  :))), yup  ",
-    filteredProductsList
-  );
 
   return (
     <div className="filtered-products-page bg-[#25c3c8]">
@@ -679,7 +764,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
         <div className="products-container  w-[80%]">
           <div className="filters-view-container">
             <div className="filters flex justify-between">
-              <div className="total-products">
+              <div className="total-products ml-[0.89%]">
                 {filteredProducts.length > 0 && (
                   <div className="contains-products  ">
                     {filteredProducts.length > 1 ? (
@@ -700,7 +785,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                   </div>
                 )}
               </div>
-              <div className="filter-by-list flex gap-2 ">
+              <div className="filter-by-list flex gap-2 mr-[0.3%]">
                 <div className="title text-gray-600 font-sans">Sort by</div>
                 <div
                   className="selected-sort flex items-center cursor-pointer"
@@ -723,7 +808,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
             {params?.collectionType != null && (
               <ProductListByFilter type={params.collectionType} />
             )}
-            <div className="product-list flex flex-wrap gap-8  justify-evenly ">
+            <div className="product-list flex flex-wrap gap-8  justify-evenly mb-7">
               {filteredProductsList.length <= 0 && (
                 <div className="no-products flex flex-col gap-8 items-center mt-[10%]">
                   <div className="text-[2rem] tracking-wide">NO RESULTS</div>
@@ -743,7 +828,9 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                   </div>
                 </div>
               )}
-              {filteredProductsList}
+              {filteredProductsList.map(
+                (product: any) => product.ProductElement
+              )}
               {/* {filteredProducts.length != null &&
                 filteredProducts.length > 0 &&
                 filteredProducts.map((productItemObject: any) => {
