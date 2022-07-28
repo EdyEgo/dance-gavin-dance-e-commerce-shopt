@@ -180,7 +180,6 @@ function modifySizeOptions(
   for (const sizeIndex of sizesAvailableArray) {
     const sizeName: any = sizeIndex[0].trim();
     const sizeObject = sizeIndex[1];
-    console.log("new size list is ", newSizeList);
 
     // here add the model as number of available items not the number of sizes available
     const numberItemsAvailableNumber =

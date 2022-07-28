@@ -9,6 +9,7 @@ import ForgotPassword from "./auth/ForgotPassword";
 import MusicPage from "../../pages/MusicPage";
 import FiltereProductsPage from "../../pages/FilteredProductsPage";
 import AdminPage from "../../pages/AdminPage";
+import ProductPage from "../../pages/ProductPage";
 
 interface ClientAreaProps {}
 
@@ -39,6 +40,12 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
               path="/dance-gavin-dance-edyego-clone/collections/:collectionType"
               element={<FiltereProductsPage />}
             />
+
+            <Route
+              path="/dance-gavin-dance-edyego-clone/products/:productId"
+              element={<ProductPage />}
+            />
+
             <Route
               path="/dance-gavin-dance-edyego-clone/signup"
               element={<SignUp />}
