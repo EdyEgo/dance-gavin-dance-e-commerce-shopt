@@ -14,7 +14,7 @@ const QuantityProductSelector: React.FC<QuantityProductSelectorProps> = ({
 
   return (
     <div className="quantity-product-selector-contianer">
-      <div className="quantity-counter flex items-center justify-between p-3 border border-[#23AAAF]">
+      <div className="quantity-counter flex items-center justify-between p-3 border border-[#17888c]">
         <div
           className="decrement cursor-pointer"
           onClick={() => {

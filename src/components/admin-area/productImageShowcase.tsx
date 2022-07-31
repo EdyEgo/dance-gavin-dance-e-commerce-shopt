@@ -97,6 +97,12 @@ const ProductImageShowcase: React.FC<ProductImageShowcaseProps> = ({
   ) {
     // slidesMade
 
+    //     newTransformNumber = newTransformNumber + SLIDE_NUMBER;
+    //     newSlidesMade = newSlidesMade - 1;
+
+    //   setTransformNumber(newTransformNumber);
+    //   setSlidesMade(newSlidesMade)
+
     if (increment) {
       for (let i = 0; i <= imageListURL.length; i++) {
         console.log(
@@ -111,7 +117,6 @@ const ProductImageShowcase: React.FC<ProductImageShowcaseProps> = ({
           break;
         }
         // incrementOrDecrementPercentageTransformNumber(increment);
-
         setTransformNumber(transformNumber + SLIDE_NUMBER);
         setSlidesMade(slidesMade - 1);
       }
@@ -140,8 +145,8 @@ const ProductImageShowcase: React.FC<ProductImageShowcaseProps> = ({
   }
 
   return (
-    <div className="product-images-container flex gap-1">
-      <div className="left-images-list flex flex-col gap-4 ">
+    <div className="product-images-container flex gap-9">
+      <div className="left-images-list flex flex-col gap-4 w-[40%]">
         {imageListURL.map((imageURL, indexImageURL) => {
           const selectedStyle =
             indexImageURL === slidesMade ? "border-2 border-black" : "";
@@ -160,7 +165,7 @@ const ProductImageShowcase: React.FC<ProductImageShowcaseProps> = ({
                 callTransitionNumberOfTimes(indexImageURL, incrementTransition);
               }}
               src={imageURL}
-              className={`w-[20%] ${selectedStyle} p-[0.15em] cursor-pointer transition-all duration-100`}
+              className={` ${selectedStyle} p-[0.15em] cursor-pointer transition-all duration-100`}
               alt=""
               key={indexImageURL + useid}
             />
@@ -168,17 +173,10 @@ const ProductImageShowcase: React.FC<ProductImageShowcaseProps> = ({
         })}
       </div>
       <div className="main-iamge-selector">
-        <div className="carousel-container w-[40%] overflow-hidden relative">
-          <div className="carousel-slider flex  " style={styles}>
+        <div className="carousel-container  overflow-hidden relative">
+          <div className="carousel-slider flex  w-full h-auto" style={styles}>
             {imageListURL.map((imageURL, indexImageURL) => {
-              return (
-                <img
-                  src={imageURL}
-                  style={{ width: "100%" }}
-                  alt=""
-                  key={indexImageURL + useid}
-                />
-              );
+              return <img src={imageURL} alt="" key={indexImageURL + useid} />;
             })}
           </div>
 

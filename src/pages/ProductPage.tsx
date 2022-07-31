@@ -8,6 +8,7 @@ import CheckSharpIcon from "@mui/icons-material/CheckSharp";
 import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
 import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import QuantitySelector from "../composables/generalHelpers/productQuantitySelector";
+import ProductItem from "../composables/generalHelpers/productItem";
 
 interface ProductPageProps {}
 
@@ -156,8 +157,8 @@ const ProductPage: React.FC<ProductPageProps> = () => {
 
   const returnFitCurrencyIcon = () => {
     const iconsList: { [key: string]: any } = {
-      euro: <EuroRoundedIcon fontSize="small" />,
-      dollar: <DollarRoundedIcon fontSize="small" />,
+      euro: <EuroRoundedIcon fontSize="medium" />,
+      dollar: <DollarRoundedIcon fontSize="medium" />,
     };
     return iconsList[productsSelectedCurrency];
   };
@@ -188,11 +189,109 @@ const ProductPage: React.FC<ProductPageProps> = () => {
     return capitalizeFirstLetter(sizeName);
   }
 
+  function getRandomItemFromArray(arrayList: any[]) {
+    // get random index value
+    const randomIndex = Math.floor(Math.random() * arrayList.length);
+
+    // get random item
+    const item = arrayList[randomIndex];
+
+    return { item, indexAt: randomIndex };
+  }
+
+  function returnPriceAndSizeAutoSelected(productItemObject: any) {
+    // this should return the number of  items available
+    const productCurrencyList: string[] = productItemObject.productCurrencyList;
+
+    const indexPriceForCurrentSelectedCurrencyByUser =
+      productCurrencyList.findIndex(
+        (currency) => currency === productItemObject
+      );
+    if (productItemObject.price !== null) {
+      return {
+        autoSelectedSize: null,
+        correctPriceForSelectedCurrency: parseInt(productItemObject.price),
+        numberItemsAvailable: productItemObject.numberItemsAvailable,
+      };
+    }
+    if (
+      productItemObject.price === null &&
+      productItemObject.sizesAvailable !== null
+    ) {
+      const sizeAutoSelected: any = Object.entries(
+        productItemObject.sizesAvailable
+      )[0];
+
+      if (sizeAutoSelected[1].price.includes(",")) {
+        const splitedPrices = sizeAutoSelected[1].price.split(",");
+        const correctPriceForSelectedCurrency = parseInt(
+          splitedPrices[indexPriceForCurrentSelectedCurrencyByUser]
+        );
+        return {
+          autoSelectedSize: sizeAutoSelected[0],
+          correctPriceForSelectedCurrency,
+          numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
+        };
+        //productsSelectedCurrency
+      }
+
+      return {
+        autoSelectedSize: sizeAutoSelected[0],
+        correctPriceForSelectedCurrency: parseInt(sizeAutoSelected[1].price),
+        numberItemsAvailable: sizeAutoSelected[1].numberItemsAvailable,
+      };
+    }
+
+    return {
+      autoSelectedSize: null,
+      correctPriceForSelectedCurrency: null,
+      numberItemsAvailable: null,
+    };
+  }
+
+  function createRecomendedProductsList() {
+    // ProductItem
+    if (productsList == null || productFound == null) {
+      return [];
+    }
+    const copyProductList = [...productsList];
+
+    const indexOfProduct = copyProductList.findIndex(
+      (productObject: any) => productObject.id === productFound.id
+    );
+
+    copyProductList.splice(indexOfProduct, 1);
+
+    const productListElements = [];
+
+    // const addedProducts:{[productName:string]:number} = {}
+
+    for (let i = 0; i < 4; i++) {
+      const { indexAt, item } = getRandomItemFromArray(copyProductList);
+      const {
+        numberItemsAvailable,
+
+        correctPriceForSelectedCurrency,
+      } = returnPriceAndSizeAutoSelected(item);
+      productListElements.push(
+        <ProductItem
+          correctPriceForSelectedCurrency={correctPriceForSelectedCurrency}
+          numberItemsAvailable={numberItemsAvailable}
+          selectedCurrency={productsSelectedCurrency}
+          productPropertiesValues={item}
+        />
+      );
+      copyProductList.splice(indexAt, 1);
+    }
+
+    return productListElements;
+  }
+
   return (
     <div className="product-page-container bg-[#25c3c8]">
       {productFound != null && (
-        <div className="product-exists">
-          <div className="product-page__header flex gap-2 items-center ">
+        <div className="product-exists ">
+          <div className="product-page__header flex gap-2 items-center p-8">
             <div className="bread flex gap-2 items-center  ">
               <div className="font-sans text-[#1D4D4F]">Home</div>
               <div className="font-sans text-[#1D4D4F]">/</div>
@@ -201,34 +300,45 @@ const ProductPage: React.FC<ProductPageProps> = () => {
               </div>
             </div>
           </div>
-          <div className="product-details-container flex justify-between">
-            <ProductImageShowcase imageListURL={productFound.picturesURL} />
-            <div className="product-details">
+          <div className="product-details-container flex gap-14 px-[9%] pb-20 pt-10">
+            <div className="image-showcase-container w-[50%]">
+              {productFound.picturesURL.length <= 1 && (
+                <img src={productFound.picturesURL[0]} alt="" />
+              )}
+              {productFound.picturesURL.length > 1 && (
+                <ProductImageShowcase imageListURL={productFound.picturesURL} />
+              )}
+            </div>
+            <div className="product-details w-[43%]">
               <div className="product-title-container">
-                <div className="product-title">{productFound.productName}</div>
+                <div className="product-title text-[1.7rem] tracking-tight">
+                  {productFound.productName}
+                </div>
               </div>
-              <div className="price-and-stock-details border-b border-[#23AAAF] pb-7">
+              <div className="price-and-stock-details border-b border-[#17888c] pb-7 flex items-center gap-4 mt-4">
                 <div className="price-container flex gap-2 items-center">
                   <div className="price-currency ">
                     {returnFitCurrencyIcon()}
                   </div>
-                  <div className="price-number font-sans">{selectedPrice}</div>
+                  <div className="price-number font-sans text-[1.8rem]">
+                    {selectedPrice}
+                  </div>
                 </div>
                 <div className="stock-details-list-tags flex flex-wrap gap-4">
                   {productFound.preorder != null &&
                     productFound.preorder === true && (
-                      <div className="preorder bg-black text-white p-1 font-sans font-medium">
+                      <div className="preorder bg-black text-white p-1 font-sans font-normal">
                         Preorder
                       </div>
                     )}
                   {productFound.limited != null &&
                     productFound.limited === true && (
-                      <div className="limited bg-black text-white p-1 font-sans font-medium">
+                      <div className="limited bg-black text-white p-1 font-sans font-normal">
                         Limited
                       </div>
                     )}
                   {productSoldOut && (
-                    <div className="sold-out bg-black text-white p-1 font-sans font-medium">
+                    <div className="sold-out bg-black text-white p-1 font-sans font-normal">
                       Sold out
                     </div>
                   )}
@@ -236,24 +346,26 @@ const ProductPage: React.FC<ProductPageProps> = () => {
               </div>
 
               {selectedSize !== null && (
-                <div className="sizes-available-container">
+                <div className="sizes-available-container mt-8">
                   <div className="selected-size-title flex gap-2">
-                    <div className="size-pointer font-sans">Size:</div>
-                    <div className="size-name-selected font-sans">
+                    <div className="size-pointer font-sans font-medium">
+                      Size:
+                    </div>
+                    <div className="size-name-selected font-sans font-normal">
                       {formatSizeNameWithKey(selectedSize.sizeName)}
                     </div>
                   </div>
-                  <div className="sizes-tabs-list-container flex gap-2 flex-wrap">
+                  <div className="sizes-tabs-list-container flex gap-2 flex-wrap mt-2">
                     {sizesList !== null &&
                       sizesList.map(
                         ([sizeNameItem, sizeItemObjectValue]: any) => {
                           const sizeSelectedClass =
                             sizeNameItem === selectedSize.sizeName
-                              ? "bg-white border border-black font-medium"
-                              : "border border-[#23AAAF]";
+                              ? "bg-white border-2 border-black font-medium"
+                              : "border border-[#17888c]";
                           return (
                             <div
-                              className={`size-item font-sans cursor-pointer p-4 ${sizeSelectedClass}`}
+                              className={`size-item font-sans cursor-pointer p-5 ${sizeSelectedClass}`}
                               onClick={() => {
                                 addASelectedPriceAndSize({
                                   newSizeObject: {
@@ -271,21 +383,23 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                   </div>
                 </div>
               )}
-              <div className="quantity-container flex flex-col gap-2">
-                <div className="quantity-title">Quantity:</div>
-                <div className="quantity-counter w-[70%]">
+              <div className="quantity-container flex flex-col gap-4 mt-8">
+                <div className="quantity-title font-sans font-medium">
+                  Quantity:
+                </div>
+                <div className="quantity-counter w-[25%]">
                   <QuantitySelector setQuantityRef={setNewQuantity} />
                 </div>
               </div>
 
-              <div className="add-to-cart-action-button-contianer">
-                <div className="product-action-button font-sans text-center font-semibold fill-animation login-button button-action text-white bg-[#E22F2F]">
+              <div className="add-to-cart-action-button-contianer mt-14">
+                <div className="product-action-button py-4 tracking-widest font-sans text-center font-semibold fill-animation login-button button-action text-white bg-[#E22F2F]">
                   {productFound?.preorder != null ? "PREORDER" : "ADD TO CART"}
                 </div>
               </div>
 
               {productFound?.listBenefits != null && (
-                <div className="benefits-list ">
+                <div className="benefits-list mt-14 border-b border-[#17888c] pb-4">
                   <ul className="flex flex-col gap-4">
                     {productFound.listBenefits.map(
                       (benefitItem: string, benefitIndex: number) => {
@@ -307,6 +421,17 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                   </ul>
                 </div>
               )}
+            </div>
+          </div>
+
+          <div className="recommended-products bg-black text-[#23C0C5] pb-[2.7%]">
+            <div className="title-container mb-8 pt-4">
+              <div className="title text-center text-[2.7rem]">
+                SELECTED FOR YOU
+              </div>
+            </div>
+            <div className="recommended-products-list flex flex-wrap gap-6 justify-center ">
+              {createRecomendedProductsList()}
             </div>
           </div>
         </div>
