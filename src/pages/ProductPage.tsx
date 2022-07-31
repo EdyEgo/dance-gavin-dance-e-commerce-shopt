@@ -2,7 +2,8 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import * as React from "react";
 
-import ImageWebp from "../components/general-helpers/ImageWebp";
+// import ImageWebp from "../components/general-helpers/ImageWebp";
+import ProductImageShowcase from "../components/admin-area/productImageShowcase";
 import CheckSharpIcon from "@mui/icons-material/CheckSharp";
 import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
 import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
@@ -201,10 +202,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
             </div>
           </div>
           <div className="product-details-container flex justify-between">
-            <div className="product-image-showcase">
-              <div className="image-list-select-container"></div>
-              <div className="image-selected"></div>
-            </div>
+            <ProductImageShowcase imageListURL={productFound.picturesURL} />
             <div className="product-details">
               <div className="product-title-container">
                 <div className="product-title">{productFound.productName}</div>
