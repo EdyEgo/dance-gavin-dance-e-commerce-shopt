@@ -1,8 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import * as React from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // import ImageWebp from "../components/general-helpers/ImageWebp";
+import { addToUserCart } from "../api/dataBaseCartMethods";
+import { addProductToCart } from "../store/cart";
 import ProductImageShowcase from "../components/admin-area/productImageShowcase";
 import CheckSharpIcon from "@mui/icons-material/CheckSharp";
 import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
@@ -20,7 +23,13 @@ const ProductPage: React.FC<ProductPageProps> = () => {
 
   const productId = params?.productId;
 
+  const [errorMessage, setErrorMessage] = React.useState<null | string>(null);
+
+  const userObject = useSelector((state: any) => state.auth.user);
+
   const productsList = useSelector((state: any) => state.products.productsList);
+
+  const [loading, setLoading] = React.useState(false);
 
   const productsSelectedCurrency = useSelector(
     (state: any) => state.productFiltersSearch.selectedCurrency
@@ -36,6 +45,39 @@ const ProductPage: React.FC<ProductPageProps> = () => {
   const [selectedPrice, setSelectedPrice] = React.useState<null | number>(null);
 
   const selectedQuantity = React.useRef(1); // use to add product to cart
+
+  // if the user is logged in then we store to the database
+
+  async function addProductSelectedToCart() {
+    // set error message if there was any error
+    setLoading(true);
+
+    const productToAddToCart = {
+      quantity: selectedQuantity.current,
+      sizeSelected: selectedSize != null ? { ...selectedSize } : null,
+      ...productFound,
+    };
+    if (userObject?.uid != null) {
+      // user is  logged in
+      const { error, message } = await addToUserCart({
+        userUid: userObject.uid,
+        productObject: productToAddToCart,
+      });
+
+      if (error) {
+        setErrorMessage(message);
+        setLoading(false);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
+      }
+
+      return;
+    }
+
+    dispatch(addProductToCart(productToAddToCart));
+    setLoading(false);
+  }
 
   function setNewQuantity(newQuantityValue: number) {
     selectedQuantity.current = newQuantityValue;
@@ -393,13 +435,40 @@ const ProductPage: React.FC<ProductPageProps> = () => {
               </div>
 
               <div className="add-to-cart-action-button-contianer mt-14">
-                <div className="product-action-button py-4 tracking-widest font-sans text-center font-semibold fill-animation login-button button-action text-white bg-[#E22F2F]">
-                  {productFound?.preorder != null ? "PREORDER" : "ADD TO CART"}
+                <div
+                  onClick={() => {
+                    addProductSelectedToCart();
+                  }}
+                  className="product-action-button py-4 tracking-widest font-sans text-center font-semibold fill-animation login-button button-action text-white bg-[#E22F2F]"
+                >
+                  {loading && (
+                    <div className="loading-icon-btn flex items-center justify-center">
+                      <CircularProgress color="inherit" />
+                    </div>
+                  )}
+                  {!loading && (
+                    <div className="action-btn-text py-2">
+                      {productFound?.preorder != null
+                        ? "PREORDER"
+                        : "ADD TO CART"}
+                    </div>
+                  )}
                 </div>
               </div>
+              {typeof errorMessage === "string" ? (
+                <div className="error-message-container mt-8 bg-yellow-300 p-4">
+                  <div className="error-message text-red-600 text-center">
+                    Could not add the product to cart!
+                  </div>
+                </div>
+              ) : (
+                <div className="error-message-container-invisible invisible">
+                  <div className="error-message">error placeholder</div>
+                </div>
+              )}
 
               {productFound?.listBenefits != null && (
-                <div className="benefits-list mt-14 border-b border-[#17888c] pb-4">
+                <div className="benefits-list mt-8 border-b border-[#17888c] pb-4">
                   <ul className="flex flex-col gap-4">
                     {productFound.listBenefits.map(
                       (benefitItem: string, benefitIndex: number) => {

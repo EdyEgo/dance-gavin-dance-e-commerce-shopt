@@ -3,7 +3,7 @@ import authReducer from "./auth";
 import drawersReducer from "./drawers";
 import productFiltersSearchReducer from "./productFiltersSearch";
 import productsReducer from "./products";
-
+import cartReducer from "./cart";
 import usersReducer from "./users";
 
 export const store = configureStore({
@@ -13,6 +13,7 @@ export const store = configureStore({
     users: usersReducer,
     productFiltersSearch: productFiltersSearchReducer,
     products: productsReducer,
+    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

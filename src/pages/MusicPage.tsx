@@ -7,8 +7,10 @@ interface MusicPageProps {}
 const MusicPage: React.FC<MusicPageProps> = () => {
   return (
     <div className="music-page-container">
-      <div className="section-albums"></div>
-      <div className="section-album-instrumental"></div>
+      <div className="section-albums">Music page placeholder albums</div>
+      <div className="section-album-instrumental">
+        Music page placeholder instrumental
+      </div>
     </div>
   );
 };
