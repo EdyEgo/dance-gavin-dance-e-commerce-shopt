@@ -6,6 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 // import ImageWebp from "../components/general-helpers/ImageWebp";
 import { addToUserCart } from "../api/dataBaseCartMethods";
 import { addProductToCart } from "../store/cart";
+import { changeDrawerStateByDirectionId } from "../store/drawers";
 import ProductImageShowcase from "../components/admin-area/productImageShowcase";
 import CheckSharpIcon from "@mui/icons-material/CheckSharp";
 import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
@@ -72,11 +73,23 @@ const ProductPage: React.FC<ProductPageProps> = () => {
         }, 3000);
       }
 
+      dispatch(
+        changeDrawerStateByDirectionId({
+          direction: "right",
+          newStatus: true,
+        })
+      );
       return;
     }
 
     dispatch(addProductToCart(productToAddToCart));
     setLoading(false);
+    dispatch(
+      changeDrawerStateByDirectionId({
+        direction: "right",
+        newStatus: true,
+      })
+    );
   }
 
   function setNewQuantity(newQuantityValue: number) {
@@ -88,9 +101,10 @@ const ProductPage: React.FC<ProductPageProps> = () => {
   React.useEffect(() => {
     addASelectedPriceAndSize();
     selectedQuantity.current = 1;
-  }, []);
+  }, [productFound]);
 
-  const productHasSizes = Object.hasOwn(productFound, "sizesAvailable");
+  const productHasSizes =
+    productFound != null ? Object.hasOwn(productFound, "sizesAvailable") : null;
   const sizesList: any = productHasSizes
     ? Object.entries(productFound.sizesAvailable)
     : null;
@@ -317,6 +331,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
       } = returnPriceAndSizeAutoSelected(item);
       productListElements.push(
         <ProductItem
+          key={"recomendedProduct" + useId + i}
           correctPriceForSelectedCurrency={correctPriceForSelectedCurrency}
           numberItemsAvailable={numberItemsAvailable}
           selectedCurrency={productsSelectedCurrency}
@@ -400,13 +415,17 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                   <div className="sizes-tabs-list-container flex gap-2 flex-wrap mt-2">
                     {sizesList !== null &&
                       sizesList.map(
-                        ([sizeNameItem, sizeItemObjectValue]: any) => {
+                        (
+                          [sizeNameItem, sizeItemObjectValue]: any,
+                          sizesIndex: number
+                        ) => {
                           const sizeSelectedClass =
                             sizeNameItem === selectedSize.sizeName
                               ? "bg-white border-2 border-black font-medium"
                               : "border border-[#17888c]";
                           return (
                             <div
+                              key={"sizes" + sizesIndex + useId}
                               className={`size-item font-sans cursor-pointer p-5 ${sizeSelectedClass}`}
                               onClick={() => {
                                 addASelectedPriceAndSize({

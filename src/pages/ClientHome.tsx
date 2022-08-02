@@ -116,10 +116,11 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
     };
   }
 
-  function returnTwentyProducts() {
+  function returnTwentyProducts(type: "normal" | "merchSlider") {
     if (productsList == null || productsList.length <= 0) {
       return [];
     }
+    // the slider is not really sorting by merch type but for now let it be this way
     const productListElements: any[] = [];
     for (
       let productIndex = 0;
@@ -138,6 +139,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
       } = returnPriceAndSizeAutoSelected(productItemObject);
       productListElements.push(
         <ProductItem
+          key={type + productIndex + useid}
           correctPriceForSelectedCurrency={correctPriceForSelectedCurrency}
           numberItemsAvailable={numberItemsAvailable}
           selectedCurrency={selectedCurrency}
@@ -182,7 +184,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
                 />
               );
             })} */}
-          {returnTwentyProducts()}
+          {returnTwentyProducts("normal")}
         </div>
         <Link
           to="collections/dance-gavin-dance"
@@ -194,49 +196,12 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         </Link>
       </section>
 
-      <section className="all-merch bg-[#25c3c8] text-black p-14">
-        <div className="all-merch__title text-center">
-          <div className="hero-titles__first-title tracking-widest text-[42px] ">
-            ALL MERCH
-          </div>
-        </div>
-        <div className="all-merch__tabs flex items-center justify-center my-12">
-          <TabsList
-            children={Object.entries(allMerchList).map(
-              ([merchName, merchValues], index) => {
-                return (
-                  <Tab
-                    style={{
-                      fontSize: "18px",
-                      color: "black",
-                      fontWeight: 900,
-                      fontFamily: " serif",
-                      // cooper-black-std,// old font family
-                    }}
-                    value={merchValues.type}
-                    label={merchValues.siteShowedName}
-                    key={useid + index}
-                  />
-                );
-              }
-            )}
-            setValue={setAllMerchSelectedTab}
-            value={allMerchSelectedTab}
-          />
-        </div>
-        <div className="all-merch__products-list my-4">
-          <ItemsSlider childrenItemsList={returnTwentyProducts()} />
-        </div>
-        <Link
-          to="collections/dance-gavin-dance"
-          className="shop-all-button-container flex justify-center items-center"
-        >
-          <div className="shop-all-button text-white bg-[#1E1E1E] p-5 my-14 tracking-wider">
-            SHOP ALL
-          </div>
-        </Link>
-      </section>
-
+      {/*  */}
+      <ItemsSlider
+        childrenItemsList={returnTwentyProducts("merchSlider")}
+        allMerchList={allMerchList}
+      />
+      {/*  */}
       <section className="tour-tickets px-[3.5em] py-[3em] text-white">
         <div className="title-container text-center text-[2.7rem] my-10">
           TOUR DATES

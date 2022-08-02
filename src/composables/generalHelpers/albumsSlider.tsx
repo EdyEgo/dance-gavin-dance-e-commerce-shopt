@@ -9,9 +9,11 @@ import AlbumInstantGratification from "../../images/albums/dgd-instant-gratifica
 import AlbumMotherShip from "../../images/albums/dgd-mothership_640x.jpg";
 import TreeCitySessions from "../../images/albums/dgd-tree-city-sessions-2_640x.jpg";
 
-interface ItemsSliderProps {}
+interface ItemsSliderProps {
+  filterImagesObject?: any;
+}
 
-const ItemsSlider: React.FC<ItemsSliderProps> = () => {
+const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
   const useid = useId();
   const [transformNumber, setTransformNumber] = useState(0);
 
@@ -107,7 +109,10 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
               : "album-item-slide-shadow pointer-events-none"
           }`}
         >
-          <div className="image-container">
+          <div
+            className="image-container"
+            style={filterImagesObject != null ? filterImagesObject : {}}
+          >
             <ImageWebp
               srcWebp={AlbumAfterBurner}
               src={AlbumAfterBurner}
@@ -121,12 +126,18 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
                 <div className="album-name font-sans font-bold text-[19px]">
                   AFTERBURNER
                 </div>
-                <Link
+                {/* <Link
                   to="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
                   className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
                 >
                   STREAM
-                </Link>
+                </Link> */}
+                <a
+                  href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
+                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                >
+                  STREAM
+                </a>
               </div>
             </div>
           </div>
@@ -139,7 +150,10 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
               : "album-item-slide-shadow pointer-events-none"
           }`}
         >
-          <div className="image-container">
+          <div
+            className="image-container"
+            style={filterImagesObject != null ? filterImagesObject : {}}
+          >
             <ImageWebp
               srcWebp={AlbumArtificialSelection}
               src={AlbumArtificialSelection}
@@ -153,12 +167,13 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
                 <div className="album-name font-sans font-bold text-[19px]">
                   ARTIFICIAL SELECTION
                 </div>
-                <Link
-                  to="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
+
+                <a
+                  href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
                   className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
                 >
                   STREAM
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -171,7 +186,10 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
               : "album-item-slide-shadow pointer-events-none"
           }`}
         >
-          <div className="image-container">
+          <div
+            className="image-container"
+            style={filterImagesObject != null ? filterImagesObject : {}}
+          >
             <ImageWebp
               srcWebp={AlbumInstantGratification}
               src={AlbumInstantGratification}
@@ -185,12 +203,12 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
                 <div className="album-name font-sans font-bold text-[19px]">
                   INSTANT GRATIFICATION
                 </div>
-                <Link
-                  to="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
+                <a
+                  href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
                   className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
                 >
                   STREAM
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -203,7 +221,10 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
               : "album-item-slide-shadow pointer-events-none"
           }`}
         >
-          <div className="image-container">
+          <div
+            className="image-container"
+            style={filterImagesObject != null ? filterImagesObject : {}}
+          >
             <ImageWebp
               srcWebp={AlbumMotherShip}
               src={AlbumMotherShip}
@@ -217,12 +238,12 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
                 <div className="album-name font-sans font-bold text-[19px]">
                   MOTHERSHIP
                 </div>
-                <Link
-                  to="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
+                <a
+                  href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
                   className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
                 >
                   STREAM
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -235,7 +256,10 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
               : "album-item-slide-shadow pointer-events-none"
           }`}
         >
-          <div className="image-container">
+          <div
+            className="image-container"
+            style={filterImagesObject != null ? filterImagesObject : {}}
+          >
             <ImageWebp
               srcWebp={TreeCitySessions}
               src={TreeCitySessions}
@@ -249,12 +273,12 @@ const ItemsSlider: React.FC<ItemsSliderProps> = () => {
                 <div className="album-name font-sans font-bold text-[19px]">
                   TREE CITY SESSIONS 2
                 </div>
-                <Link
-                  to="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
+                <a
+                  href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
                   className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
                 >
                   STREAM
-                </Link>
+                </a>
               </div>
             </div>
           </div>

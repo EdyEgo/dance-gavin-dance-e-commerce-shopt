@@ -73,7 +73,15 @@ const rows = [
   createData("Brazil", "BR"),
 ];
 
-export default function StickyHeadTable() {
+export default function StickyHeadTable({
+  backgroundPreselected,
+  hovePreselected,
+  buttonsPreselectedHoverEffect,
+}: {
+  backgroundPreselected?: string;
+  hovePreselected?: string;
+  buttonsPreselectedHoverEffect?: string;
+}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -98,7 +106,15 @@ export default function StickyHeadTable() {
               .map((row) => {
                 return (
                   <TableRow
-                    className="bg-[#E84A42] hover:bg-red-500"
+                    className={`${
+                      backgroundPreselected != null
+                        ? backgroundPreselected
+                        : "bg-[#E84A42]"
+                    } ${
+                      hovePreselected != null
+                        ? hovePreselected
+                        : "hover:bg-red-500"
+                    }`}
                     role="checkbox"
                     tabIndex={-1}
                     key={row.code}
@@ -107,10 +123,6 @@ export default function StickyHeadTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
 
-                      const usedClass =
-                        value === "TICKETS"
-                          ? "text-white border border-white hover:border-gray-800"
-                          : "text-blue";
                       return (
                         <TableCell
                           key={column.id}
@@ -125,7 +137,11 @@ export default function StickyHeadTable() {
                             <div className="action-button flex justify-end">
                               <a
                                 href="https://www.ticketmaster.com/event/09005CD6ADB650FF?irgwc=1&clickid=yakXqGSNrxyITSM23oyBG2qwUkD1qRUpmw9%3A240&camefrom=CFC_BUYAT_219208&impradid=219208&REFERRAL_ID=tmfeedbuyat219208&wt.mc_id=aff_BUYAT_219208&utm_source=219208-Bandsintown&impradname=Bandsintown&utm_medium=affiliate&ircid=4272"
-                                className="btn border border-white py-2 px-16 cursor-pointer hover:bg-red-600 hover:border-gray-200 transition-all ease-out"
+                                className={`btn border border-white py-2 px-16 cursor-pointer ${
+                                  buttonsPreselectedHoverEffect != null
+                                    ? buttonsPreselectedHoverEffect
+                                    : "hover:bg-red-600"
+                                } hover:border-gray-200 transition-all ease-out`}
                               >
                                 {value}
                               </a>
