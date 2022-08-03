@@ -1,13 +1,23 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { addToUserCart } from "../../api/dataBaseCartMethods";
+import { addProductToCart } from "../../store/cart";
+
+import {
+  changeDrawerStateByDirectionId,
+  changeDrawerTypeMenu,
+} from "../../store/drawers";
 import ImageWebp from "../../components/general-helpers/ImageWebp";
 import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
 import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
+import AddIcon from "@mui/icons-material/Add";
+import { DriveEtaTwoTone } from "@mui/icons-material";
 
 // import {changeSelectedCurrency} from "../../store/productFiltersSearch"
 
 interface ProductItemProps {
+  addToCartButton?: any;
   productPropertiesValues: any;
   selectedCurrency: string;
   numberItemsAvailable: number;
@@ -15,14 +25,20 @@ interface ProductItemProps {
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({
+  addToCartButton,
   productPropertiesValues,
   selectedCurrency,
   numberItemsAvailable,
   correctPriceForSelectedCurrency,
 }) => {
+  const dispatch = useDispatch();
+
   const productsSelectedCurrency = useSelector(
     (state: any) => state.productFiltersSearch.selectedCurrency
   );
+  const [loading, setLoading] = React.useState(false);
+
+  const userObject = useSelector((state: any) => state.auth.user);
 
   // function returnPriceAndSizeAutoSelected() {
   //   // this should return the number of  items available
@@ -91,13 +107,62 @@ const ProductItem: React.FC<ProductItemProps> = ({
   //   correctPriceForSelectedCurrency,
   // } = returnPriceAndSizeAutoSelected();
 
+  async function addProductSelectedToCart() {
+    // set error message if there was any error
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+
+    const productToAddToCart = {
+      quantity: 1,
+      sizeSelected: null,
+      ...productPropertiesValues,
+    };
+    if (userObject?.uid != null) {
+      // user is  logged in
+      console.log("remember to  fetch the user object from users");
+      const { error, message } = await addToUserCart({
+        userUid: userObject.uid,
+        userCurrentCart: [],
+        productObject: productToAddToCart,
+      });
+
+      if (error) {
+        // here you can set a popover to show an error
+        setLoading(false);
+      }
+
+      dispatch(
+        changeDrawerStateByDirectionId({
+          direction: "right",
+          newStatus: true,
+        })
+      );
+
+      dispatch(changeDrawerTypeMenu({ menuTypeSelected: "cart" }));
+      return;
+    }
+
+    dispatch(addProductToCart(productToAddToCart));
+    setLoading(false);
+    dispatch(
+      changeDrawerStateByDirectionId({
+        direction: "right",
+        newStatus: true,
+      })
+    );
+
+    dispatch(changeDrawerTypeMenu({ menuTypeSelected: "cart" }));
+  }
+
   return (
-    <Link
-      to={`/dance-gavin-dance-edyego-clone/products/${productPropertiesValues.id}`}
-      className="product-item w-[22%] my-2"
-    >
-      <div className="hero-container ">
-        <div className="image-container relative">
+    <div className="product-item w-[22%] my-2">
+      <Link
+        to={`/dance-gavin-dance-edyego-clone/products/${productPropertiesValues.id}`}
+        className="hero-container "
+      >
+        <div className="relative image-container">
           <div className="figure">
             <ImageWebp
               className="image-main"
@@ -135,21 +200,42 @@ const ProductItem: React.FC<ProductItemProps> = ({
               )}
           </div>
         </div>
-      </div>
-      <div className="product-details-container text-center">
-        <div className="title-container my-5 font-sans font-bold tracking-wider">
+      </Link>
+      <div className="pt-5 text-center product-details-container">
+        <Link
+          to={`/dance-gavin-dance-edyego-clone/products/${productPropertiesValues.id}`}
+          className="my-5 font-sans font-bold tracking-wider title-container"
+        >
           {productPropertiesValues.productName}
-        </div>
-        <div className="price-container flex gap-2 items-center justify-center mt-2">
-          {/* <div className="currency flex items-center"> */}
+        </Link>
+        <Link
+          to={`/dance-gavin-dance-edyego-clone/products/${productPropertiesValues.id}`}
+          className="flex items-center justify-center gap-2 mt-2 price-container"
+        >
+          {/* <div className="flex items-center currency"> */}
           {returnFitCurrencyIcon()}
           {/* </div> */}
-          <div className="price-number font-sans">
+          <div className="font-sans price-number">
             {correctPriceForSelectedCurrency}
           </div>
-        </div>
+        </Link>
+
+        {addToCartButton != null && (
+          <div className="flex items-center justify-center pt-4 quik-add-to-cart-container">
+            <div
+              className="flex items-center gap-1 p-4 quik-add-to-cart-button fill-animation login-button button-action"
+              style={addToCartButton}
+              onClick={() => {
+                addProductSelectedToCart();
+              }}
+            >
+              <AddIcon fontSize="small" />
+              <div className="text-btn">ADD TO CART</div>
+            </div>
+          </div>
+        )}
       </div>
-    </Link>
+    </div>
   );
 };
 

@@ -12,32 +12,40 @@ import UserProfileIcon from "@mui/icons-material/PersonOutline";
 // import ArrowRightSharpIcon from "@mui/icons-material/ArrowRightSharp";
 import ArrowRightSharpIcon from "@mui/icons-material/PlayArrow";
 import { useDispatch } from "react-redux";
-import { changeDrawerStateByDirectionId } from "../../../store/drawers";
+import {
+  changeDrawerStateByDirectionId,
+  changeDrawerTypeMenu,
+} from "../../../store/drawers";
 
 interface ClientNavBarProps {}
 type Anchor = "top" | "left" | "bottom" | "right";
 const ClientNavBar: React.FC<ClientNavBarProps> = () => {
   const dispatch = useDispatch();
-  function openDrawerByDirection(drawerDirection: Anchor) {
+  function openDrawerByDirection(
+    drawerDirection: Anchor,
+    typeDrawerMenu: string
+  ) {
     dispatch(
       changeDrawerStateByDirectionId({
         direction: drawerDirection,
         newStatus: true,
       })
     );
+
+    dispatch(changeDrawerTypeMenu({ menuTypeSelected: typeDrawerMenu }));
   }
 
   const generalCollectionsLink = "/dance-gavin-dance-edyego-clone/collections/";
 
   return (
-    <nav className="nav-bar text-white relative">
-      <div className="nav-bar-sections-container p-6 pt-9 flex  justify-between md:px-10">
+    <nav className="relative text-white nav-bar">
+      <div className="flex justify-between p-6 nav-bar-sections-container pt-9 md:px-10">
         <div className="nav-bar-section-left ">
-          <div className="nav-bar-section-left__mobile-version mobile flex gap-5 items-center">
+          <div className="flex items-center gap-5 nav-bar-section-left__mobile-version mobile">
             <div
-              className="mobile-menu-icon-container cursor-pointer"
+              className="cursor-pointer mobile-menu-icon-container"
               onClick={() => {
-                openDrawerByDirection("left");
+                openDrawerByDirection("left", "cart");
               }}
             >
               <BurgetMenuMobile fontSize="small" />
@@ -79,8 +87,8 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
             </div>
           </div>
           <div className="nav-bar-section-middle__desktop-version desktop">
-            <div className="nav-bar-options-list-middle-desktop text-xl font-bold flex gap-8">
-              <div className="shop-container  ">
+            <div className="flex gap-8 text-xl font-bold nav-bar-options-list-middle-desktop">
+              <div className="shop-container ">
                 <div className="link-container item-with-drop-down-menu-hover shop-hover-link-effect">
                   <Link
                     className=" item-link hover-underline-animation"
@@ -89,11 +97,11 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
                     Shop
                   </Link>
                 </div>
-                <div className="dropdown-menu-shop px-48 py-16 text-black shadow-2xl">
-                  <div className="items-list flex justify-between items-start relative">
-                    <div className="animated-list-links collections flex flex-col gap-5">
+                <div className="px-48 py-16 text-black shadow-2xl dropdown-menu-shop">
+                  <div className="relative flex items-start justify-between items-list">
+                    <div className="flex flex-col gap-5 animated-list-links collections">
                       <div className="title-container">Collections</div>
-                      <div className="links-list flex flex-col gap-4 text-lg">
+                      <div className="flex flex-col gap-4 text-lg links-list">
                         <Link
                           to={generalCollectionsLink + "dance-gavin-dance"}
                           className="hover:text-gray-700"
@@ -126,9 +134,9 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
                         </Link>
                       </div>
                     </div>
-                    <div className="animated-list-links apparel flex flex-col gap-5">
+                    <div className="flex flex-col gap-5 animated-list-links apparel">
                       <div className="title-container">Apparel</div>
-                      <div className="links-list flex flex-col gap-4 text-lg">
+                      <div className="flex flex-col gap-4 text-lg links-list">
                         <Link
                           to={generalCollectionsLink + "tees"}
                           className="hover:text-gray-700"
@@ -155,17 +163,17 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
                         </Link>
                       </div>
                     </div>
-                    <div className="animated-list-links accessories flex flex-col gap-4 ">
+                    <div className="flex flex-col gap-4 animated-list-links accessories ">
                       <Link
                         to={generalCollectionsLink + "accessories"}
                         className="title-container"
                       >
                         Accessories
                       </Link>
-                      <div className="links-list text-lg">
+                      <div className="text-lg links-list">
                         <Link
                           to={generalCollectionsLink + "accessories"}
-                          className="item flex items-center"
+                          className="flex items-center item"
                         >
                           <div className="text ">ALL ACCESSORIES</div>
                           <ArrowRightSharpIcon className="mb-1" />
@@ -174,7 +182,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
                     </div>
                     <Link
                       to={generalCollectionsLink + "jackpot-juicer"}
-                      className="animated-list-links album-container flex flex-col gap-5"
+                      className="flex flex-col gap-5 animated-list-links album-container"
                     >
                       {/* you can extract this one from database  */}
                       <div className="picture-album-as-title feature-image-zoom">
@@ -184,8 +192,8 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
                           height="auto"
                         />
                       </div>
-                      <div className="small-description flex flex-col justify-center items-center gap-3">
-                        <div className="first-title text-base tracking-widest">
+                      <div className="flex flex-col items-center justify-center gap-3 small-description">
+                        <div className="text-base tracking-widest first-title">
                           PREORDERS AVAILABLE
                         </div>
                         <div className="second-title text-md">
@@ -227,7 +235,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
           </div>
         </div>
         <div className="nav-bar-section-right">
-          <div className="nav-bar-section-right__mobile-version mobile flex items-center gap-5">
+          <div className="flex items-center gap-5 nav-bar-section-right__mobile-version mobile">
             <div className="mobile-tablet">
               <Link to="/dance-gavin-dance-edyego-clone/login">
                 <UserProfileIcon fontSize="small" />
@@ -237,14 +245,20 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
             <div
               className="shoping-cart"
               onClick={() => {
-                openDrawerByDirection("right");
+                openDrawerByDirection("right", "cart");
               }}
             >
               <ShoppingCart />
             </div>
           </div>
-          <div className="nav-bar-section-right__desktop-version desktop gap-4 flex">
-            <SearchIconMobile fontSize="large" className="cursor-pointer" />
+          <div className="flex gap-4 nav-bar-section-right__desktop-version desktop">
+            <SearchIconMobile
+              fontSize="large"
+              className="cursor-pointer"
+              onClick={() => {
+                openDrawerByDirection("right", "search");
+              }}
+            />
             <Link to="/dance-gavin-dance-edyego-clone/login">
               <UserProfileIcon fontSize="large" className="cursor-pointer" />
             </Link>
@@ -252,7 +266,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
             <div
               className="shoping-cart"
               onClick={() => {
-                openDrawerByDirection("right");
+                openDrawerByDirection("right", "cart");
               }}
             >
               <ShoppingCart desktopMode={true} />
@@ -262,7 +276,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
       </div>
       {/* <Link
           to="/reduce-issues"
-          className="logo-container flex justify-center items-center gap-1 "
+          className="flex items-center justify-center gap-1 logo-container "
         >
           <div className="logo-img-container">
             <img src="./logosite.png" alt="site logo" className="w-9" />
@@ -271,11 +285,11 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
         </Link>
         <div className="link-container"></div>
         <div className="auth-container">
-          <div className="auth-links-container flex items-center justify-center gap-4 font-semibold">
-            <div className="sign-in-link text-blue-900 hover:text-blue-600 transition-all ease">
+          <div className="flex items-center justify-center gap-4 font-semibold auth-links-container">
+            <div className="text-blue-900 transition-all sign-in-link hover:text-blue-600 ease">
               <Link
                 to="/dance-gavin-dance-edyego-clone/login"
-                className="sign-in-button-client-area p-2 "
+                className="p-2 sign-in-button-client-area "
               >
                 Log In
               </Link>
@@ -283,7 +297,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
 
             <Link
               to="/dance-gavin-dance-edyego-clone/signup"
-              className="sign-up-button-client-area-nav text-black sign-up-link bg-blue-800   p-2 rounded-md border-transparent hover:bg-blue-600 transition-all ease"
+              className="p-2 text-black transition-all bg-blue-800 border-transparent rounded-md sign-up-button-client-area-nav sign-up-link hover:bg-blue-600 ease"
             >
               Sign Up
             </Link>

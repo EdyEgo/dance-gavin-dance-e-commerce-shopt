@@ -11,6 +11,7 @@ import TourPage from "../../pages/TourPage";
 import FiltereProductsPage from "../../pages/FilteredProductsPage";
 import AdminPage from "../../pages/AdminPage";
 import ProductPage from "../../pages/ProductPage";
+import SwanfestPage from "../../pages/SwanfestPage";
 
 interface ClientAreaProps {}
 
@@ -18,7 +19,7 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
   return (
     <div>
       <Router>
-        <header className="header  sticky top-0 z-20">
+        <header className="sticky top-0 z-20 header">
           {/* was "relative" here but we need : "sticky top-0" */}
           <NavBar />
         </header>
@@ -40,6 +41,11 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
             <Route
               path="/dance-gavin-dance-edyego-clone/pages/tour"
               element={<TourPage />}
+            />
+
+            <Route
+              path="/dance-gavin-dance-edyego-clone/pages/swanfest"
+              element={<SwanfestPage />}
             />
 
             <Route

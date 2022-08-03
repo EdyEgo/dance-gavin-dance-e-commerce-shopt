@@ -7,10 +7,25 @@ export default function ShoppingCart({
 }: {
   desktopMode?: boolean;
 }) {
-  const ItemsAddedToCart = 7; //useSelector((state:any)=>state.cart)
+
+ 
+  const productsAddedToCart = useSelector(
+    (state: any) => state.cart.productsAddedToCart.length
+  );
+
   return (
-    <div className="badge-container cursor-pointer">
-      <Badge badgeContent={ItemsAddedToCart} color="info">
+    <div className="cursor-pointer badge-container">
+      <Badge
+        sx={{
+          "& .BaseBadge-badge": {
+            backgroundColor: "white",
+            color: "#E6433C",
+          },
+        }}
+        badgeContent={productsAddedToCart}
+        color="info"
+        invisible={productsAddedToCart <= 0}
+      >
         {desktopMode && (
           <ShoppingBagIcon className="text-white" fontSize="large" />
         )}

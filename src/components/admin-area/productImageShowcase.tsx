@@ -105,14 +105,6 @@ const ProductImageShowcase: React.FC<ProductImageShowcaseProps> = ({
 
     if (increment) {
       for (let i = 0; i <= imageListURL.length; i++) {
-        console.log(
-          "bruh",
-          selectedSlideIndex,
-          "i",
-          i,
-          "slides made",
-          slidesMade
-        );
         if (selectedSlideIndex === slidesMade) {
           break;
         }
@@ -145,7 +137,7 @@ const ProductImageShowcase: React.FC<ProductImageShowcaseProps> = ({
   }
 
   return (
-    <div className="product-images-container flex gap-9">
+    <div className="flex product-images-container gap-9">
       <div className="left-images-list flex flex-col gap-4 w-[40%]">
         {imageListURL.map((imageURL, indexImageURL) => {
           const selectedStyle =
@@ -173,14 +165,14 @@ const ProductImageShowcase: React.FC<ProductImageShowcaseProps> = ({
         })}
       </div>
       <div className="main-iamge-selector">
-        <div className="carousel-container  overflow-hidden relative">
-          <div className="carousel-slider flex  w-full h-auto" style={styles}>
+        <div className="relative overflow-hidden carousel-container">
+          <div className="flex w-full h-auto carousel-slider" style={styles}>
             {imageListURL.map((imageURL, indexImageURL) => {
               return <img src={imageURL} alt="" key={indexImageURL + useid} />;
             })}
           </div>
 
-          <div className="outlayer-container absolute top-0 right-0 h-full w-full flex">
+          <div className="absolute top-0 right-0 flex w-full h-full outlayer-container">
             <div
               onClick={() => {
                 // transitionByClick("prev");

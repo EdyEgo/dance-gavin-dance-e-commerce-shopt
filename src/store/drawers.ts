@@ -7,6 +7,8 @@ const initialState: {
     bottom: boolean;
     right: boolean;
   };
+  menuType:"cart" | "search",
+
   navBarDropDawnMenuStatus: boolean;
 } = {
   drawers: {
@@ -15,6 +17,7 @@ const initialState: {
     right: false,
     top: false,
   },
+  menuType:"cart",
   navBarDropDawnMenuStatus: false,
 };
 
@@ -31,12 +34,18 @@ export const drawersSlice = createSlice({
       const newStatus: boolean = payload.newStatus;
       state.navBarDropDawnMenuStatus = newStatus;
     },
+    changeDrawerTypeMenu(state, { payload }){
+       const menuTypeSelected:"cart" | "search" = payload.menuTypeSelected
+
+       state.menuType = menuTypeSelected
+    }
   },
 });
 
 export const {
   changeDrawerStateByDirectionId,
   changeNavBarDropDawnMenuStatus,
+  changeDrawerTypeMenu
 } = drawersSlice.actions;
 
 export default drawersSlice.reducer;

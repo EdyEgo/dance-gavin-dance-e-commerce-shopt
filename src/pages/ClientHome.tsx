@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useId } from "react";
 import ProductItem from "../composables/generalHelpers/productItem";
-import TabsList from "../composables/generalHelpers/tabsList";
 import ItemsSlider from "../composables/generalHelpers/itemsSlider";
 import AlbumSlider from "../composables/generalHelpers/albumsSlider";
 import TourTable from "../composables/generalHelpers/tourTable";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import Tab from "@mui/material/Tab";
+
 interface ClientHomeProps {}
 
 const ClientHome: React.FC<ClientHomeProps> = () => {
@@ -152,12 +151,12 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
 
   return (
     <div className="container-home bg-[#E84A42] ">
-      <section className="hero-section-contianer text-white flex justify-center items-center ">
-        <div className="hero-titles-container text-center flex flex-col gap-7 ">
-          <div className="hero-titles__first-title tracking-widest">
+      <section className="flex items-center justify-center text-white hero-section-contianer ">
+        <div className="flex flex-col text-center hero-titles-container gap-7 ">
+          <div className="tracking-widest hero-titles__first-title">
             OUT EVERYWHERE
           </div>
-          <h1 className="hero-titles__second-second-title text-4xl">
+          <h1 className="text-4xl hero-titles__second-second-title">
             JACKPOT JUICER
           </h1>
         </div>
@@ -168,7 +167,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         <div className="title-container my-14">
           <div className="title text-center text-[42px]">JACKPOT JUICER</div>
         </div>
-        <div className="albums-list-container flex flex-wrap  justify-evenly">
+        <div className="flex flex-wrap albums-list-container justify-evenly">
           {/* {productsList != null &&
             productsList.length >= 1 &&
             // <ProductItem
@@ -188,7 +187,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         </div>
         <Link
           to="collections/dance-gavin-dance"
-          className="shop-all-button-container flex justify-center items-center"
+          className="flex items-center justify-center shop-all-button-container"
         >
           <div className="shop-all-button text-[#F9F175] bg-[#1E1E1E] p-5 my-14 tracking-wider">
             SHOP ALL MERCH
@@ -209,8 +208,8 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         <div className="table-container">
           <TourTable />
         </div>
-        <div className="show-all-dates-action-button-container my-6 ">
-          <div className="link-container border-white border text-center p-4 cursor-pointer hover:bg-red-600 hover:border-gray-200 transition-all ease-out">
+        <div className="my-6 show-all-dates-action-button-container ">
+          <div className="p-4 text-center transition-all ease-out border border-white cursor-pointer link-container hover:bg-red-600 hover:border-gray-200">
             <Link
               to="/dance-gavin-dance-edyego-clone/collections/dance-gavin-dance"
               className="show-all-dates-btn "
@@ -221,14 +220,14 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         </div>
       </section>
 
-      <section className="recent-releases bg-black">
+      <section className="bg-black recent-releases">
         <div className="title-container text-center text-[2.7rem] py-16 text-[#27C6CB]">
           RECENT RELEASES
         </div>
-        <div className="albums-slide-show-container px-8">
+        <div className="px-8 albums-slide-show-container">
           <AlbumSlider />
         </div>
-        <div className="albums-tabs-container p-4">
+        <div className="p-4 albums-tabs-container">
           {/* <TabsList
             children={Object.entries(albumsYearsList).map(
               ([merchName, merchValues], index) => {
@@ -253,7 +252,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
             value={allMerchSelectedTab}
           /> */}
         </div>
-        <div className="view-discography-container py-20 flex items-center justify-center">
+        <div className="flex items-center justify-center py-20 view-discography-container">
           <Link
             to="/dance-gavin-dance-edyego-clone/pages/music"
             className="view-music-page-link-btn text-white bg-[#22BDC3] p-5 px-12 fill-animation login-button button-action"
@@ -263,8 +262,9 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         </div>
       </section>
 
-      <div className="section-song-autoplay relative">
+      <div className="relative section-song-autoplay">
         <iframe
+          title="Dance Gavin Dance video"
           className="pointer-events-none"
           allowFullScreen
           width="100%"

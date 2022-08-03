@@ -10,14 +10,28 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { changeDrawerStateByDirectionId } from "../../../store/drawers";
+import {
+  changeDrawerStateByDirectionId,
+  changeDrawerTypeMenu,
+} from "../../../store/drawers";
+
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
-export default function LeftMenuDrawer({}: {}) {
+export default function LeftMenuDrawer() {
   const dispatch = useDispatch();
   const drawersState = useSelector((state: any) => state.drawers.drawers);
+  const drawersMenuTypeState = useSelector(
+    (state: any) => state.drawers.menuType
+  );
+
+  const productsAddedToCart = useSelector(
+    (state: any) => state.cart.productsAddedToCart.length
+  );
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -77,8 +91,62 @@ export default function LeftMenuDrawer({}: {}) {
   //   </Box>
   // );
 
+  function returnFitTypeMenu() {
+    // drawersMenuTypeState
+
+    const menuTypes: { [menuType: string]: () => any } = {
+      cart: () => {
+        return (
+          <div className="cart-menu-container">
+            {productsAddedToCart >= 1 && (
+              <div className="cart-menu-product-has-items"></div>
+            )}
+
+            {productsAddedToCart <= 0 && (
+              <div className="cart-menu-empty">
+                <div className="flex justify-between p-7 cart-header-container border-b border-[#1B8A8E]">
+                  <div className="flex items-center gap-2 cart-icon-tite">
+                    <ShoppingBagOutlinedIcon fontSize="small" />
+                    <div className="cart-title">CART</div>
+                  </div>
+                  <div className="cursor-pointer close-cart-menu">
+                    <CloseOutlinedIcon
+                      onClick={() => {
+                        changeLeftDrawerState(false, "right");
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center justify-center pt-[14em] start-shopping-action-container">
+                  <div className="flex flex-col gap-4 cart-is-empty-info-action">
+                    <div className="font-sans font-medium text-center info-empty-cart">
+                      Your cart is empty
+                    </div>
+                    <Link
+                      onClick={() => {
+                        changeLeftDrawerState(false, "right");
+                      }}
+                      to="/dance-gavin-dance-edyego-clone/collections/dance-gavin-dance"
+                      className=" text-white start-shopping-buton-action fill-animation login-button button-action p-4 bg-[#E6433C]"
+                    >
+                      START SHOPPIMNG
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      },
+      search: () => {
+        return <div className="search-menu-container">search placeholder</div>;
+      },
+    };
+    return menuTypes[drawersMenuTypeState]();
+  }
+
   return (
-    <div className="h-0 w-0">
+    <div className="w-0 h-0">
       {(["left", "right", "top", "bottom"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
           {/* <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button> */}
@@ -86,9 +154,15 @@ export default function LeftMenuDrawer({}: {}) {
             anchor={anchor}
             open={drawersState[anchor]}
             onClose={toggleDrawer(anchor, false)}
+            sx={{
+              "& .MuiPaper-root": {
+                width: "33%",
+              },
+            }}
           >
-            {/* {list(anchor)} */}
-            bruh
+            <div className="h-full bg-[#22BDC3] menu-container ">
+              {returnFitTypeMenu()}
+            </div>
           </Drawer>
         </React.Fragment>
       ))}

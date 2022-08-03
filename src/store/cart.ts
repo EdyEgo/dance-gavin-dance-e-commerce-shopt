@@ -15,6 +15,12 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addProductToCart(state, { payload }) {
+
+      const productAlreadyInCart = state.productsAddedToCart.findIndex((product)=>product.id === payload.id)
+      if(productAlreadyInCart !== -1){
+        state.productsAddedToCart.splice(productAlreadyInCart,1,payload)
+        return
+      }
       state.productsAddedToCart.push(payload);
     },
   },

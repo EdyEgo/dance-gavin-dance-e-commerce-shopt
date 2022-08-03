@@ -6,7 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 // import ImageWebp from "../components/general-helpers/ImageWebp";
 import { addToUserCart } from "../api/dataBaseCartMethods";
 import { addProductToCart } from "../store/cart";
-import { changeDrawerStateByDirectionId } from "../store/drawers";
+import { changeDrawerStateByDirectionId ,changeDrawerTypeMenu} from "../store/drawers";
 import ProductImageShowcase from "../components/admin-area/productImageShowcase";
 import CheckSharpIcon from "@mui/icons-material/CheckSharp";
 import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
@@ -50,6 +50,9 @@ const ProductPage: React.FC<ProductPageProps> = () => {
   // if the user is logged in then we store to the database
 
   async function addProductSelectedToCart() {
+    if (loading) {
+      return;
+    }
     // set error message if there was any error
     setLoading(true);
 
@@ -60,8 +63,11 @@ const ProductPage: React.FC<ProductPageProps> = () => {
     };
     if (userObject?.uid != null) {
       // user is  logged in
+      console.log("remember to  fetch the user object from users");
+
       const { error, message } = await addToUserCart({
         userUid: userObject.uid,
+        userCurrentCart: [],
         productObject: productToAddToCart,
       });
 
@@ -79,6 +85,10 @@ const ProductPage: React.FC<ProductPageProps> = () => {
           newStatus: true,
         })
       );
+
+      dispatch(
+        changeDrawerTypeMenu({menuTypeSelected:"cart"})
+      )
       return;
     }
 
@@ -90,6 +100,10 @@ const ProductPage: React.FC<ProductPageProps> = () => {
         newStatus: true,
       })
     );
+
+    dispatch(
+      changeDrawerTypeMenu({menuTypeSelected:"cart"})
+    )
   }
 
   function setNewQuantity(newQuantityValue: number) {
@@ -219,15 +233,6 @@ const ProductPage: React.FC<ProductPageProps> = () => {
     return iconsList[productsSelectedCurrency];
   };
 
-  console.log(
-    "my found product is",
-    productFound,
-    "bruhhh",
-    selectedPrice,
-    "size",
-    selectedSize
-  );
-
   function capitalizeFirstLetter(word: string) {
     return word.charAt(0).toUpperCase() + word.slice(1);
   }
@@ -348,8 +353,8 @@ const ProductPage: React.FC<ProductPageProps> = () => {
     <div className="product-page-container bg-[#25c3c8]">
       {productFound != null && (
         <div className="product-exists ">
-          <div className="product-page__header flex gap-2 items-center p-8">
-            <div className="bread flex gap-2 items-center  ">
+          <div className="flex items-center gap-2 p-8 product-page__header">
+            <div className="flex items-center gap-2 bread ">
               <div className="font-sans text-[#1D4D4F]">Home</div>
               <div className="font-sans text-[#1D4D4F]">/</div>
               <div className="text-[15px] font-sans">
@@ -373,7 +378,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                 </div>
               </div>
               <div className="price-and-stock-details border-b border-[#17888c] pb-7 flex items-center gap-4 mt-4">
-                <div className="price-container flex gap-2 items-center">
+                <div className="flex items-center gap-2 price-container">
                   <div className="price-currency ">
                     {returnFitCurrencyIcon()}
                   </div>
@@ -381,21 +386,21 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                     {selectedPrice}
                   </div>
                 </div>
-                <div className="stock-details-list-tags flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-4 stock-details-list-tags">
                   {productFound.preorder != null &&
                     productFound.preorder === true && (
-                      <div className="preorder bg-black text-white p-1 font-sans font-normal">
+                      <div className="p-1 font-sans font-normal text-white bg-black preorder">
                         Preorder
                       </div>
                     )}
                   {productFound.limited != null &&
                     productFound.limited === true && (
-                      <div className="limited bg-black text-white p-1 font-sans font-normal">
+                      <div className="p-1 font-sans font-normal text-white bg-black limited">
                         Limited
                       </div>
                     )}
                   {productSoldOut && (
-                    <div className="sold-out bg-black text-white p-1 font-sans font-normal">
+                    <div className="p-1 font-sans font-normal text-white bg-black sold-out">
                       Sold out
                     </div>
                   )}
@@ -403,16 +408,16 @@ const ProductPage: React.FC<ProductPageProps> = () => {
               </div>
 
               {selectedSize !== null && (
-                <div className="sizes-available-container mt-8">
-                  <div className="selected-size-title flex gap-2">
-                    <div className="size-pointer font-sans font-medium">
+                <div className="mt-8 sizes-available-container">
+                  <div className="flex gap-2 selected-size-title">
+                    <div className="font-sans font-medium size-pointer">
                       Size:
                     </div>
-                    <div className="size-name-selected font-sans font-normal">
+                    <div className="font-sans font-normal size-name-selected">
                       {formatSizeNameWithKey(selectedSize.sizeName)}
                     </div>
                   </div>
-                  <div className="sizes-tabs-list-container flex gap-2 flex-wrap mt-2">
+                  <div className="flex flex-wrap gap-2 mt-2 sizes-tabs-list-container">
                     {sizesList !== null &&
                       sizesList.map(
                         (
@@ -444,8 +449,8 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                   </div>
                 </div>
               )}
-              <div className="quantity-container flex flex-col gap-4 mt-8">
-                <div className="quantity-title font-sans font-medium">
+              <div className="flex flex-col gap-4 mt-8 quantity-container">
+                <div className="font-sans font-medium quantity-title">
                   Quantity:
                 </div>
                 <div className="quantity-counter w-[25%]">
@@ -461,12 +466,12 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                   className="product-action-button py-4 tracking-widest font-sans text-center font-semibold fill-animation login-button button-action text-white bg-[#E22F2F]"
                 >
                   {loading && (
-                    <div className="loading-icon-btn flex items-center justify-center">
+                    <div className="flex items-center justify-center loading-icon-btn">
                       <CircularProgress color="inherit" />
                     </div>
                   )}
                   {!loading && (
-                    <div className="action-btn-text py-2">
+                    <div className="py-2 action-btn-text">
                       {productFound?.preorder != null
                         ? "PREORDER"
                         : "ADD TO CART"}
@@ -475,13 +480,13 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                 </div>
               </div>
               {typeof errorMessage === "string" ? (
-                <div className="error-message-container mt-8 bg-yellow-300 p-4">
-                  <div className="error-message text-red-600 text-center">
+                <div className="p-4 mt-8 bg-yellow-300 error-message-container">
+                  <div className="text-center text-red-600 error-message">
                     Could not add the product to cart!
                   </div>
                 </div>
               ) : (
-                <div className="error-message-container-invisible invisible">
+                <div className="invisible error-message-container-invisible">
                   <div className="error-message">error placeholder</div>
                 </div>
               )}
@@ -493,7 +498,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                       (benefitItem: string, benefitIndex: number) => {
                         return (
                           <li
-                            className="benefit-item flex gap-1"
+                            className="flex gap-1 benefit-item"
                             key={benefitIndex + useId + "benefitItem"}
                           >
                             <div className="before-dot">
@@ -513,12 +518,12 @@ const ProductPage: React.FC<ProductPageProps> = () => {
           </div>
 
           <div className="recommended-products bg-black text-[#23C0C5] pb-[2.7%]">
-            <div className="title-container mb-8 pt-4">
+            <div className="pt-4 mb-8 title-container">
               <div className="title text-center text-[2.7rem]">
                 SELECTED FOR YOU
               </div>
             </div>
-            <div className="recommended-products-list flex flex-wrap gap-6 justify-center ">
+            <div className="flex flex-wrap justify-center gap-6 recommended-products-list ">
               {createRecomendedProductsList()}
             </div>
           </div>
