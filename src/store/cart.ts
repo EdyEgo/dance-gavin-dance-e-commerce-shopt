@@ -23,9 +23,17 @@ export const cartSlice = createSlice({
       }
       state.productsAddedToCart.push(payload);
     },
+
+    removeProductFromCart(state, { payload }){
+      
+      const productIndex = payload.productIndex
+      state.productsAddedToCart.splice(productIndex,1)
+
+
+    }
   },
 });
 
-export const { addProductToCart } = cartSlice.actions;
+export const { addProductToCart,removeProductFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

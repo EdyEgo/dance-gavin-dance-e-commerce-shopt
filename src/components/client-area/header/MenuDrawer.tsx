@@ -1,29 +1,31 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
+// import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+// import Button from "@mui/material/Button";
+// import List from "@mui/material/List";
+// import Divider from "@mui/material/Divider";
+// import ListItem from "@mui/material/ListItem";
+// import ListItemButton from "@mui/material/ListItemButton";
+// import ListItemIcon from "@mui/material/ListItemIcon";
+// import ListItemText from "@mui/material/ListItemText";
+// import InboxIcon from "@mui/icons-material/MoveToInbox";
+// import MailIcon from "@mui/icons-material/Mail";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   changeDrawerStateByDirectionId,
-  changeDrawerTypeMenu,
+  // changeDrawerTypeMenu,
 } from "../../../store/drawers";
 
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import ProductItemCart from "../../../composables/generalHelpers/productItemCart"
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
 export default function LeftMenuDrawer() {
   const dispatch = useDispatch();
+  const useid = React.useId()
   const drawersState = useSelector((state: any) => state.drawers.drawers);
   const drawersMenuTypeState = useSelector(
     (state: any) => state.drawers.menuType
@@ -32,6 +34,12 @@ export default function LeftMenuDrawer() {
   const productsAddedToCart = useSelector(
     (state: any) => state.cart.productsAddedToCart.length
   );
+
+  const productsAddedToCartList = useSelector(
+    (state: any) => state.cart.productsAddedToCart
+  );
+
+
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -90,7 +98,7 @@ export default function LeftMenuDrawer() {
   //     </List>
   //   </Box>
   // );
-
+console.log('bruh ',productsAddedToCart,"run forest",productsAddedToCartList)
   function returnFitTypeMenu() {
     // drawersMenuTypeState
 
@@ -99,7 +107,33 @@ export default function LeftMenuDrawer() {
         return (
           <div className="cart-menu-container">
             {productsAddedToCart >= 1 && (
-              <div className="cart-menu-product-has-items"></div>
+              <div className="cart-menu-products">
+              <div className="cart-menu-product-has-items">
+                                <div className="flex justify-between p-7 cart-header-container border-b border-[#1B8A8E]">
+                  <div className="flex items-center gap-2 cart-icon-tite">
+                    <ShoppingBagOutlinedIcon fontSize="small" />
+                    <div className="cart-title flex gap-1">
+                      <div className="item-tittle">{productsAddedToCart >= 1 ? "Items" : "Item"}</div>
+                      <div className="number-items">{productsAddedToCart}</div>
+                    </div>
+                  </div>
+                  <div className="cursor-pointer close-cart-menu">
+                    <CloseOutlinedIcon
+                      onClick={() => {
+                        changeLeftDrawerState(false, "right");
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="start-shopping-action-container">
+                <div className="product-list p-7">
+                {productsAddedToCartList.map((productObject:any,cartProductIndex:number)=><ProductItemCart key={cartProductIndex + "cart" + useid} productCartIndex={cartProductIndex} productAdded={productObject}/>)}
+
+                </div>
+              </div>
+              </div>
+
             )}
 
             {productsAddedToCart <= 0 && (
@@ -127,7 +161,7 @@ export default function LeftMenuDrawer() {
                         changeLeftDrawerState(false, "right");
                       }}
                       to="/dance-gavin-dance-edyego-clone/collections/dance-gavin-dance"
-                      className=" text-white start-shopping-buton-action fill-animation login-button button-action p-4 bg-[#E6433C]"
+                      className=" text-white tracking-wider start-shopping-buton-action fill-animation login-button button-action p-4 bg-[#E6433C]"
                     >
                       START SHOPPIMNG
                     </Link>

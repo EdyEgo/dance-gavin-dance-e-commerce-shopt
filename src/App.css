@@ -547,6 +547,15 @@ home slider test
   transform: scale(1.1);
 }
 
+
+/* product cart styles */
+.size-out-of-stock{
+ background: linear-gradient(to bottom right,transparent calc(50% - 1px),rgb(33, 165, 170) 50%,transparent calc(50% + 1px)) no-repeat;
+} 
+
+/* end product cart styles */
+
+
 /* end video animations client home  */
 
 /* product image slider  */

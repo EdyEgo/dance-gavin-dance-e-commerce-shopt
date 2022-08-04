@@ -3,10 +3,12 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 interface QuantityProductSelectorProps {
   setQuantityRef: (newQuantityValue: number) => void;
+  maximQuantityAvailable?: number;
 }
 
 const QuantityProductSelector: React.FC<QuantityProductSelectorProps> = ({
   setQuantityRef,
+  maximQuantityAvailable,
 }) => {
   const [quantity, setQuantity] = useState(1);
 
@@ -29,9 +31,20 @@ const QuantityProductSelector: React.FC<QuantityProductSelectorProps> = ({
         </div>
         <div className="count-number font-sans font-medium">{quantity}</div>
         <div
+          title={
+            maximQuantityAvailable != null && quantity >= maximQuantityAvailable
+              ? "No more stock"
+              : ""
+          }
           className="increment cursor-pointer"
           onClick={() => {
             const newValue = quantity + 1;
+            if (
+              maximQuantityAvailable != null &&
+              newValue > maximQuantityAvailable
+            ) {
+              return;
+            }
             setQuantity(newValue);
           }}
         >

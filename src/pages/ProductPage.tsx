@@ -424,6 +424,11 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                           [sizeNameItem, sizeItemObjectValue]: any,
                           sizesIndex: number
                         ) => {
+                        
+
+                          const numberItemsAvailable = parseInt(
+                            sizeItemObjectValue.numberItemsAvailable
+                          );
                           const sizeSelectedClass =
                             sizeNameItem === selectedSize.sizeName
                               ? "bg-white border-2 border-black font-medium"
@@ -431,8 +436,15 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                           return (
                             <div
                               key={"sizes" + sizesIndex + useId}
-                              className={`size-item font-sans cursor-pointer p-5 ${sizeSelectedClass}`}
+                              className={`size-item font-sans  ${
+                                numberItemsAvailable <= 0
+                                  ? "size-out-of-stock cursor-default"
+                                  : "cursor-pointer"
+                              } p-5 ${sizeSelectedClass}`}
                               onClick={() => {
+                                if (numberItemsAvailable <= 0) {
+                                  return;
+                                }
                                 addASelectedPriceAndSize({
                                   newSizeObject: {
                                     sizeName: sizeNameItem,

@@ -156,6 +156,8 @@ const ProductItem: React.FC<ProductItemProps> = ({
     dispatch(changeDrawerTypeMenu({ menuTypeSelected: "cart" }));
   }
 
+  // calculate the price by the selected quantity and make it posibble to change the quantity // left here
+
   return (
     <div className="product-item w-[22%] my-2">
       <Link
@@ -220,20 +222,21 @@ const ProductItem: React.FC<ProductItemProps> = ({
           </div>
         </Link>
 
-        {addToCartButton != null && (
-          <div className="flex items-center justify-center pt-4 quik-add-to-cart-container">
-            <div
-              className="flex items-center gap-1 p-4 quik-add-to-cart-button fill-animation login-button button-action"
-              style={addToCartButton}
-              onClick={() => {
-                addProductSelectedToCart();
-              }}
-            >
-              <AddIcon fontSize="small" />
-              <div className="text-btn">ADD TO CART</div>
+        {addToCartButton != null &&
+          productPropertiesValues?.sizesAvailable == null && (
+            <div className="flex items-center justify-center pt-4 quik-add-to-cart-container">
+              <div
+                className="flex items-center gap-1 p-4 quik-add-to-cart-button fill-animation login-button button-action"
+                style={addToCartButton}
+                onClick={() => {
+                  addProductSelectedToCart();
+                }}
+              >
+                <AddIcon fontSize="small" />
+                <div className="text-btn">ADD TO CART</div>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );
