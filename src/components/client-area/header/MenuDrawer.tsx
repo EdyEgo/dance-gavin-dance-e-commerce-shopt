@@ -108,32 +108,42 @@ console.log('bruh ',productsAddedToCart,"run forest",productsAddedToCartList)
           <div className="cart-menu-container">
             {productsAddedToCart >= 1 && (
               <div className="cart-menu-products">
-              <div className="cart-menu-product-has-items">
-                                <div className="flex justify-between p-7 cart-header-container border-b border-[#1B8A8E]">
-                  <div className="flex items-center gap-2 cart-icon-tite">
-                    <ShoppingBagOutlinedIcon fontSize="small" />
-                    <div className="cart-title flex gap-1">
-                      <div className="item-tittle">{productsAddedToCart >= 1 ? "Items" : "Item"}</div>
-                      <div className="number-items">{productsAddedToCart}</div>
+                <div className="cart-menu-product-has-items">
+                  <div className="flex justify-between p-7 cart-header-container border-b border-[#1B8A8E]">
+                    <div className="flex items-center gap-2 cart-icon-tite">
+                      <ShoppingBagOutlinedIcon fontSize="small" />
+                      <div className="cart-title flex gap-1">
+                        <div className="item-tittle">
+                          {productsAddedToCart >= 1 ? "Items" : "Item"}
+                        </div>
+                        <div className="number-items">
+                          {productsAddedToCart}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="cursor-pointer close-cart-menu">
+                      <CloseOutlinedIcon
+                        onClick={() => {
+                          changeLeftDrawerState(false, "right");
+                        }}
+                      />
                     </div>
                   </div>
-                  <div className="cursor-pointer close-cart-menu">
-                    <CloseOutlinedIcon
-                      onClick={() => {
-                        changeLeftDrawerState(false, "right");
-                      }}
-                    />
+                </div>
+                <div className="start-shopping-action-container">
+                  <div className="product-list p-7">
+                    {productsAddedToCartList.map(
+                      (productObject: any, cartProductIndex: number) => (
+                        <ProductItemCart
+                          key={cartProductIndex + "cart" + useid}
+                          productCartIndex={cartProductIndex}
+                          productAdded={productObject}
+                        />
+                      )
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="start-shopping-action-container">
-                <div className="product-list p-7">
-                {productsAddedToCartList.map((productObject:any,cartProductIndex:number)=><ProductItemCart key={cartProductIndex + "cart" + useid} productCartIndex={cartProductIndex} productAdded={productObject}/>)}
-
-                </div>
-              </div>
-              </div>
-
             )}
 
             {productsAddedToCart <= 0 && (

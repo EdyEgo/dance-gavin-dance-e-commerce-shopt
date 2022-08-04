@@ -156,7 +156,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
     dispatch(changeDrawerTypeMenu({ menuTypeSelected: "cart" }));
   }
 
-  // calculate the price by the selected quantity and make it posibble to change the quantity // left here
+  // calculate the price by the selected quantity and make it posibble to change the quantity // left here !!!!!
 
   return (
     <div className="product-item w-[22%] my-2">

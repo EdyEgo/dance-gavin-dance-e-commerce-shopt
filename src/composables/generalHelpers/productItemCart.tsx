@@ -2,7 +2,10 @@ import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {} from "../../api/dataBaseCartMethods"; // add a delete method
-import { removeProductFromCart } from "../../store/cart"; // add a delete method
+import {
+  removeProductFromCart,
+  changeProductQuantityByIndex,
+} from "../../store/cart"; // add a delete method
 import ImageWebp from "../../components/general-helpers/ImageWebp";
 
 import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
@@ -19,24 +22,35 @@ const ProductItemCart: React.FC<ProductItemCartProps> = ({
   productAdded,
   productCartIndex,
 }) => {
+  // here is the issue
+
   const dispatch = useDispatch();
   // removeProductFromCart
   const productsSelectedCurrency = useSelector(
     (state: any) => state.productFiltersSearch.selectedCurrency
   );
 
-  const cartProductQuantityRef = React.useRef(productAdded.quantity);
+  //   const cartProductQuantityRef = React.useRef(productAdded.quantity);
 
   const { numberItemsAvailable, price, sizeNameTitle } =
     returnProductSelectedPriceAndAvaiabilityNumbers();
 
-  function setQuantityRef(newQuantity: number) {
-    cartProductQuantityRef.current = newQuantity;
+  //   function setQuantityRef(newQuantity: number) {
+  //     cartProductQuantityRef.current = newQuantity;
+  //   }
+
+  function setQuantityByProductIndex(newQuantity: number) {
+    dispatch(
+      changeProductQuantityByIndex({
+        productIndex: productCartIndex,
+        newQuantity,
+      })
+    );
   }
 
   console.log("product added", productAdded);
 
-  const userObject = useSelector((state: any) => state.auth.user);
+  //   const userObject = useSelector((state: any) => state.auth.user);
 
   const returnFitCurrencyIcon = () => {
     const iconsList: { [key: string]: any } = {
@@ -109,7 +123,8 @@ const ProductItemCart: React.FC<ProductItemCartProps> = ({
         <div className="cart-product-actions-container">
           <div className="cart-product-quantity-selector">
             <QuantitySelector
-              setQuantityRef={setQuantityRef}
+              currentQuantity={productAdded.quantity}
+              setQuantityRef={setQuantityByProductIndex}
               maximQuantityAvailable={numberItemsAvailable}
             />
           </div>
