@@ -1,6 +1,8 @@
 import * as React from "react";
 // import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import StopIcon from "@mui/icons-material/Stop";
 // import Button from "@mui/material/Button";
 // import List from "@mui/material/List";
 // import Divider from "@mui/material/Divider";
@@ -12,6 +14,10 @@ import Drawer from "@mui/material/Drawer";
 // import MailIcon from "@mui/icons-material/Mail";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+
+import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
+import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
+
 import {
   changeDrawerStateByDirectionId,
   // changeDrawerTypeMenu,
@@ -19,17 +25,29 @@ import {
 
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import ProductItemCart from "../../../composables/generalHelpers/productItemCart"
+import ProductItemCart from "../../../composables/generalHelpers/productItemCart";
+import OnOffSwitch from "../../../composables/generalHelpers/onOffSwitch";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
 export default function LeftMenuDrawer() {
   const dispatch = useDispatch();
-  const useid = React.useId()
+  const useid = React.useId();
+
+  const productsSelectedCurrency = useSelector(
+    (state: any) => state.productFiltersSearch.selectedCurrency
+  );
+
   const drawersState = useSelector((state: any) => state.drawers.drawers);
   const drawersMenuTypeState = useSelector(
     (state: any) => state.drawers.menuType
   );
+
+  const shippingProtectionChecked = React.useRef(false);
+
+  function setShippingProtectionChecked() {
+    shippingProtectionChecked.current = !shippingProtectionChecked.current;
+  }
 
   const productsAddedToCart = useSelector(
     (state: any) => state.cart.productsAddedToCart.length
@@ -38,8 +56,6 @@ export default function LeftMenuDrawer() {
   const productsAddedToCartList = useSelector(
     (state: any) => state.cart.productsAddedToCart
   );
-
-
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -64,48 +80,37 @@ export default function LeftMenuDrawer() {
     );
   }
 
-  // const list = (anchor: Anchor) => (
-  //   <Box
-  //     sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
-  //     role="presentation"
-  //     onClick={toggleDrawer(anchor, false)}
-  //     onKeyDown={toggleDrawer(anchor, false)}
-  //   >
-  //     <List>
-  //       {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-  //         <ListItem key={text} disablePadding>
-  //           <ListItemButton>
-  //             <ListItemIcon>
-  //               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-  //             </ListItemIcon>
-  //             <ListItemText primary={text} />
-  //           </ListItemButton>
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //     <Divider />
-  //     <List>
-  //       {["All mail", "Trash", "Spam"].map((text, index) => (
-  //         <ListItem key={text} disablePadding>
-  //           <ListItemButton>
-  //             <ListItemIcon>
-  //               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-  //             </ListItemIcon>
-  //             <ListItemText primary={text} />
-  //           </ListItemButton>
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //   </Box>
-  // );
-console.log('bruh ',productsAddedToCart,"run forest",productsAddedToCartList)
-  function returnFitTypeMenu() {
-    // drawersMenuTypeState
+  const returnFitCurrencyIcon = () => {
+    const iconsList: { [key: string]: any } = {
+      euro: <EuroRoundedIcon fontSize="small" />,
+      dollar: <DollarRoundedIcon fontSize="small" />,
+    };
+    return iconsList[productsSelectedCurrency];
+  };
 
+  function calculateTotalPrice() {
+    // .totalQuantityPrice
+    const totalPrice = productsAddedToCartList.reduce(
+      (prev: any, curr: any) => {
+        const prevPlusCurrentProductPrice = prev + curr.totalQuantityPrice;
+
+        return prevPlusCurrentProductPrice;
+      },
+      0
+    );
+
+    return totalPrice;
+  }
+
+  async function checkOut() {
+    // left here
+  }
+
+  function returnFitTypeMenu() {
     const menuTypes: { [menuType: string]: () => any } = {
       cart: () => {
         return (
-          <div className="cart-menu-container">
+          <div className="cart-menu-container bg-[#22BDC3]">
             {productsAddedToCart >= 1 && (
               <div className="cart-menu-products">
                 <div className="cart-menu-product-has-items">
@@ -130,8 +135,8 @@ console.log('bruh ',productsAddedToCart,"run forest",productsAddedToCartList)
                     </div>
                   </div>
                 </div>
-                <div className="start-shopping-action-container">
-                  <div className="product-list p-7">
+                <div className="start-shopping-action-container ">
+                  <div className="product-list p-7 flex flex-col gap-7">
                     {productsAddedToCartList.map(
                       (productObject: any, cartProductIndex: number) => (
                         <ProductItemCart
@@ -141,6 +146,89 @@ console.log('bruh ',productsAddedToCart,"run forest",productsAddedToCartList)
                         />
                       )
                     )}
+                  </div>
+                </div>
+
+                <div className="cart-checkout-container border-t border-[#1B8A8E] pt-4 p-7">
+                  <div className="checkout-header">
+                    <div className="main-header-title font-sans">
+                      Shipping & taxes calculated at checkout
+                    </div>
+                    <div className="shipping-protection-container ">
+                      {/* p-2 */}
+                      <div className="swith-container p-2 flex gap-2 items-center ">
+                        <div className="shipping-protection-info">
+                          <div className="title font-sans font-semibold text-[0.8rem]">
+                            Shipping Protection
+                          </div>
+                          <div className="second-title  flex gap-1">
+                            <div className="second-title__text-checkout font-sans text-[0.6rem]">
+                              from Damage, Loss & Theft for
+                            </div>
+                            <div className=" font-sans text-[0.6rem] font-bold">
+                              $ 3
+                            </div>
+                          </div>
+                        </div>
+                        <div className="shipping-protection-switch-button">
+                          {/* shippingProtectionChecked,setShippingProtectionChecked */}
+                          <OnOffSwitch
+                            checked={shippingProtectionChecked.current}
+                            setChecked={setShippingProtectionChecked}
+                          />
+                        </div>
+                      </div>
+                      <div className="note font-sans text-[0.6rem]">
+                        *By turning off package protection, Dance Gavin Dance is
+                        not liable for lost, damaged, or stolen items
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="checkout-main-info py-10 flex flex-col gap-8">
+                    <div className="first-message font-sans text-[0.9rem]">
+                      If purchasing presale items with non-presale items, all
+                      items will ship together when the presale is available.
+                    </div>
+                    <div className="secodn-message font-sans text-[0.9rem]">
+                      Please place separate orders if you would like to receive
+                      non-presale items first.
+                    </div>
+                  </div>
+
+                  <div className="checkout-action-button-container p-7">
+                    <div
+                      onClick={() => {
+                        checkOut();
+                      }}
+                      className="checkout-button-action relative fill-animation login-button button-action p-4 bg-[#E6433C] text-white flex justify-center"
+                    >
+                      {/* <LockOutlinedIcon /> */}
+
+                      <div className="lock-icon-container absolute top-[25%] left-[3%]">
+                        <LockOutlinedIcon fontSize="small" />
+                      </div>
+
+                      <div className="second-part flex items-center justify-center gap-4">
+                        <div className="checkout-text-container felx items-center">
+                          <div className="checkout-text text-[0.8rem] tracking-widest">
+                            CHECKOUT
+                          </div>
+                        </div>
+                        <div className="square-container h-[60%]">
+                          {/* <StopIcon fontSize="small" /> */}
+                          <div className="square bg-white p-[2px]"></div>
+                        </div>
+                        <div className="total-price flex gap-1 items-center">
+                          <div className="currency-selected text-[0.8rem]">
+                            {returnFitCurrencyIcon()}
+                          </div>
+                          <div className="price-number text-[0.8rem]">
+                            {calculateTotalPrice()}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -183,7 +271,11 @@ console.log('bruh ',productsAddedToCart,"run forest",productsAddedToCartList)
         );
       },
       search: () => {
-        return <div className="search-menu-container">search placeholder</div>;
+        return (
+          <div className="search-menu-container bg-[#22BDC3]">
+            search placeholder
+          </div>
+        );
       },
     };
     return menuTypes[drawersMenuTypeState]();
