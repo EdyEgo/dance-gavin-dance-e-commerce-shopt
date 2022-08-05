@@ -18,6 +18,7 @@ const OnOffSwitch: React.FC<OnOffSwitchProps> = ({ checked, setChecked }) => {
   return (
     <div className="on-off-switch-container">
       <Switch
+        size="small"
         checked={checkedIn}
         onChange={handleChange}
         inputProps={{ "aria-label": "controlled" }}
