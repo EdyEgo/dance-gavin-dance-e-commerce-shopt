@@ -3,20 +3,14 @@ import * as React from "react";
 import Drawer from "@mui/material/Drawer";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import StopIcon from "@mui/icons-material/Stop";
-// import Button from "@mui/material/Button";
-// import List from "@mui/material/List";
-// import Divider from "@mui/material/Divider";
-// import ListItem from "@mui/material/ListItem";
-// import ListItemButton from "@mui/material/ListItemButton";
-// import ListItemIcon from "@mui/material/ListItemIcon";
-// import ListItemText from "@mui/material/ListItemText";
-// import InboxIcon from "@mui/icons-material/MoveToInbox";
-// import MailIcon from "@mui/icons-material/Mail";
-import { Link } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
 import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
+import ShippingIcon from "../../../images/shipping/RoutePlusGray.svg";
 
 import {
   changeDrawerStateByDirectionId,
@@ -26,13 +20,16 @@ import {
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import ProductItemCart from "../../../composables/generalHelpers/productItemCart";
-import OnOffSwitch from "../../../composables/generalHelpers/onOffSwitch";
 
+import ShippingSwitch from "../../../composables/generalHelpers/shippingSwitch";
 type Anchor = "top" | "left" | "bottom" | "right";
 
 export default function LeftMenuDrawer() {
   const dispatch = useDispatch();
   const useid = React.useId();
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = React.useState(false);
 
   const productsSelectedCurrency = useSelector(
     (state: any) => state.productFiltersSearch.selectedCurrency
@@ -42,12 +39,6 @@ export default function LeftMenuDrawer() {
   const drawersMenuTypeState = useSelector(
     (state: any) => state.drawers.menuType
   );
-
-  const shippingProtectionChecked = React.useRef(false);
-
-  function setShippingProtectionChecked() {
-    shippingProtectionChecked.current = !shippingProtectionChecked.current;
-  }
 
   const productsAddedToCart = useSelector(
     (state: any) => state.cart.productsAddedToCart.length
@@ -104,6 +95,22 @@ export default function LeftMenuDrawer() {
 
   async function checkOut() {
     // left here
+
+    setLoading(true);
+    if (productsAddedToCartList.length <= 0) {
+      setLoading(false);
+
+      return;
+    }
+
+    setLoading(false);
+    dispatch(
+      changeDrawerStateByDirectionId({
+        direction: "right",
+        newStatus: false,
+      })
+    );
+    navigate("/dance-gavin-dance-edyego-clone/checkout");
   }
 
   function returnFitTypeMenu() {
@@ -157,25 +164,26 @@ export default function LeftMenuDrawer() {
                     <div className="shipping-protection-container ">
                       {/* p-2 */}
                       <div className="swith-container p-2 flex gap-2 items-center ">
-                        <div className="shipping-protection-info">
-                          <div className="title font-sans font-semibold text-[0.8rem]">
-                            Shipping Protection
+                        <div className="shipping-protection-info flex items-center gap-2 justify-center">
+                          <div className="icon-shipping-container">
+                            <img src={ShippingIcon} alt="" />
                           </div>
-                          <div className="second-title  flex gap-1">
-                            <div className="second-title__text-checkout font-sans text-[0.6rem]">
-                              from Damage, Loss & Theft for
+                          <div className="second-part pt-1">
+                            <div className="title font-sans font-semibold text-[0.8rem]">
+                              Shipping Protection
                             </div>
-                            <div className=" font-sans text-[0.6rem] font-bold">
-                              $ 3
+                            <div className="second-title  flex gap-1">
+                              <div className="second-title__text-checkout font-sans text-[0.6rem]">
+                                from Damage, Loss & Theft for
+                              </div>
+                              <div className=" font-sans text-[0.6rem] font-bold">
+                                $ 3
+                              </div>
                             </div>
                           </div>
                         </div>
                         <div className="shipping-protection-switch-button">
-                          {/* shippingProtectionChecked,setShippingProtectionChecked */}
-                          <OnOffSwitch
-                            checked={shippingProtectionChecked.current}
-                            setChecked={setShippingProtectionChecked}
-                          />
+                          <ShippingSwitch />
                         </div>
                       </div>
                       <div className="note font-sans text-[0.6rem]">
@@ -201,33 +209,47 @@ export default function LeftMenuDrawer() {
                       onClick={() => {
                         checkOut();
                       }}
-                      className="checkout-button-action relative fill-animation login-button button-action p-4 bg-[#E6433C] text-white flex justify-center"
+                      className="checkout-button-action relative fill-animation login-button button-action p-4 bg-[#E6433C] text-white "
                     >
                       {/* <LockOutlinedIcon /> */}
 
-                      <div className="lock-icon-container absolute top-[25%] left-[3%]">
-                        <LockOutlinedIcon fontSize="small" />
-                      </div>
+                      {!loading && (
+                        <div className="info-button-container flex justify-center">
+                          <div className="lock-icon-container absolute top-[25%] left-[3%]">
+                            <LockOutlinedIcon fontSize="small" />
+                          </div>
 
-                      <div className="second-part flex items-center justify-center gap-4">
-                        <div className="checkout-text-container felx items-center">
-                          <div className="checkout-text text-[0.8rem] tracking-widest">
+                          <div className="second-part flex items-center justify-center gap-4">
+                            <div className="checkout-text-container felx items-center">
+                              {/* <div className="checkout-text text-[0.8rem] tracking-widest">
                             CHECKOUT
+                          </div> */}
+
+                              <div className=" action-btn-text text-[0.8rem] tracking-widest">
+                                CHECKOUT
+                              </div>
+                            </div>
+                            <div className="square-container h-[60%]">
+                              {/* <StopIcon fontSize="small" /> */}
+                              <div className="square bg-white p-[2px]"></div>
+                            </div>
+                            <div className="total-price flex gap-1 items-center">
+                              <div className="currency-selected text-[0.8rem]">
+                                {returnFitCurrencyIcon()}
+                              </div>
+                              <div className="price-number text-[0.8rem]">
+                                {calculateTotalPrice()}
+                              </div>
+                            </div>
                           </div>
                         </div>
-                        <div className="square-container h-[60%]">
-                          {/* <StopIcon fontSize="small" /> */}
-                          <div className="square bg-white p-[2px]"></div>
+                      )}
+
+                      {loading && (
+                        <div className="flex items-center justify-center loading-icon-btn">
+                          <CircularProgress color="inherit" size="20px" />
                         </div>
-                        <div className="total-price flex gap-1 items-center">
-                          <div className="currency-selected text-[0.8rem]">
-                            {returnFitCurrencyIcon()}
-                          </div>
-                          <div className="price-number text-[0.8rem]">
-                            {calculateTotalPrice()}
-                          </div>
-                        </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>

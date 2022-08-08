@@ -13,6 +13,7 @@ import AdminPage from "../../pages/AdminPage";
 import ProductPage from "../../pages/ProductPage";
 import SwanfestPage from "../../pages/SwanfestPage";
 import RedirectToHome from "./RedirectHome";
+import CheckOut from "../../pages/CheckOut";
 
 interface ClientAreaProps {}
 
@@ -59,6 +60,11 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
             <Route
               path="/dance-gavin-dance-edyego-clone/products/:productId"
               element={<ProductPage />}
+            />
+
+            <Route
+              path="/dance-gavin-dance-edyego-clone/checkout"
+              element={<CheckOut />}
             />
 
             <Route

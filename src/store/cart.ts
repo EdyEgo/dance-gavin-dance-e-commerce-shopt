@@ -22,6 +22,8 @@ function extractPriceNumber(productItem:any){
 
 const initialState: {
   totalPrice: number
+  shippingProtectionChecked:boolean,
+
   productsAddedToCart: {
     totalQuantityPrice:number,
     quantity: number;
@@ -29,6 +31,7 @@ const initialState: {
     [key: string]: any;
   }[];
 } = {
+  shippingProtectionChecked:false,
   totalPrice:0,
   productsAddedToCart: [],
 };
@@ -58,7 +61,10 @@ export const cartSlice = createSlice({
 
 
     },
-
+  
+    changeShippingProtectionCheck(state, { payload }:{payload:boolean}){
+    state.shippingProtectionChecked = payload
+    },
     changeProductQuantityByIndex(state, { payload }){
       const indexProduct = payload.productIndex 
       const newQuantity = payload.newQuantity
@@ -72,6 +78,6 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addProductToCart,removeProductFromCart,changeProductQuantityByIndex } = cartSlice.actions;
+export const { addProductToCart,removeProductFromCart,changeShippingProtectionCheck,changeProductQuantityByIndex } = cartSlice.actions;
 
 export default cartSlice.reducer;
