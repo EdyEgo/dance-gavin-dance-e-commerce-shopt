@@ -9,8 +9,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RangeSlider from "./rangeSlider";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
-import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
+import FitCurrencyIcon from "./FitCurrencyIcon";
+
 import {
   changeAvailabilitySelected,
   changePriceRangeNumberSelected,
@@ -122,14 +122,6 @@ export default function SimpleAccordion() {
   // const sortBySelectedValues = useSelector(
   //   (state: any) => state.productFiltersSearch.sortBy
   // );
-
-  const returnFitCurrencyIcon = () => {
-    const iconsList: { [key: string]: any } = {
-      euro: <EuroRoundedIcon fontSize="small" />,
-      dollar: <DollarRoundedIcon fontSize="small" />,
-    };
-    return iconsList[productsSelectedCurrency];
-  };
 
   function capitalizeFirstLetter(word: string) {
     return word.charAt(0).toUpperCase() + word.slice(1);
@@ -267,7 +259,9 @@ export default function SimpleAccordion() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        {returnFitCurrencyIcon()}
+                        <FitCurrencyIcon
+                          productsSelectedCurrency={productsSelectedCurrency}
+                        />
                       </InputAdornment>
                     ),
                   }}
@@ -286,7 +280,9 @@ export default function SimpleAccordion() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        {returnFitCurrencyIcon()}
+                        <FitCurrencyIcon
+                          productsSelectedCurrency={productsSelectedCurrency}
+                        />
                       </InputAdornment>
                     ),
                   }}

@@ -2,14 +2,12 @@ import * as React from "react";
 // import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import StopIcon from "@mui/icons-material/Stop";
+
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
-import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import ShippingIcon from "../../../images/shipping/RoutePlusGray.svg";
 
 import {
@@ -22,6 +20,8 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import ProductItemCart from "../../../composables/generalHelpers/productItemCart";
 
 import ShippingSwitch from "../../../composables/generalHelpers/shippingSwitch";
+import FitCurrencyIcon from "../../../composables/generalHelpers/FitCurrencyIcon";
+
 type Anchor = "top" | "left" | "bottom" | "right";
 
 export default function LeftMenuDrawer() {
@@ -71,14 +71,6 @@ export default function LeftMenuDrawer() {
     );
   }
 
-  const returnFitCurrencyIcon = () => {
-    const iconsList: { [key: string]: any } = {
-      euro: <EuroRoundedIcon fontSize="small" />,
-      dollar: <DollarRoundedIcon fontSize="small" />,
-    };
-    return iconsList[productsSelectedCurrency];
-  };
-
   function calculateTotalPrice() {
     // .totalQuantityPrice
     const totalPrice = productsAddedToCartList.reduce(
@@ -113,6 +105,9 @@ export default function LeftMenuDrawer() {
     navigate("/dance-gavin-dance-edyego-clone/checkout");
   }
 
+  console.log(
+    "still need to edit the cart in loged in mode if the user is in his account !!!"
+  );
   function returnFitTypeMenu() {
     const menuTypes: { [menuType: string]: () => any } = {
       cart: () => {
@@ -235,7 +230,11 @@ export default function LeftMenuDrawer() {
                             </div>
                             <div className="total-price flex gap-1 items-center">
                               <div className="currency-selected text-[0.8rem]">
-                                {returnFitCurrencyIcon()}
+                                <FitCurrencyIcon
+                                  productsSelectedCurrency={
+                                    productsSelectedCurrency
+                                  }
+                                />
                               </div>
                               <div className="price-number text-[0.8rem]">
                                 {calculateTotalPrice()}

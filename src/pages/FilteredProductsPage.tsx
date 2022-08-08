@@ -17,14 +17,14 @@ import {
   addSizeFiltersSelected,
 } from "../store/productFiltersSearch";
 
-import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
-import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
+
 import ProductItem from "../composables/generalHelpers/productItem";
 import AccordionList from "../composables/generalHelpers/accordionList";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuItem from "@mui/material/MenuItem";
 import CheckIcon from "@mui/icons-material/Check";
 import DashBoard from "../composables/generalHelpers/dashBoard";
+import FitCurrencyIcon from "../composables/generalHelpers/FitCurrencyIcon";
 import ClearIcon from "@mui/icons-material/Clear";
 import ProductListByFilter from "../composables/pages/filteredProductsPage/ProductsListByFilter";
 import {
@@ -376,14 +376,6 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     return true;
   }
 
-  const returnFitCurrencyIcon = () => {
-    const iconsList: { [key: string]: any } = {
-      euro: <EuroRoundedIcon fontSize="small" />,
-      dollar: <DollarRoundedIcon fontSize="small" />,
-    };
-    return iconsList[selectedCurrency];
-  };
-
   const displayPriceFilterSelected =
     priceRangeSelected[0] !== priceRangeAvailable[0] ||
     priceRangeSelected[1] !== priceRangeAvailable[1];
@@ -672,7 +664,9 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                     <div className="filter-selected font-sans flex gap-2">
                       <div className="min-price flex gap-2">
                         <div className="currency">
-                          {returnFitCurrencyIcon()}
+                          <FitCurrencyIcon
+                            productsSelectedCurrency={selectedCurrency}
+                          />
                         </div>
                         <div className="price-number font-sans">
                           {priceRangeSelected[0]}
@@ -681,7 +675,9 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                       <div className="line-between-range">-</div>
                       <div className="max-range flex gap-2">
                         <div className="currency">
-                          {returnFitCurrencyIcon()}
+                          <FitCurrencyIcon
+                            productsSelectedCurrency={selectedCurrency}
+                          />
                         </div>
                         <div className="price-number font-sans">
                           {priceRangeSelected[1]}

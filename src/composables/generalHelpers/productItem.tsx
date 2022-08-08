@@ -9,10 +9,9 @@ import {
   changeDrawerTypeMenu,
 } from "../../store/drawers";
 import ImageWebp from "../../components/general-helpers/ImageWebp";
-import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
-import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
+
 import AddIcon from "@mui/icons-material/Add";
-import { DriveEtaTwoTone } from "@mui/icons-material";
+import FitCurrencyIcon from "./FitCurrencyIcon";
 
 // import {changeSelectedCurrency} from "../../store/productFiltersSearch"
 
@@ -92,14 +91,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
   //     numberItemsAvailable: null,
   //   };
   // }
-
-  const returnFitCurrencyIcon = () => {
-    const iconsList: { [key: string]: any } = {
-      euro: <EuroRoundedIcon fontSize="small" />,
-      dollar: <DollarRoundedIcon fontSize="small" />,
-    };
-    return iconsList[productsSelectedCurrency];
-  };
 
   // const {
   //   numberItemsAvailable,
@@ -214,9 +205,9 @@ const ProductItem: React.FC<ProductItemProps> = ({
           to={`/dance-gavin-dance-edyego-clone/products/${productPropertiesValues.id}`}
           className="flex items-center justify-center gap-2 mt-2 price-container"
         >
-          {/* <div className="flex items-center currency"> */}
-          {returnFitCurrencyIcon()}
-          {/* </div> */}
+          <FitCurrencyIcon
+            productsSelectedCurrency={productsSelectedCurrency}
+          />
           <div className="font-sans price-number">
             {correctPriceForSelectedCurrency}
           </div>

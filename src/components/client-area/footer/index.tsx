@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -9,6 +10,9 @@ import { Link } from "react-router-dom";
 interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
+  // const locationReact = useLocation();
+  // const isCheckoutPage = locationReact.pathname.includes("checkout");
+
   return (
     <div className="footer-container  text-white p-12">
       {/* h-96  */}

@@ -8,9 +8,10 @@ import { addToUserCart } from "../api/dataBaseCartMethods";
 import { addProductToCart } from "../store/cart";
 import { changeDrawerStateByDirectionId ,changeDrawerTypeMenu} from "../store/drawers";
 import ProductImageShowcase from "../components/admin-area/productImageShowcase";
+import FitCurrencyIcon from "../composables/generalHelpers/FitCurrencyIcon";
+
 import CheckSharpIcon from "@mui/icons-material/CheckSharp";
-import EuroRoundedIcon from "@mui/icons-material/EuroRounded";
-import DollarRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
+
 import QuantitySelector from "../composables/generalHelpers/productQuantitySelector";
 import ProductItem from "../composables/generalHelpers/productItem";
 
@@ -86,9 +87,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
         })
       );
 
-      dispatch(
-        changeDrawerTypeMenu({menuTypeSelected:"cart"})
-      )
+      dispatch(changeDrawerTypeMenu({ menuTypeSelected: "cart" }));
       return;
     }
 
@@ -101,9 +100,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
       })
     );
 
-    dispatch(
-      changeDrawerTypeMenu({menuTypeSelected:"cart"})
-    )
+    dispatch(changeDrawerTypeMenu({ menuTypeSelected: "cart" }));
   }
 
   function setNewQuantity(newQuantityValue: number) {
@@ -224,14 +221,6 @@ const ProductPage: React.FC<ProductPageProps> = () => {
 
     return false;
   }
-
-  const returnFitCurrencyIcon = () => {
-    const iconsList: { [key: string]: any } = {
-      euro: <EuroRoundedIcon fontSize="medium" />,
-      dollar: <DollarRoundedIcon fontSize="medium" />,
-    };
-    return iconsList[productsSelectedCurrency];
-  };
 
   function capitalizeFirstLetter(word: string) {
     return word.charAt(0).toUpperCase() + word.slice(1);
@@ -380,7 +369,10 @@ const ProductPage: React.FC<ProductPageProps> = () => {
               <div className="price-and-stock-details border-b border-[#17888c] pb-7 flex items-center gap-4 mt-4">
                 <div className="flex items-center gap-2 price-container">
                   <div className="price-currency ">
-                    {returnFitCurrencyIcon()}
+                    <FitCurrencyIcon
+                      size="medium"
+                      productsSelectedCurrency={productsSelectedCurrency}
+                    />
                   </div>
                   <div className="price-number font-sans text-[1.8rem]">
                     {selectedPrice}
@@ -424,8 +416,6 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                           [sizeNameItem, sizeItemObjectValue]: any,
                           sizesIndex: number
                         ) => {
-                        
-
                           const numberItemsAvailable = parseInt(
                             sizeItemObjectValue.numberItemsAvailable
                           );

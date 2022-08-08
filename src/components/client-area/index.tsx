@@ -15,16 +15,20 @@ import SwanfestPage from "../../pages/SwanfestPage";
 import RedirectToHome from "./RedirectHome";
 import CheckOut from "../../pages/CheckOut";
 
+import HeaderContainer from "./header/HeaderContainer";
+import FooterContainer from "./footer/FooterContainer";
+
 interface ClientAreaProps {}
 
 const ClientArea: React.FC<ClientAreaProps> = () => {
   return (
     <div>
       <Router>
-        <header className="sticky top-0 z-20 header">
-          {/* was "relative" here but we need : "sticky top-0" */}
+        {/* <header className="sticky top-0 z-20 header">
+         
           <NavBar />
-        </header>
+        </header> */}
+        <HeaderContainer />
 
         <div className="routes-container">
           <Routes>
@@ -84,16 +88,19 @@ const ClientArea: React.FC<ClientAreaProps> = () => {
               path="*"
               element={
                 <div>
-                  Ops this page was not so lucky as the rest of them , 404 Error
-                  , page not found
+                  Ops, this page was not so lucky as the rest of them , 404
+                  Error , page not found
                 </div>
               }
             />
           </Routes>
         </div>
-        <div className="footer-container">
+
+        {/* <div className="footer-container">
           <Footer />
-        </div>
+        </div> */}
+        <FooterContainer />
+
         <MenuDrawer />
       </Router>
     </div>
