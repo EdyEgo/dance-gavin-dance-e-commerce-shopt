@@ -6,12 +6,13 @@ const initialState: {
     country: null | string;
     firstName: null | string;
     lastName: null | string;
+    region:null | string;
     company: null | string;
     address: null | string;
     apartament: null | string;
     city: null | string;
-    postcode: null | string;
-    phone: null | string;
+    postalCode: null | string;
+    phone: null | number;
   };
   shippingMethodSelected: null | any;
   paymentInfo: {
@@ -30,8 +31,9 @@ const initialState: {
     email: null,
     firstName: null,
     lastName: null,
+    region:null,
     phone: null,
-    postcode: null,
+    postalCode: null,
   },
   shippingMethodSelected: null,
   paymentInfo: {
@@ -55,11 +57,15 @@ export const checkoutSlice = createSlice({
         | "company"
         | "address"
         | "apartament"
-        | "postcode"
+        | "postalCode"
+        | "region"
         | "city"
         | "phone" = payload.informationType;
       const newInformationValue = payload.newInformationValue;
 
+      
+
+      
       state.informationsPage[informationType] = newInformationValue;
     },
 
