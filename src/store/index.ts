@@ -5,6 +5,7 @@ import productFiltersSearchReducer from "./productFiltersSearch";
 import productsReducer from "./products";
 import cartReducer from "./cart";
 import usersReducer from "./users";
+import checkoutReducer from "./checkout";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     productFiltersSearch: productFiltersSearchReducer,
     products: productsReducer,
     cart: cartReducer,
+    checkout: checkoutReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

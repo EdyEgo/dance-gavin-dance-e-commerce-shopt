@@ -13,7 +13,6 @@ import {
   // changeDrawerTypeMenu,
 } from "../../store/drawers";
 
-
 import FitCurrencyIcon from "../generalHelpers/FitCurrencyIcon";
 
 import QuantitySelector from "./productQuantitySelector"; // add maxim to add , show a title if the maximum to add is met
@@ -146,7 +145,7 @@ const ProductItemCart: React.FC<ProductItemCartProps> = ({
 
         {sizeNameTitle != null && (
           <div className="cart-product-size-selected">
-            <div className="size-selected font-sans font-normal text-gray-600">
+            <div className="size-selected font-sans font-normal">
               {sizeNameTitle}
             </div>
           </div>

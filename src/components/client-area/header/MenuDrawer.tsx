@@ -102,7 +102,9 @@ export default function LeftMenuDrawer() {
         newStatus: false,
       })
     );
-    navigate("/dance-gavin-dance-edyego-clone/checkout");
+    navigate(
+      "/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Information"
+    );
   }
 
   console.log(

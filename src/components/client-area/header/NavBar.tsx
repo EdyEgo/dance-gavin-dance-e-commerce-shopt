@@ -4,7 +4,6 @@ import footerImage from "../../../images/footer.webp";
 import albumImage from "../../../images/album-image.webp";
 import navMiddleImageWbp from "../../../images/left-nav-bar-logo.webp";
 import navMiddleImagePng from "../../../images/nav-bar-middle-logo.png";
-import pngPlaceholder from "../../../images/logo192.png";
 import ShoppingCart from "./ShoppingCart";
 import BurgetMenuMobile from "@mui/icons-material/Menu";
 import SearchIconMobile from "@mui/icons-material/Search";
