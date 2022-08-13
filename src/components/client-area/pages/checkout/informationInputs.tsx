@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as React from "react";
 import CheckoutInput from "../../../../composables/generalHelpers/checkoutInput";
@@ -10,18 +10,40 @@ interface InformationInputsProps {}
 const InformationInputs: React.FC<InformationInputsProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const searchQuaerys = useLocation().search;
+
+  const informationsCheckout = useSelector(
+    (state: any) => state.checkout.informationsPage
+  );
+
+  const {
+    email,
+    country,
+    firstName,
+    lastName,
+    company,
+    address,
+    apartament,
+    postalCode,
+    city,
+    region,
+    phone,
+  } = informationsCheckout;
+
+  const changeInput = new URLSearchParams(searchQuaerys).get("changeInput");
+
   const inputsValues = React.useRef<any>({
-    email: "",
-    country: "Romania",
-    firstName: "",
-    lastName: "",
-    company: "",
-    address: "",
-    apartament: "",
-    postalCode: "",
-    city: "",
-    region: "",
-    phone: "",
+    email,
+    country,
+    firstName,
+    lastName,
+    company,
+    address,
+    apartament,
+    postalCode,
+    city,
+    region,
+    phone,
   });
 
   // inputName
@@ -63,6 +85,41 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
   // )
 
   // }
+
+  const adreessInputRef = React.useRef<any>(null);
+
+  const emailInputRef = React.useRef<any>(null);
+
+  function focusInputsOnChangeQueryURL() {
+    if (changeInput == null) {
+      return;
+    }
+
+    const queryTypes: { [queryType: string]: () => void } = {
+      email: () => {
+        if (emailInputRef.current?.focus == null) {
+          return;
+        }
+        emailInputRef.current.focus();
+      },
+      address: () => {
+        if (adreessInputRef.current?.focus == null) {
+          return;
+        }
+        adreessInputRef.current.focus();
+      },
+    };
+    const queryTypeExist = Object.hasOwn(queryTypes, changeInput);
+    if (!queryTypeExist) {
+      return;
+    }
+
+    queryTypes[changeInput]();
+  }
+
+  React.useEffect(() => {
+    focusInputsOnChangeQueryURL();
+  }, []);
 
   function verifyInputsValuesValid() {
     const email = inputsValues.current.email.trim();
@@ -111,6 +168,7 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
         <div className="email-input-container">
           <CheckoutInput
             labelName={"Email"}
+            inputRef={emailInputRef}
             setValue={changeInputsValues}
             inputName={"email"}
             type={"email"}
@@ -167,6 +225,7 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
             <div className="address-container">
               <CheckoutInput
                 labelName={"Address"}
+                inputRef={adreessInputRef}
                 setValue={changeInputsValues}
                 inputName={"address"}
                 type={"text"}
@@ -252,39 +311,11 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
                   "/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Shipping"
                 );
               }}
-              className="continue-to-shipping cursor-pointer font-sans p-5 bg-[#22BDC3] hover:bg-[#21A7AC] transition-all duration-150 rounded-md"
+              className="continue-to-shipping cursor-pointer font-sans font-medium p-5 bg-[#22BDC3] hover:bg-[#21A7AC] transition-all duration-150 rounded-md"
             >
               Continue to shipping
             </div>
           </div>
-        </div>
-      </div>
-      <div className="informations-footer">
-        <div className="links-list text-[#208F94] flex gap-2">
-          <a
-            className="hover:text-[#22BDC3]"
-            href="https://dancegavindanceband.com/43955585175/policies/refund-policy.html?locale=en-US"
-          >
-            Refund policy
-          </a>
-          <a
-            className="hover:text-[#22BDC3]"
-            href="https://dancegavindanceband.com/43955585175/policies/shipping-policy.html?locale=en-US"
-          >
-            Shipping policy
-          </a>
-          <a
-            className="hover:text-[#22BDC3]"
-            href="https://dancegavindanceband.com/43955585175/policies/privacy-policy.html?locale=en-US"
-          >
-            Privacy policy
-          </a>
-          <a
-            className="hover:text-[#22BDC3]"
-            href="https://dancegavindanceband.com/43955585175/policies/terms-of-service.html?locale=en-US"
-          >
-            Terms of service
-          </a>
         </div>
       </div>
     </div>

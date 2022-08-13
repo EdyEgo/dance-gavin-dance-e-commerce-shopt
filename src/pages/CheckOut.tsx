@@ -132,6 +132,36 @@ const CheckOutPage: React.FC<CheckOutPageProps> = () => {
             </div>
           </div>
           <div className="checkout__steps-container">{returnFitStepPage()}</div>
+          <div className="checkout__footer">
+            <div className="informations-footer">
+              <div className="links-list text-[#208F94] flex gap-2">
+                <a
+                  className="hover:text-[#22BDC3]"
+                  href="https://dancegavindanceband.com/43955585175/policies/refund-policy.html?locale=en-US"
+                >
+                  Refund policy
+                </a>
+                <a
+                  className="hover:text-[#22BDC3]"
+                  href="https://dancegavindanceband.com/43955585175/policies/shipping-policy.html?locale=en-US"
+                >
+                  Shipping policy
+                </a>
+                <a
+                  className="hover:text-[#22BDC3]"
+                  href="https://dancegavindanceband.com/43955585175/policies/privacy-policy.html?locale=en-US"
+                >
+                  Privacy policy
+                </a>
+                <a
+                  className="hover:text-[#22BDC3]"
+                  href="https://dancegavindanceband.com/43955585175/policies/terms-of-service.html?locale=en-US"
+                >
+                  Terms of service
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="products-details-and-total-container bg-[#22BDC3] w-[50%]">

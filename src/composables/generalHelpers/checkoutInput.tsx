@@ -2,6 +2,7 @@ import * as React from "react";
 
 interface CheckoutInputProps {
   value: any;
+  inputRef?: any;
   setValue: (newValue: any, inputName: string) => void;
   inputName: string;
   type: string;
@@ -14,6 +15,7 @@ const CheckoutInput: React.FC<CheckoutInputProps> = ({
   inputName,
   type,
   value,
+  inputRef,
 }) => {
   const [internalValue, setInternalValue] = React.useState(value);
 
@@ -35,6 +37,7 @@ const CheckoutInput: React.FC<CheckoutInputProps> = ({
           onChange={(event) => {
             setNewValue(event.target.value);
           }}
+          ref={inputRef != null ? inputRef : null}
         />
         <label className="form__label">{labelName}</label>
       </div>

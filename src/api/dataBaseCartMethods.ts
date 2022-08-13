@@ -8,11 +8,13 @@ export async function addToUserCart({
   productObject,
 }: {
   userUid: string;
-  userCurrentCart:any[];
+  userCurrentCart: any[];
   productObject: any;
 }) {
- const productIsAlreadyInCart = userCurrentCart.findIndex((product:any)=>product.id === productObject.id)
-  if(productIsAlreadyInCart !== -1){
+  const productIsAlreadyInCart = userCurrentCart.findIndex(
+    (product: any) => product.id === productObject.id
+  );
+  if (productIsAlreadyInCart !== -1) {
     return { error: true, message: "This product is already in your cart" };
   }
   try {
@@ -29,3 +31,10 @@ export async function addToUserCart({
     return { error: true, message: e.message };
   }
 }
+
+export async function proccessPayment({
+  accountLoggedInUid,
+}: {
+  // if an
+  accountLoggedInUid?: string;
+}) {}

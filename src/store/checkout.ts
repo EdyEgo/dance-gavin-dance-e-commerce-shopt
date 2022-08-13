@@ -6,7 +6,7 @@ const initialState: {
     country: null | string;
     firstName: null | string;
     lastName: null | string;
-    region:null | string;
+    region: null | string;
     company: null | string;
     address: null | string;
     apartament: null | string;
@@ -14,7 +14,13 @@ const initialState: {
     postalCode: null | string;
     phone: null | number;
   };
-  shippingMethodSelected: null | any;
+  shippingMethodSelected: {
+    name: "First Class Package International" | "Priority Mail International";
+    priceValue: number;
+    currencySelected: "euro" | "dollar";
+    indexValue: 0 | 1;
+  };
+  shippingMethodsList: any[];
   paymentInfo: {
     cardNumber: number | null;
     cardName: string | null;
@@ -27,15 +33,32 @@ const initialState: {
     apartament: null,
     city: null,
     company: null,
-    country: null,
+    country: "Romania",
     email: null,
     firstName: null,
     lastName: null,
-    region:null,
+    region: null,
     phone: null,
     postalCode: null,
   },
-  shippingMethodSelected: null,
+  shippingMethodSelected: {
+    name: "First Class Package International",
+    priceValue: 26,
+    currencySelected: "euro",
+    indexValue: 0,
+  },
+  shippingMethodsList: [
+    {
+      name: "First Class Package International",
+      priceValue: 26,
+      currencySelected: "euro",
+    },
+    {
+      name: "Priority Mail International",
+      priceValue: 56,
+      currencySelected: "euro",
+    },
+  ],
   paymentInfo: {
     cardExpirationDate: null,
     cardName: null,
@@ -63,9 +86,6 @@ export const checkoutSlice = createSlice({
         | "phone" = payload.informationType;
       const newInformationValue = payload.newInformationValue;
 
-      
-
-      
       state.informationsPage[informationType] = newInformationValue;
     },
 
