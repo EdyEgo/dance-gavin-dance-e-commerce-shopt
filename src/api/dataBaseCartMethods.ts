@@ -1,6 +1,6 @@
 import { postNewDocument } from "../composables/firebase/post/postDocument";
 
-import { serverTimestamp } from "firebase/firestore";
+import { arrayUnion, serverTimestamp } from "firebase/firestore";
 
 export async function addToUserCart({
   userUid,
@@ -34,7 +34,36 @@ export async function addToUserCart({
 
 export async function proccessPayment({
   accountLoggedInUid,
+  proccessPaymentObject,
 }: {
   // if an
   accountLoggedInUid?: string;
-}) {}
+  proccessPaymentObject: any;
+}) {
+  try {
+    const orderObject = await postNewDocument({
+      useAddDocument: true,
+      collectionSelected: "orders",
+      inputObject: proccessPaymentObject,
+    });
+
+    if (accountLoggedInUid != null) {
+      await postNewDocument({
+        collectionSelected: "users",
+        inputObject: {
+          orders: {
+            [orderObject.id]: {
+              deliveredAt: null,
+              orderedAt: serverTimestamp(),
+            },
+          },
+        },
+      });
+    }
+    // orderObject.id
+
+    return { error: false };
+  } catch (e: any) {
+    return { error: true, message: e.message };
+  }
+}

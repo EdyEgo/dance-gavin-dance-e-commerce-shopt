@@ -1,10 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useId, useState } from "react";
+import { useId, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import FitCurrencyIcon from "../../../../composables/generalHelpers/FitCurrencyIcon";
 import Backdrop from "../../../../composables/generalHelpers/backdrop";
 import Snackbar from "../../../../composables/generalHelpers/snackbar";
+import { proccessPayment } from "../../../../api/dataBaseCartMethods";
 
 interface PaymentInputsProps {}
 
@@ -13,9 +14,23 @@ const PaymentInputs: React.FC<PaymentInputsProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const authUser = useSelector((state: any) => state.auth.user);
+
   const [openStatusSnackbar, setOpenStatusSnackbar] = useState(false);
   const [openStatusBackdrop, setOpenStatusBackdrop] = useState(false);
   const [paymentMessage, setPaymentMessage] = useState<string>("");
+
+  const shippingProtectionChecked = useSelector(
+    (state: any) => state.cart.shippingProtectionChecked
+  );
+
+  const productsSelectedCurrency = useSelector(
+    (state: any) => state.productFiltersSearch.selectedCurrency
+  );
+
+  const productOrderedList = useSelector(
+    (state: any) => state.cart.productsAddedToCart
+  );
 
   const informationsCheckout = useSelector(
     (state: any) => state.checkout.informationsPage
@@ -25,10 +40,66 @@ const PaymentInputs: React.FC<PaymentInputsProps> = () => {
     (state: any) => state.checkout.shippingMethodSelected
   );
 
+  const cardDetails = useRef({
+    cardName: "",
+    cardNumber: null,
+    expirationDate: "",
+    securityDate: "",
+  });
+
   async function handlePayNow() {
+    // you only need the id of the product the the whole object soooooooooo productOrderedList has the products object
     setOpenStatusBackdrop(true);
     //setPaymentMessage if the payment was successfull
     // refresh the cart and checkout store
+
+    const { error } = await proccessPayment({
+      accountLoggedInUid:
+        typeof authUser?.uid === "string" ? authUser?.uid : null,
+      proccessPaymentObject: {
+        cardDetails: cardDetails.current,
+        productOrderedList: productOrderedList.map((productObject: any) => {
+          return {
+            id: productObject.id,
+            sizeSelected: productObject.sizeSelected,
+            quantity: productObject.quantity,
+            totalQuantityPrice: productObject.totalQuantityPrice,
+          };
+        }),
+        shippingMethod: {
+          name: shippingMethodSelected.name,
+          priceValues: {
+            currencySelected: shippingMethodSelected.currencySelected,
+            priceNumber: shippingMethodSelected.priceValue,
+          },
+        },
+        taxes: {
+          currencySelected: productsSelectedCurrency,
+          priceNumber: 8,
+        },
+        shippingProtectionChecked,
+        checkoutInformation: informationsCheckout,
+      },
+    });
+
+    setOpenStatusBackdrop(false);
+
+    if (error) {
+      setPaymentMessage("Error on proccessesing the order");
+      setTimeout(() => {
+        setPaymentMessage("");
+      }, 3000);
+      return;
+    }
+
+    setPaymentMessage("Order");
+    setTimeout(() => {
+      setPaymentMessage("Order was proccessed");
+    }, 3000);
+    // left here
+
+    // clean the cart , from local storage and from database if there is a user logged in
+    // send an email
   }
 
   return (
