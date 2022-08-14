@@ -5,6 +5,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import FitCurrencyIcon from "../../../../composables/generalHelpers/FitCurrencyIcon";
 import Backdrop from "../../../../composables/generalHelpers/backdrop";
 import Snackbar from "../../../../composables/generalHelpers/snackbar";
+import PaymentRememberMe from "./rememberPaymentInfoCheckbox";
 import { proccessPayment } from "../../../../api/dataBaseCartMethods";
 
 interface PaymentInputsProps {}
@@ -19,6 +20,12 @@ const PaymentInputs: React.FC<PaymentInputsProps> = () => {
   const [openStatusSnackbar, setOpenStatusSnackbar] = useState(false);
   const [openStatusBackdrop, setOpenStatusBackdrop] = useState(false);
   const [paymentMessage, setPaymentMessage] = useState<string>("");
+
+  const rememberMe = useRef(false);
+
+  function setNewValueRememberMe(newValueForRememberMe: boolean) {
+    rememberMe.current = newValueForRememberMe;
+  }
 
   const shippingProtectionChecked = useSelector(
     (state: any) => state.cart.shippingProtectionChecked
@@ -54,6 +61,7 @@ const PaymentInputs: React.FC<PaymentInputsProps> = () => {
     // refresh the cart and checkout store
 
     const { error } = await proccessPayment({
+      rememberMe: rememberMe.current,
       accountLoggedInUid:
         typeof authUser?.uid === "string" ? authUser?.uid : null,
       proccessPaymentObject: {
@@ -161,7 +169,28 @@ const PaymentInputs: React.FC<PaymentInputsProps> = () => {
             </div>
           </div>
         </div>
-        <div className="shipping-method-selector-container bg-white rounded-md"></div>
+        {/* no point in adding a card really */}
+        {/* <div className="card-inputs-container  rounded-md">
+          <div className="card-inputs__title text-white">
+            <div className="title">
+              <div className="first-title font-sans font-extrabold">
+                Payment
+              </div>
+              <div className="second-title font-sans">
+                All transactions are secure and encrypted.
+              </div>
+            </div>
+          </div>
+          <div className="inputs-list bg-white rounded-md">
+<div className="inputs-list__title">
+
+</div>
+          </div>
+        </div> */}
+        <PaymentRememberMe
+          rememberMe={rememberMe.current}
+          setRememberMe={setNewValueRememberMe}
+        />
       </div>
       <div className="actions-buttons-container flex justify-between items-center">
         <div className="return-to-shop-button">

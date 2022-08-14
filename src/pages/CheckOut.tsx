@@ -60,35 +60,46 @@ const CheckOutPage: React.FC<CheckOutPageProps> = () => {
 
   const breadcrumbs = [
     <div className="back-to-shopping ">
-      <Link to="/dance-gavin-dance-edyego-clone">Shop</Link>
+      <Link className="text-[#21B1B6]" to="/dance-gavin-dance-edyego-clone">
+        Shop
+      </Link>
     </div>,
     <div className="information-link">
       {checkoutStep !== "Information" ? (
-        <Link to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Information">
+        <Link
+          className="text-[#21B1B6]"
+          to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Information"
+        >
           Information
         </Link>
       ) : (
-        "Information"
+        <div className="text-white">Information</div>
       )}
     </div>,
 
     <div className="shipping-link">
       {checkoutStep !== "Shipping" ? (
-        <Link to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Shipping">
+        <Link
+          className="text-[#21B1B6]"
+          to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Shipping"
+        >
           Shipping
         </Link>
       ) : (
-        "Shipping"
+        <div className="text-white">Shipping</div>
       )}
     </div>,
 
     <div className="payment-link">
       {checkoutStep !== "Payment" ? (
-        <Link to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Payment">
+        <Link
+          className="text-[#21B1B6]"
+          to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Payment"
+        >
           Payment
         </Link>
       ) : (
-        "Payment"
+        <div className="text-white">Payment</div>
       )}
     </div>,
   ];

@@ -34,10 +34,12 @@ export async function addToUserCart({
 
 export async function proccessPayment({
   accountLoggedInUid,
+  rememberMe,
   proccessPaymentObject,
 }: {
   // if an
   accountLoggedInUid?: string;
+  rememberMe: boolean;
   proccessPaymentObject: any;
 }) {
   try {
@@ -48,16 +50,44 @@ export async function proccessPayment({
     });
 
     if (accountLoggedInUid != null) {
-      await postNewDocument({
-        collectionSelected: "users",
-        inputObject: {
-          orders: {
-            [orderObject.id]: {
-              deliveredAt: null,
-              orderedAt: serverTimestamp(),
-            },
+      // rememberMe
+
+      const postInUserObjectDatabase: {
+        orders: any;
+        paymentInforamtion?: any;
+      } = {
+        orders: {
+          [orderObject.id]: {
+            deliveredAt: null,
+            orderedAt: serverTimestamp(),
           },
         },
+      };
+
+      if (rememberMe) {
+        const copyPaymentIformation = {
+          email: proccessPaymentObject.email,
+
+          country: proccessPaymentObject.country,
+          firstName: proccessPaymentObject.firstName,
+          lastName: proccessPaymentObject.lastName,
+          company: proccessPaymentObject.company,
+          address: proccessPaymentObject.address,
+          apartament: proccessPaymentObject.apartament,
+          postalCode: proccessPaymentObject.postalCode,
+          city: proccessPaymentObject.city,
+          region: proccessPaymentObject.region,
+          phone: proccessPaymentObject.phone,
+          shippingMethod: proccessPaymentObject.shippingMethod,
+          cardDetails: proccessPaymentObject.cardDetails,
+          taxes: proccessPaymentObject.taxes,
+        };
+        postInUserObjectDatabase["paymentInforamtion"] = copyPaymentIformation;
+      }
+
+      await postNewDocument({
+        collectionSelected: "users",
+        inputObject: postInUserObjectDatabase,
       });
     }
     // orderObject.id
