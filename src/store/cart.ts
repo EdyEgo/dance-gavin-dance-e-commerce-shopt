@@ -42,6 +42,12 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    refreshCartToDefaultStates(state) {
+      state.totalPrice = 0;
+      state.productsAddedToCart = [];
+      state.shippingProtectionChecked = false;
+    },
+
     addProductToCart(state, { payload }) {
       const productAlreadyInCart = state.productsAddedToCart.findIndex(
         (product) => product.id === payload.id
@@ -95,6 +101,7 @@ export const cartSlice = createSlice({
 });
 
 export const {
+  refreshCartToDefaultStates,
   addProductToCart,
   removeProductFromCart,
   changeShippingProtectionCheck,

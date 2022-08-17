@@ -97,3 +97,17 @@ export async function proccessPayment({
     return { error: true, message: e.message };
   }
 }
+
+export async function clearUserCart(userId: string) {
+  try {
+    await postNewDocument({
+      noRegister: true,
+      collectionSelected: "users",
+      documentName: userId,
+      inputObject: { card: null },
+    });
+    return { error: false };
+  } catch (e: any) {
+    return { error: true, message: e.message };
+  }
+}

@@ -19,6 +19,8 @@ import QuantitySelector from "./productQuantitySelector"; // add maxim to add , 
 
 interface ProductItemCartProps {
   hideActionsContainer?: true;
+  imageStyles?: string;
+  imageTagStyles?: string;
   showQuantityOnPictureStylesClasses?: any;
   productAdded: any;
   productCartIndex: number;
@@ -26,6 +28,8 @@ interface ProductItemCartProps {
 
 const ProductItemCart: React.FC<ProductItemCartProps> = ({
   hideActionsContainer,
+  imageStyles,
+  imageTagStyles,
   showQuantityOnPictureStylesClasses,
   productAdded,
   productCartIndex,
@@ -104,7 +108,11 @@ const ProductItemCart: React.FC<ProductItemCartProps> = ({
 
   return (
     <div className="product-item-cart-container bg-[#22BDC3] flex gap-3 justify-between">
-      <div className="cart-product-image w-[20%]">
+      <div
+        className={`cart-product-image ${
+          imageStyles != null ? imageStyles : "w-[20%]"
+        }`}
+      >
         <Link
           onClick={() => {
             changeLeftDrawerState(false, "right");
@@ -121,7 +129,9 @@ const ProductItemCart: React.FC<ProductItemCartProps> = ({
           <img
             src={productAdded.picturesURL[0]}
             alt=""
-            className="object-cover h-full w-full"
+            className={`object-cover h-full w-full  ${
+              imageTagStyles != null ? imageTagStyles : ""
+            }`}
           />
           {showQuantityOnPictureStylesClasses != null && (
             <div

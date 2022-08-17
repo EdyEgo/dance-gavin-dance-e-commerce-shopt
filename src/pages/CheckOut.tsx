@@ -35,26 +35,17 @@ const CheckOutPage: React.FC<CheckOutPageProps> = () => {
     (state: any) => state.productFiltersSearch.selectedCurrency
   );
 
-  const shippingProtectionChecked = useSelector(
-    (state: any) => state.cart.shippingProtectionChecked
+  const shippingMethodSelected = useSelector(
+    (state: any) => state.checkout.shippingMethodSelected
   );
+  console.log("inside ", shippingMethodSelected);
+  // const shippingProtectionChecked = useSelector(
+  //   (state: any) => state.cart.shippingProtectionChecked
+  // );
 
   const productsAddedToCartList = useSelector(
     (state: any) => state.cart.productsAddedToCart
   );
-
-  function returnFitStepPage() {
-    if (checkoutStep == null) {
-      return "";
-    }
-    const stepsPagesTypes: { [checkoutType: string]: any } = {
-      Information: <InformationInputs />,
-      Shipping: <ShippingInputs />,
-      Payment: <PaymentInput />,
-    };
-
-    return stepsPagesTypes[checkoutStep];
-  }
 
   // if there are not information in the preceding part of the checkout then the next one can not be access
 
@@ -121,10 +112,26 @@ const CheckOutPage: React.FC<CheckOutPageProps> = () => {
   const totalPriceWithoutTaxes = calculateTotalPrice();
   const shippingTaxes = 8;
 
+  const priceNumberWithAllTaxes =
+    totalPriceWithoutTaxes + shippingTaxes + shippingMethodSelected.priceValue;
+
+  function returnFitStepPage() {
+    if (checkoutStep == null) {
+      return "";
+    }
+    const stepsPagesTypes: { [checkoutType: string]: any } = {
+      Information: <InformationInputs />,
+      Shipping: <ShippingInputs />,
+      Payment: <PaymentInput totalToPayNumber={priceNumberWithAllTaxes} />,
+    };
+
+    return stepsPagesTypes[checkoutStep];
+  }
+
   return (
     <div className="checkout-page-container flex ">
       <div className="shipping-methods-container bg-[#1A1A1A] w-[60%]">
-        <div className="content-container">
+        <div className="content-container pl-[18.5%]">
           <div className="checkout__header">
             <div className="band-name-header">
               <div className="band-logo-container">
@@ -175,68 +182,92 @@ const CheckOutPage: React.FC<CheckOutPageProps> = () => {
           </div>
         </div>
       </div>
-      <div className="products-details-and-total-container bg-[#22BDC3] w-[50%]">
-        <div className="products-list-container text-white">
-          {productsAddedToCartList.map(
-            (productObject: any, cartProductIndex: number) => {
-              return (
-                <ProductItemCart
-                  showQuantityOnPictureStylesClasses={
-                    "p-1 rounded-full absolute top-0 left-0 text-white font-sans bg-gray-700"
-                  }
-                  hideActionsContainer={true}
-                  key={cartProductIndex + "checkout" + useid}
-                  productCartIndex={cartProductIndex}
-                  productAdded={productObject}
-                />
-              );
-            }
-          )}
-        </div>
-        <div className="subtotal-container text-white">
-          <div className="subtotal flex justify-between items-center">
-            <div className="title-left">Subtotal</div>
+      <div className="products-details-and-total-container bg-[#22BDC3] w-[50%] ">
+        <div className="products-details-content-container pr-[22%] pt-[8%] pl-[6%]">
+          <div className="products-list-container text-white flex flex-col gap-4">
+            {productsAddedToCartList.map(
+              (productObject: any, cartProductIndex: number) => {
+                {
+                  /* cart-product-image w-[20%] for cart */
+                }
+                //
+                return (
+                  <ProductItemCart
+                    imageStyles="w-[12%]"
+                    imageTagStyles={"rounded-md"}
+                    showQuantityOnPictureStylesClasses={
+                      "rounded-full absolute flex justify-center items-center -top-3 -right-3 text-white font-sans bg-[#6A7A7A] w-[40%] h-[40%]"
+                    }
+                    hideActionsContainer={true}
+                    key={cartProductIndex + "checkout" + useid}
+                    productCartIndex={cartProductIndex}
+                    productAdded={productObject}
+                  />
+                );
+              }
+            )}
+          </div>
+          <div className="subtotal-container text-white">
+            <div className="subtotal flex justify-between items-center">
+              <div className="title-left">Subtotal</div>
+              <div className="price-right flex gap-1 items-center">
+                {/* totalPriceWithoutTaxes */}
+                <div className="currency">
+                  <FitCurrencyIcon
+                    productsSelectedCurrency={productsSelectedCurrency}
+                  />
+                </div>
+                <div className="price">{totalPriceWithoutTaxes}</div>
+              </div>
+            </div>
+            <div className="shipping-info flex justify-between items-center">
+              <div className="title-left flex gap-2 items-center">
+                <div>Shipping</div>
+                <HelpOutlinedIcon fontSize="small" />
+              </div>
+              <div className="info-right flex gap-1">
+                <div className="currency">
+                  {checkoutStep !== null && checkoutStep !== "Information" && (
+                    <FitCurrencyIcon
+                      productsSelectedCurrency={productsSelectedCurrency}
+                    />
+                  )}
+                </div>
+                <div className="price">
+                  {checkoutStep === null || checkoutStep === "Information"
+                    ? "Calculated at next step"
+                    : shippingMethodSelected.priceValue}
+                </div>
+              </div>
+            </div>
+            <div className="estimated-taxes flex justify-between items-center pb-5">
+              <div className="title-left">
+                Taxes {"("}estimated{")"}
+              </div>
+              <div className="price-right flex gap-1 items-center">
+                <div className="currency">
+                  <FitCurrencyIcon
+                    productsSelectedCurrency={productsSelectedCurrency}
+                  />
+                </div>
+                <div className="price">{shippingTaxes}</div>
+              </div>
+            </div>
+          </div>
+          <div className="total-container text-white flex justify-between border-t border-[#3CC5CA] pt-5">
+            <div className="title-left">Total</div>
             <div className="price-right flex gap-1 items-center">
-              {/* totalPriceWithoutTaxes */}
               <div className="currency">
                 <FitCurrencyIcon
                   productsSelectedCurrency={productsSelectedCurrency}
                 />
               </div>
-              <div className="price">{totalPriceWithoutTaxes}</div>
-            </div>
-          </div>
-          <div className="shipping-info flex justify-between items-center">
-            <div className="title-left flex gap-2 items-center">
-              <div>Shipping</div>
-              <HelpOutlinedIcon fontSize="small" />
-            </div>
-            <div className="info-right">Calculated at next step</div>
-          </div>
-          <div className="estimated-taxes flex justify-between items-center ">
-            <div className="title-left">
-              Taxes {"("}estimated{")"}
-            </div>
-            <div className="price-right flex gap-1 items-center">
-              <div className="currency">
-                <FitCurrencyIcon
-                  productsSelectedCurrency={productsSelectedCurrency}
-                />
+              <div className="price">
+                {/* if the page is at Information then don t calculate the total price with the shipping taxes */}
+                {checkoutStep !== null && checkoutStep !== "Information"
+                  ? priceNumberWithAllTaxes
+                  : totalPriceWithoutTaxes + shippingTaxes}
               </div>
-              <div className="price">{shippingTaxes}</div>
-            </div>
-          </div>
-        </div>
-        <div className="total-container text-white">
-          <div className="title-left">Total</div>
-          <div className="price-right flex gap-1 items-center">
-            <div className="currency">
-              <FitCurrencyIcon
-                productsSelectedCurrency={productsSelectedCurrency}
-              />
-            </div>
-            <div className="price">
-              {totalPriceWithoutTaxes + shippingTaxes}
             </div>
           </div>
         </div>

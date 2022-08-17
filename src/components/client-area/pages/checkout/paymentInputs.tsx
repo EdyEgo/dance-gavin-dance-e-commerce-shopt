@@ -6,11 +6,18 @@ import FitCurrencyIcon from "../../../../composables/generalHelpers/FitCurrencyI
 import Backdrop from "../../../../composables/generalHelpers/backdrop";
 import Snackbar from "../../../../composables/generalHelpers/snackbar";
 import PaymentRememberMe from "./rememberPaymentInfoCheckbox";
-import { proccessPayment } from "../../../../api/dataBaseCartMethods";
+import {
+  proccessPayment,
+  clearUserCart,
+} from "../../../../api/dataBaseCartMethods";
+import { refreshCartToDefaultStates } from "../../../../store/cart";
+import { refreshCheckoutToDefaultStates } from "../../../../store/checkout";
 
-interface PaymentInputsProps {}
+interface PaymentInputsProps {
+  totalToPayNumber: number;
+}
 
-const PaymentInputs: React.FC<PaymentInputsProps> = () => {
+const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
   const useid = useId();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,7 +61,40 @@ const PaymentInputs: React.FC<PaymentInputsProps> = () => {
     securityDate: "",
   });
 
+  function informationsCheckoutAreValid() {
+    //  const {
+    //   address,
+    //   apartament,
+    //   city,
+    //   company,
+
+    //   email,
+    //   firstName,
+    //   lastName,
+    //   region,
+    //   phone,
+    //   postalCode,
+    //  } = informationsCheckout
+
+    const informationsCheckoutEntries = Object.entries(informationsCheckout);
+
+    for (const inputKeyValuePair of informationsCheckoutEntries) {
+      const inputvalue = inputKeyValuePair[1];
+      if (inputvalue == null) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   async function handlePayNow() {
+    const informationsAreValid = informationsCheckoutAreValid();
+
+    if (!informationsAreValid) {
+      return;
+    }
+
     // you only need the id of the product the the whole object soooooooooo productOrderedList has the products object
     setOpenStatusBackdrop(true);
     //setPaymentMessage if the payment was successfull
@@ -65,6 +105,7 @@ const PaymentInputs: React.FC<PaymentInputsProps> = () => {
       accountLoggedInUid:
         typeof authUser?.uid === "string" ? authUser?.uid : null,
       proccessPaymentObject: {
+        totalToPay: { totalToPayNumber, productsSelectedCurrency },
         cardDetails: cardDetails.current,
         productOrderedList: productOrderedList.map((productObject: any) => {
           return {
@@ -106,7 +147,22 @@ const PaymentInputs: React.FC<PaymentInputsProps> = () => {
     }, 3000);
     // left here
 
-    // clean the cart , from local storage and from database if there is a user logged in
+    dispatch(refreshCartToDefaultStates());
+    dispatch(refreshCheckoutToDefaultStates());
+
+    if (typeof authUser?.uid === "string") {
+      // if there is a user logged in then update his cart
+      const { error } = await clearUserCart(authUser.uid);
+      if (error) {
+        setPaymentMessage("Error on clearing your cart");
+        setTimeout(() => {
+          setPaymentMessage("");
+        }, 3000);
+      }
+    }
+
+    navigate("/dance-gavin-dance-edyego-clone");
+    // clean the cart ,the checkout, from local storage and from database if there is a user logged in
     // send an email
   }
 
@@ -218,7 +274,7 @@ const PaymentInputs: React.FC<PaymentInputsProps> = () => {
         </div>
       </div>
       <Backdrop setOpen={setOpenStatusBackdrop} open={openStatusBackdrop} />
-      ,
+
       <Snackbar
         setOpen={setOpenStatusSnackbar}
         open={openStatusSnackbar}

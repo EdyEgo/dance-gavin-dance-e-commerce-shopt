@@ -158,11 +158,19 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
   return (
     <div className="informations-container text-white">
       <div className="contact-informations-container">
-        <div className="contact-informations__header">
+        <div className="contact-informations__header flex justify-between">
           <div>Contact Information</div>
-          <div>
-            Already have an account?
-            <Link to="/dance-gavin-dance-edyego-clone/login">Log in</Link>
+          <div className="flex gap-2">
+            <div className="font-sans font-medium">
+              {" "}
+              Already have an account?
+            </div>
+            <Link
+              to="/dance-gavin-dance-edyego-clone/login"
+              className="font-sans text-[#22BDC3]"
+            >
+              Log in
+            </Link>
           </div>
         </div>
         <div className="email-input-container">

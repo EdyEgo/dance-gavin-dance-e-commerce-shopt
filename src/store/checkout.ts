@@ -71,6 +71,36 @@ export const checkoutSlice = createSlice({
   name: "checkout",
   initialState,
   reducers: {
+    refreshCheckoutToDefaultStates(state) {
+      state.informationsPage = {
+        address: null,
+        apartament: null,
+        city: null,
+        company: null,
+        country: "Romania",
+        email: null,
+        firstName: null,
+        lastName: null,
+        region: null,
+        phone: null,
+        postalCode: null,
+      };
+
+      state.shippingMethodSelected = {
+        name: "First Class Package International",
+        priceValue: 26,
+        currencySelected: "euro",
+        indexValue: 0,
+      };
+      state.paymentInfo = {
+        // we don t ask for card info in this app but in the future you never know
+        cardExpirationDate: null,
+        cardName: null,
+        cardNumber: null,
+        securityCode: null,
+      };
+    },
+
     changeInformationsPage(state, { payload }) {
       const informationType:
         | "email"
@@ -106,6 +136,7 @@ export const checkoutSlice = createSlice({
 });
 
 export const {
+  refreshCheckoutToDefaultStates,
   changeInformationsPage,
   changeShippingMethodSelected,
   changePaymentInfo,
