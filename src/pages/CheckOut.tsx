@@ -38,7 +38,6 @@ const CheckOutPage: React.FC<CheckOutPageProps> = () => {
   const shippingMethodSelected = useSelector(
     (state: any) => state.checkout.shippingMethodSelected
   );
-  console.log("inside ", shippingMethodSelected);
   // const shippingProtectionChecked = useSelector(
   //   (state: any) => state.cart.shippingProtectionChecked
   // );

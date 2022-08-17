@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: {
+  orderProcessedMadeEmailMessage: string;
   informationsPage: {
     email: null | string;
     country: null | string;
@@ -65,6 +66,8 @@ const initialState: {
     cardNumber: null,
     securityCode: null,
   },
+  orderProcessedMadeEmailMessage:
+    "Thank you for your order, your products should be at your door very soon.",
 };
 
 export const checkoutSlice = createSlice({

@@ -6,12 +6,14 @@ import FitCurrencyIcon from "../../../../composables/generalHelpers/FitCurrencyI
 import Backdrop from "../../../../composables/generalHelpers/backdrop";
 import Snackbar from "../../../../composables/generalHelpers/snackbar";
 import PaymentRememberMe from "./rememberPaymentInfoCheckbox";
+
 import {
   proccessPayment,
   clearUserCart,
 } from "../../../../api/dataBaseCartMethods";
 import { refreshCartToDefaultStates } from "../../../../store/cart";
 import { refreshCheckoutToDefaultStates } from "../../../../store/checkout";
+import { sendEmail } from "../../../../composables/emailSender"; // testing email sender
 
 interface PaymentInputsProps {
   totalToPayNumber: number;
@@ -48,6 +50,9 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
 
   const informationsCheckout = useSelector(
     (state: any) => state.checkout.informationsPage
+  );
+  const checkoutOrderProcessedMadeEmailMessage = useSelector(
+    (state: any) => state.checkout.orderProcessedMadeEmailMessage
   );
 
   const shippingMethodSelected = useSelector(
@@ -147,21 +152,44 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
     }, 3000);
     // left here
 
-    dispatch(refreshCartToDefaultStates());
-    dispatch(refreshCheckoutToDefaultStates());
-
     if (typeof authUser?.uid === "string") {
       // if there is a user logged in then update his cart
       const { error } = await clearUserCart(authUser.uid);
+
       if (error) {
         setPaymentMessage("Error on clearing your cart");
         setTimeout(() => {
           setPaymentMessage("");
         }, 3000);
+        return;
       }
+      // send logged user email
+      // totalToPayNumber, productsSelectedCurrency,productOrderedList.length
+
+      await sendEmail({
+        emailNameReceiver: authUser.email,
+        message: `${checkoutOrderProcessedMadeEmailMessage} , you have ordered ${productOrderedList.length} products with a 
+        total of  ${totalToPayNumber} ${productsSelectedCurrency}s to pay`,
+        userNameReceiver: informationsCheckout.firstName, // here use authUser.firstName
+      });
+      dispatch(refreshCartToDefaultStates());
+      dispatch(refreshCheckoutToDefaultStates());
+      navigate("/dance-gavin-dance-edyego-clone");
+      return;
     }
+    // send not logged user email with payment been proccessed
+    await sendEmail({
+      emailNameReceiver: informationsCheckout.email,
+      message: `${checkoutOrderProcessedMadeEmailMessage} , you have ordered ${productOrderedList.length} products with a 
+        total of  ${totalToPayNumber} ${productsSelectedCurrency}s to pay`,
+      userNameReceiver: informationsCheckout.firstName,
+    });
+
+    dispatch(refreshCartToDefaultStates());
+    dispatch(refreshCheckoutToDefaultStates());
 
     navigate("/dance-gavin-dance-edyego-clone");
+
     // clean the cart ,the checkout, from local storage and from database if there is a user logged in
     // send an email
   }
