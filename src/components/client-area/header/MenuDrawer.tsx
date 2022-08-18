@@ -44,6 +44,10 @@ export default function LeftMenuDrawer() {
     (state: any) => state.cart.productsAddedToCart.length
   );
 
+  const totalQuantityItems = useSelector(
+    (state: any) => state.cart.totalQuantityItems
+  );
+
   const productsAddedToCartList = useSelector(
     (state: any) => state.cart.productsAddedToCart
   );
@@ -123,11 +127,9 @@ export default function LeftMenuDrawer() {
                       <ShoppingBagOutlinedIcon fontSize="small" />
                       <div className="cart-title flex gap-1">
                         <div className="item-tittle">
-                          {productsAddedToCart >= 1 ? "Items" : "Item"}
+                          {totalQuantityItems >= 1 ? "Items" : "Item"}
                         </div>
-                        <div className="number-items">
-                          {productsAddedToCart}
-                        </div>
+                        <div className="number-items">{totalQuantityItems}</div>
                       </div>
                     </div>
                     <div className="cursor-pointer close-cart-menu">

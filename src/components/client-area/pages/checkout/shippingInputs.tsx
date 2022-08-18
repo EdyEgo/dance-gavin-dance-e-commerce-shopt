@@ -28,14 +28,13 @@ const ShippingInputs: React.FC<ShippingInputsProps> = () => {
   const { name, priceValue, currencySelected, indexValue } =
     shippingMethodSelected;
 
-  console.log("information checkout are", informationsCheckout);
   return (
-    <div className="shipping-inputs-container">
+    <div className="shipping-inputs-container h-[100vh]">
       <div className="shipping-inputs">
         <div className="shipping-informations-and-contact-container">
-          <div className="shipping-information-and-contact bg-white rounded-md">
-            <div className="contact flex justify-between">
-              <div className="title-contact">Contact</div>
+          <div className="shipping-information-and-contact bg-white rounded-md mb-12">
+            <div className="contact flex justify-between p-2">
+              <div className="title-contact font-sans font-bold">Contact</div>
               <div className="email-text">{informationsCheckout.email}</div>
               <Link
                 className="text-[#39C4C9] font-sans font-medium"
@@ -44,9 +43,9 @@ const ShippingInputs: React.FC<ShippingInputsProps> = () => {
                 Change
               </Link>
             </div>
-            <div className="ship-to flex justify-between border-t border-[#D9D9D9]">
-              <div className="title-ship-to">Ship to</div>
-              <div className="email-text">
+            <div className="ship-to flex justify-between border-t border-[#D9D9D9] p-2">
+              <div className="title-ship-to font-sans font-bold">Ship to</div>
+              <div className="email-text font-sans font-bold">
                 {informationsCheckout.address}, {informationsCheckout.city},{" "}
                 {informationsCheckout.postalCode},{" "}
                 {informationsCheckout.country}
@@ -60,7 +59,7 @@ const ShippingInputs: React.FC<ShippingInputsProps> = () => {
             </div>
           </div>
         </div>
-        <div className="shipping-method-selector-container bg-white rounded-md">
+        <div className="shipping-method-selector-container bg-white rounded-md mb-12">
           {shippingMethodsList.map(
             (shippingMethodObject: any, indexShippingMethod: number) => {
               const previousElementFromTheListIsNotExisting =
@@ -69,7 +68,7 @@ const ShippingInputs: React.FC<ShippingInputsProps> = () => {
 
               return (
                 <div
-                  className={`first shipping method flex justify-between cursor-pointer py-4 ${
+                  className={`first shipping method flex justify-between cursor-pointer py-4 px-2 ${
                     previousElementFromTheListIsNotExisting
                       ? ""
                       : "border-t border-[#D9D9D9]"
@@ -93,7 +92,7 @@ const ShippingInputs: React.FC<ShippingInputsProps> = () => {
                         <RadioButtonUncheckedIcon />
                       )}
                     </div>
-                    <div className="title-packeage">
+                    <div className="title-packeage font-sans font-medium">
                       {shippingMethodObject.name}
                     </div>
                   </div>

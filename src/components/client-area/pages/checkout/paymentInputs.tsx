@@ -40,6 +40,10 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
     (state: any) => state.cart.shippingProtectionChecked
   );
 
+  const totalQuantityItems = useSelector(
+    (state: any) => state.cart.totalQuantityItems
+  );
+
   const productsSelectedCurrency = useSelector(
     (state: any) => state.productFiltersSearch.selectedCurrency
   );
@@ -165,10 +169,10 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
       }
       // send logged user email
       // totalToPayNumber, productsSelectedCurrency,productOrderedList.length
-
+      //totalQuantityItems
       await sendEmail({
         emailNameReceiver: authUser.email,
-        message: `${checkoutOrderProcessedMadeEmailMessage} , you have ordered ${productOrderedList.length} products with a 
+        message: `${checkoutOrderProcessedMadeEmailMessage} , you have ordered ${totalQuantityItems} products with a 
         total of  ${totalToPayNumber} ${productsSelectedCurrency}s to pay`,
         userNameReceiver: informationsCheckout.firstName, // here use authUser.firstName
       });
@@ -195,12 +199,12 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
   }
 
   return (
-    <div className="payment-inputs-container">
+    <div className="payment-inputs-container h-[100vh]">
       <div className="payment-list">
         <div className="payment-informations-and-contact-container">
           <div className="payment-information-and-contact bg-white rounded-md">
-            <div className="contact flex justify-between">
-              <div className="title-contact">Contact</div>
+            <div className="contact flex justify-between p-2">
+              <div className="title-contact font-sans font-bold">Contact</div>
               <div className="email-text font-sans font-medium">
                 {informationsCheckout.email}
               </div>
@@ -211,8 +215,8 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
                 Change
               </Link>
             </div>
-            <div className="ship-to flex justify-between border-t border-[#D9D9D9]">
-              <div className="title-ship-to">Ship to</div>
+            <div className="ship-to flex justify-between border-t border-[#D9D9D9] p-2">
+              <div className="title-ship-to font-sans font-bold">Ship to</div>
               <div className="ship-to-text font-sans font-medium">
                 {informationsCheckout.address}, {informationsCheckout.city},{" "}
                 {informationsCheckout.postalCode},{" "}
@@ -226,8 +230,10 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
               </Link>
             </div>
 
-            <div className="ship-method flex justify-between border-t border-[#D9D9D9]">
-              <div className="title-shipping-to">Method</div>
+            <div className="ship-method flex justify-between border-t border-[#D9D9D9] p-2">
+              <div className="title-shipping-to font-sans font-bold">
+                Method
+              </div>
               <div className="shipping-method-container flex gap-2">
                 <div className="name font-sans font-medium">
                   {shippingMethodSelected.name}
@@ -276,7 +282,7 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
           setRememberMe={setNewValueRememberMe}
         />
       </div>
-      <div className="actions-buttons-container flex justify-between items-center">
+      <div className="actions-buttons-container flex justify-between items-center mt-12">
         <div className="return-to-shop-button">
           <Link
             className="return-shop-button font-sans flex items-center gap-2 text-[#21A7AC] hover:text-[#22BDC3]"

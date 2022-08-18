@@ -18,10 +18,10 @@ const RememberPaymentInfoCheckbox: React.FC<
   }
 
   return (
-    <div className="remember-me-container">
+    <div className="remember-me-container mt-12">
       <div className="remember-me__title"></div>
       <div
-        className="remember-me__checkbox-container bg-white cursor-pointer flex items-center gap-2"
+        className="remember-me__checkbox-container bg-white rounded-md cursor-pointer flex items-center gap-2 p-2"
         onClick={() => {
           setNewRememberMeValueAndRefreshComponent(!rememberInformation);
         }}
@@ -32,7 +32,7 @@ const RememberPaymentInfoCheckbox: React.FC<
           )}
           {!rememberInformation && <CheckBoxIcon className="text-[#22BDC3]" />}
         </div>
-        <div className="remember-me__text">
+        <div className="remember-me__text font-sans font-bold">
           Save my information for a faster checkout
         </div>
       </div>

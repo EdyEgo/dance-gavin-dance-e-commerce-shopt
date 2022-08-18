@@ -122,6 +122,17 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
   }, []);
 
   function verifyInputsValuesValid() {
+    if (
+      inputsValues.current.email == null ||
+      inputsValues.current.firstName == null ||
+      inputsValues.current.lastName == null ||
+      inputsValues.current.address == null ||
+      inputsValues.current.city == null ||
+      inputsValues.current.region == null
+    ) {
+      return false;
+    }
+
     const email = inputsValues.current.email.trim();
     const firstName = inputsValues.current.firstName.trim();
     const lastName = inputsValues.current.lastName.trim();
@@ -158,8 +169,8 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
   return (
     <div className="informations-container text-white">
       <div className="contact-informations-container">
-        <div className="contact-informations__header flex justify-between">
-          <div>Contact Information</div>
+        <div className="contact-informations__header flex justify-between px-8 pb-4">
+          <div className="font-sans font-medium">Contact Information</div>
           <div className="flex gap-2">
             <div className="font-sans font-medium">
               {" "}
@@ -185,13 +196,13 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
         </div>
 
         <div className="shipping-informations-container">
-          <div className="shipping-informations__title">
-            <div className="title">Shipping address</div>
+          <div className="shipping-informations__title px-8 pb-4">
+            <div className="title font-sans font-medium">Shipping address</div>
           </div>
-          <div className="shipping-informations__inputs-container">
+          <div className="shipping-informations__inputs-container ">
             <div className="country-container">
               <CheckoutInput
-                labelName={"Country"}
+                labelName={""}
                 setValue={changeInputsValues}
                 inputName={"country"}
                 type={"text"}
@@ -199,7 +210,7 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
               />
             </div>
 
-            <div className="full-name-container flex gap-1 justify-center">
+            <div className="full-name-container flex gap-1 justify-center px-4 pt-5">
               <div className="first-name">
                 <CheckoutInput
                   labelName={"First name"}
@@ -250,7 +261,7 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
                 value={inputsValues.current.apartament}
               />
             </div>
-            <div className="address-city-container flex gap-1 justify-center">
+            <div className="address-city-container flex gap-1 justify-center px-5">
               <div className="postal-code">
                 <CheckoutInput
                   labelName={"Postal code"}
