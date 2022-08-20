@@ -21,6 +21,7 @@ import ProductItemCart from "../../../composables/generalHelpers/productItemCart
 
 import ShippingSwitch from "../../../composables/generalHelpers/shippingSwitch";
 import FitCurrencyIcon from "../../../composables/generalHelpers/FitCurrencyIcon";
+import SearchProducts from "./searchProducts";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
@@ -298,7 +299,7 @@ export default function LeftMenuDrawer() {
       search: () => {
         return (
           <div className="search-menu-container bg-[#22BDC3]">
-            search placeholder
+            <SearchProducts />
           </div>
         );
       },

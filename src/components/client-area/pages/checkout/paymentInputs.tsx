@@ -89,7 +89,11 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
 
     for (const inputKeyValuePair of informationsCheckoutEntries) {
       const inputvalue = inputKeyValuePair[1];
-      if (inputvalue == null) {
+      if (
+        inputvalue == null &&
+        inputKeyValuePair[0] !== "phone" &&
+        inputKeyValuePair[0] !== "company"
+      ) {
         return false;
       }
     }
@@ -99,7 +103,6 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
 
   async function handlePayNow() {
     const informationsAreValid = informationsCheckoutAreValid();
-
     if (!informationsAreValid) {
       return;
     }
@@ -277,10 +280,12 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
 </div>
           </div>
         </div> */}
-        <PaymentRememberMe
-          rememberMe={rememberMe.current}
-          setRememberMe={setNewValueRememberMe}
-        />
+        {typeof authUser?.uid === "string" && (
+          <PaymentRememberMe
+            rememberMe={rememberMe.current}
+            setRememberMe={setNewValueRememberMe}
+          />
+        )}
       </div>
       <div className="actions-buttons-container flex justify-between items-center mt-12">
         <div className="return-to-shop-button">
@@ -297,9 +302,11 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
         <div className="continue-to-shipping">
           <div
             onClick={() => {
+              if (openStatusBackdrop) {
+                // if there is a payment in proccess then don t start another one
+                return;
+              }
               handlePayNow();
-              // add backdrop from material ui https://mui.com/material-ui/react-backdrop/
-              // add a snack bar to show that you order has been processed https://mui.com/material-ui/react-snackbar/
             }}
             className="continue-to-shipping text-white font-medium cursor-pointer font-sans p-5 bg-[#22BDC3] hover:bg-[#21A7AC] transition-all duration-150 rounded-md"
           >

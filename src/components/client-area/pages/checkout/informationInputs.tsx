@@ -12,6 +12,8 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
   const navigate = useNavigate();
   const searchQuaerys = useLocation().search;
 
+  const [errorMessage, setErrorMessage] = React.useState<null | string>(null);
+
   const informationsCheckout = useSelector(
     (state: any) => state.checkout.informationsPage
   );
@@ -168,6 +170,17 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
 
   return (
     <div className="informations-container text-white">
+      {typeof errorMessage === "string" && (
+        <div className="error-message text-center pb-5 text-red-600 font-sans font-bold text-[1.3rem]">
+          {errorMessage}
+        </div>
+      )}
+      {errorMessage == null && (
+        <div className="error-message invisible pb-5 font-sans font-bold text-[1.3rem]">
+          error placeholder
+        </div>
+      )}
+
       <div className="contact-informations-container">
         <div className="contact-informations__header flex justify-between px-8 pb-4">
           <div className="font-sans font-medium">Contact Information</div>
@@ -321,6 +334,14 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
                 const inputsAreValid = verifyInputsValuesValid();
 
                 if (!inputsAreValid) {
+                  if (errorMessage != null) {
+                    setErrorMessage(null);
+                  }
+                  setErrorMessage("Please complete all requested fields!");
+
+                  setTimeout(() => {
+                    setErrorMessage(null);
+                  }, 3000);
                   return;
                 }
 

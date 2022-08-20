@@ -36,21 +36,21 @@ export function findFitFilteringType(
   return "all";
 }
 
-function excludeProductsByfilterType(
-  filterType:
-    | "all"
-    | "swanfest"
-    | "sale"
-    | "tour"
-    | "best"
-    | "newest"
-    | "productCategory",
-  productsList: any[]
-) {
-  if (filterType === "all") {
-    return productsList;
-  }
-}
+// function excludeProductsByfilterType(
+//   filterType:
+//     | "all"
+//     | "swanfest"
+//     | "sale"
+//     | "tour"
+//     | "best"
+//     | "newest"
+//     | "productCategory",
+//   productsList: any[]
+// ) {
+//   if (filterType === "all") {
+//     return productsList;
+//   }
+// }
 
 function findIfProductIsAvailable(productObject: {
   numberItemsAvailable: null | number;
