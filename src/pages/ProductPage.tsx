@@ -6,7 +6,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 // import ImageWebp from "../components/general-helpers/ImageWebp";
 import { addToUserCart } from "../api/dataBaseCartMethods";
 import { addProductToCart } from "../store/cart";
-import { changeDrawerStateByDirectionId ,changeDrawerTypeMenu} from "../store/drawers";
+import {
+  changeDrawerStateByDirectionId,
+  changeDrawerTypeMenu,
+} from "../store/drawers";
 import ProductImageShowcase from "../components/admin-area/productImageShowcase";
 import FitCurrencyIcon from "../composables/generalHelpers/FitCurrencyIcon";
 
@@ -111,6 +114,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
 
   React.useEffect(() => {
     addASelectedPriceAndSize();
+    window.scrollTo({ top: 0 }); // not the best solution
     selectedQuantity.current = 1;
   }, [productFound]);
 

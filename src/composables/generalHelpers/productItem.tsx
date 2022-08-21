@@ -17,6 +17,9 @@ import FitCurrencyIcon from "./FitCurrencyIcon";
 
 interface ProductItemProps {
   addToCartButton?: any;
+  customStyles?: string;
+  customStylesDetailsContainer?: string;
+  customStylesImageContainer?: string;
   productPropertiesValues: any;
   selectedCurrency: string;
   numberItemsAvailable: number;
@@ -26,6 +29,9 @@ interface ProductItemProps {
 const ProductItem: React.FC<ProductItemProps> = ({
   addToCartButton,
   productPropertiesValues,
+  customStyles,
+  customStylesDetailsContainer,
+  customStylesImageContainer,
   selectedCurrency,
   numberItemsAvailable,
   correctPriceForSelectedCurrency,
@@ -150,10 +156,24 @@ const ProductItem: React.FC<ProductItemProps> = ({
   // calculate the price by the selected quantity and make it posibble to change the quantity // left here !!!!!
 
   return (
-    <div className="product-item w-[22%] my-2">
+    <div
+      className={`product-item ${
+        customStyles != null ? customStyles : " w-[22%] my-2"
+      }`}
+    >
       <Link
+        onClick={() => {
+          dispatch(
+            changeDrawerStateByDirectionId({
+              direction: "right",
+              newStatus: false,
+            })
+          );
+        }}
         to={`/dance-gavin-dance-edyego-clone/products/${productPropertiesValues.id}`}
-        className="hero-container "
+        className={`hero-container ${
+          customStylesImageContainer != null ? customStylesImageContainer : ""
+        }`}
       >
         <div className="relative image-container">
           <div className="figure">
@@ -194,14 +214,36 @@ const ProductItem: React.FC<ProductItemProps> = ({
           </div>
         </div>
       </Link>
-      <div className="pt-5 text-center product-details-container">
+      <div
+        className={`pt-5 text-center product-details-container ${
+          customStylesDetailsContainer != null
+            ? customStylesDetailsContainer
+            : ""
+        }`}
+      >
         <Link
+          onClick={() => {
+            dispatch(
+              changeDrawerStateByDirectionId({
+                direction: "right",
+                newStatus: false,
+              })
+            );
+          }}
           to={`/dance-gavin-dance-edyego-clone/products/${productPropertiesValues.id}`}
           className="my-5 font-sans font-bold tracking-wider title-container"
         >
           {productPropertiesValues.productName}
         </Link>
         <Link
+          onClick={() => {
+            dispatch(
+              changeDrawerStateByDirectionId({
+                direction: "right",
+                newStatus: false,
+              })
+            );
+          }}
           to={`/dance-gavin-dance-edyego-clone/products/${productPropertiesValues.id}`}
           className="flex items-center justify-center gap-2 mt-2 price-container"
         >

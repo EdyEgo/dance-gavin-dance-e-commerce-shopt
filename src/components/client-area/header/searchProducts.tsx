@@ -172,45 +172,56 @@ const SearchProducts: React.FC<SearchProductsProps> = () => {
           </div>
         </div>
       </div>
-      <div className="search-products__products-list">
-        {foundProducts?.length != null && foundProducts.length <= 0 && (
-          <div className="serach-result-empty flex flex-col justify-center items-center gap-8 mt-[40%]">
-            <div className="first-title">No results could be found.</div>
-            <div
-              onClick={() => {
-                if (searchRef.current?.focus == null) {
-                  return;
-                }
-                console.log("oke");
-                searchRef.current.focus();
-              }}
-              className="action-button p-5 text-white bg-[#E6433C] cursor-pointer login-button button-action fill-animation"
-            >
-              NEW SEARCH
-            </div>
+      <div className="search-products__products-list ">
+        <div className="products-title-container px-12 py-5 flex">
+          <div className="title-product border-b-[0.2em] border-black tracking-widest">
+            PRODUCTS
           </div>
-        )}
-        {foundProducts?.length != null &&
-          foundProducts.length >= 1 &&
-          foundProducts.map((productObject: any, index: number) => {
-            const {
-              numberItemsAvailable,
-              sold,
-              correctPriceForSelectedCurrency,
-            } = returnPriceAndSizeAutoSelected(productObject);
+        </div>
 
-            return (
-              <ProductItem
-                key={useid + "searchProducts" + index}
-                correctPriceForSelectedCurrency={
-                  correctPriceForSelectedCurrency
-                }
-                numberItemsAvailable={numberItemsAvailable}
-                selectedCurrency={selectedCurrency}
-                productPropertiesValues={productObject}
-              />
-            );
-          })}
+        <div className="products-list flex flex-col gap-4 items-center justify-center px-12 py-4">
+          {foundProducts?.length != null && foundProducts.length <= 0 && (
+            <div className="serach-result-empty flex flex-col justify-center items-center gap-8 mt-[40%]">
+              <div className="first-title">No results could be found.</div>
+              <div
+                onClick={() => {
+                  if (searchRef.current?.focus == null) {
+                    return;
+                  }
+
+                  searchRef.current.focus();
+                }}
+                className="action-button p-5 text-white bg-[#E6433C] cursor-pointer login-button button-action fill-animation"
+              >
+                NEW SEARCH
+              </div>
+            </div>
+          )}
+          {foundProducts?.length != null &&
+            foundProducts.length >= 1 &&
+            foundProducts.map((productObject: any, index: number) => {
+              const {
+                numberItemsAvailable,
+                sold,
+                correctPriceForSelectedCurrency,
+              } = returnPriceAndSizeAutoSelected(productObject);
+
+              return (
+                <ProductItem
+                  key={useid + "searchProducts" + index}
+                  customStyles={"flex gap-4 items-center"}
+                  customStylesDetailsContainer={"w-[50%]"}
+                  customStylesImageContainer={"w-[30%]"}
+                  correctPriceForSelectedCurrency={
+                    correctPriceForSelectedCurrency
+                  }
+                  numberItemsAvailable={numberItemsAvailable}
+                  selectedCurrency={selectedCurrency}
+                  productPropertiesValues={productObject}
+                />
+              );
+            })}
+        </div>
       </div>
     </div>
   );
