@@ -48,6 +48,9 @@ function App() {
       if (typeof user?.uid === "string") {
         writeUserObjectToUsersStore(user.uid);
       }
+      if (user?.uid == null) {
+        dispatch(changeCurrentUser(null));
+      }
       // add user object from users collection database
     }
 

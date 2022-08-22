@@ -4,7 +4,11 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import CircularProgress from "@mui/material/CircularProgress";
 import Avatar from "@mui/material/Avatar";
 import handleErrorMessage from "../../../api/handleErrorMessages";
-import { signIn, signInWithProvider } from "../../../api/dataBaseAuthMethods";
+import {
+  signIn,
+  signInWithProvider,
+  signOut,
+} from "../../../api/dataBaseAuthMethods";
 
 import Stack from "@mui/material/Stack";
 
@@ -14,9 +18,10 @@ import {
   validatePasswordFormat,
 } from "../../../composables/authFormHelpers";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const [values, setValues] = React.useState<any>({
     email: "",
     remember: false,
@@ -253,6 +258,17 @@ export default function SignIn() {
                     <div className="email flex gap-4">
                       <div>Email</div>
                       <div>{authUser.email}</div>
+                    </div>
+                    <div className="logout flex gap-4">
+                      <div
+                        className="log-user-out-btn text-gray-600 hover:text-gray-700 transition-all duration-200 ease-in-out cursor-pointer"
+                        onClick={async () => {
+                          await signOut();
+                          navigate("/dance-gavin-dance-edyego-clone");
+                        }}
+                      >
+                        Logout
+                      </div>
                     </div>
                   </div>
                 </div>
