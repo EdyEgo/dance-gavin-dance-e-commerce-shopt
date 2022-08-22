@@ -174,9 +174,11 @@ const SearchProducts: React.FC<SearchProductsProps> = () => {
       </div>
       <div className="search-products__products-list ">
         <div className="products-title-container px-12 py-5 flex">
-          <div className="title-product border-b-[0.2em] border-black tracking-widest">
-            PRODUCTS
-          </div>
+          {foundProducts?.length != null && foundProducts.length >= 1 && (
+            <div className="title-product border-b-[0.2em] border-black tracking-widest">
+              PRODUCTS
+            </div>
+          )}
         </div>
 
         <div className="products-list flex flex-col gap-4 items-center justify-center px-12 py-4">

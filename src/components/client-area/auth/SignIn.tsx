@@ -1,8 +1,8 @@
 import * as React from "react";
-
+import { useSelector } from "react-redux";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import Avatar from "@mui/material/Avatar";
 import handleErrorMessage from "../../../api/handleErrorMessages";
 import { signIn, signInWithProvider } from "../../../api/dataBaseAuthMethods";
 
@@ -24,7 +24,14 @@ export default function SignIn() {
 
     showPassword: false,
   });
+  const authUser = useSelector((state: any) => state.auth.user);
+  const userObject = useSelector((state: any) => state);
+
+  // when you make an order and you are logged in update the user object too
+
   const [loading, setLoading] = React.useState(false);
+  console.log("clear the cart and checkout and user loggin in", authUser);
+  console.log("userObject", userObject);
 
   const [errorMessage, setErrorMessage] = React.useState<null | string>(null);
 
@@ -97,148 +104,18 @@ export default function SignIn() {
     };
 
   return (
-    // <ThemeProvider theme={theme}>
-    //   <Container component="main" maxWidth="xs">
-    //     <CssBaseline />
-    //     <Box
-    //       sx={{
-    //         marginTop: 4,
-    //         display: "flex",
-    //         flexDirection: "column",
-    //         alignItems: "center",
-    //       }}
-    //     >
-    //       <div className="title-login">title</div>
-    //       {
-    //         <div
-    //           className={`error-message-container text-center p-1  text-red-600 ${
-    //             errorMessage === "invisible" ? errorMessage : ""
-    //           }`}
-    //         >
-    //           {errorMessage}
-    //         </div>
-    //       }
-    //       <Box
-    //         component="form"
-    //         onSubmit={handleSubmit}
-    //         noValidate
-    //         sx={{ mt: 1 }}
-    //       >
-    // <TextField
-    //   margin="normal"
-    //   value={values.email}
-    //   onChange={handleChange("email")}
-    //   fullWidth
-    //   id="email"
-    //   label="Email"
-    //   name="email"
-    //   autoComplete="email"
-    //   autoFocus
-    // />
-    // <TextField
-    //   margin="normal"
-    //   value={values.password}
-    //   onChange={handleChange("password")}
-    //   fullWidth
-    //   name="password"
-    //   label="Password"
-    //   type="password"
-    //   id="password"
-    //   autoComplete="current-password"
-    // />
-    //         <FormControlLabel
-    //           control={
-    //             <Checkbox
-    //               value={values.remember}
-    //               onChange={() => {
-    //                 setValues({ ...values, remember: !values.remember });
-    //               }}
-    //               color="primary"
-    //             />
-    //           }
-    //           label="Remember me"
-    //         />
-
-    //         {/* <div className="flex items-center justify-center or-sign-method-row ">
-    //           <div className="self-center w-5/12 bg-gray-600 border-t border-b border-gray-600"></div>
-    //           <p className="pb-1 mx-4 mt-1 font-bold text-black">OR</p>
-    //           <div className="self-center w-5/12 bg-gray-600 border-t border-b border-gray-600"></div>
-    //         </div> */}
-
-    //         <div className="flex justify-center provider-sign-method-row ">
-    //           <Stack direction="row" alignItems="center" spacing={2}>
-    //             <label htmlFor="icon-button-file">
-    //               <Input
-    //                 onClick={() => {
-    //                   handleProviderSubmit("google");
-    //                 }}
-    //                 id="icon-button-file"
-    //                 type="button"
-    //               />
-    //               {/* <IconButton
-    //                 color="primary"
-    //                 aria-label="upload picture"
-    //                 component="span"
-    //               >
-    //                 <GoogleIcon />
-    //               </IconButton> */}
-    //             </label>
-    //           </Stack>
-    //         </div>
-
-    //         {loading === false && (
-    //           <Button
-    //             type="submit"
-    //             fullWidth
-    //             variant="contained"
-    //             sx={{ mt: 3, mb: 2 }}
-    //           >
-    //             LOGIN
-    //           </Button>
-    //         )}
-
-    //         {loading && (
-    //           <Button
-    //             type="submit"
-    //             fullWidth
-    //             disabled={true}
-    //             variant="contained"
-    //             sx={{ mt: 3, mb: 2 }}
-    //           >
-    //             <LoadingButton loading={true} variant="text" disabled>
-    //               disabled
-    //             </LoadingButton>
-    //           </Button>
-    //         )}
-
-    //         {/* <Grid container>
-    //           <Grid item xs>
-    //             <Link to="/forgotpassword" variant="body2">
-    //               Forgot password?
-    //             </Link>
-    //           </Grid>
-    //           <Grid item>
-    //             <Link to="signup" variant="body2">
-    //               {"Don't have an account? Sign Up"}
-    //             </Link>
-    //           </Grid>
-    //         </Grid> */}
-    //       </Box>
-    //     </Box>
-    //   </Container>
-    // </ThemeProvider>
-
     <div className="login-page-container ">
-      <div className="login-container flex flex-col gap-16  items-center ">
-        <div className="login-container__title text-center mt-16">
-          <div className="first-title text-[55px] text-[#1D1D1D]">LOGIN</div>
-          <div className="second-title mt-3 font-sans text-lg text-[#1D1D1D]">
-            Please enter your e-mail and password:
+      {authUser?.uid == null && (
+        <div className="login-container flex flex-col gap-16  items-center ">
+          <div className="login-container__title text-center mt-16">
+            <div className="first-title text-[55px] text-[#1D1D1D]">LOGIN</div>
+            <div className="second-title mt-3 font-sans text-lg text-[#1D1D1D]">
+              Please enter your e-mail and password:
+            </div>
           </div>
-        </div>
-        <div className="login-container__inputs w-[30%]">
-          <div className="inputs-container ">
-            {/* <TextField
+          <div className="login-container__inputs w-[30%]">
+            <div className="inputs-container ">
+              {/* <TextField
               margin="normal"
               value={values.email}
               onChange={handleChange("email")}
@@ -261,92 +138,152 @@ export default function SignIn() {
               autoComplete="current-password"
             /> */}
 
-            <div className="card">
-              {errorMessage != null && (
-                <div className="error-message-container flex items-center gap-2 text-[#e4ffa6] bg-[#36c7c4]  p-6 mb-7">
-                  <div className="error-icon">
-                    <ErrorOutlineIcon />
+              <div className="card">
+                {errorMessage != null && (
+                  <div className="error-message-container flex items-center gap-2 text-[#e4ffa6] bg-[#36c7c4]  p-6 mb-7">
+                    <div className="error-icon">
+                      <ErrorOutlineIcon />
+                    </div>
+                    <div className="error-message">{errorMessage}</div>
                   </div>
-                  <div className="error-message">{errorMessage}</div>
+                )}
+                <label className="input">
+                  <input
+                    className="input__field"
+                    type="text"
+                    placeholder=" "
+                    value={values.email}
+                    onChange={handleChange("email")}
+                  />
+                  <span className="input__label font-sans text-[18px] text-gray-700">
+                    E-mail
+                  </span>
+                </label>
+                <div className="invisible-line-between py-[0.56rem]"></div>
+                <label className="input">
+                  <input
+                    className="input__field"
+                    type="password"
+                    placeholder=" "
+                    value={values.password}
+                    onChange={handleChange("password")}
+                  />
+                  <span className="input__label font-sans text-[18px] text-gray-700">
+                    Password
+                  </span>
+                </label>
+
+                <div className="forgot-password-container py-3 flex justify-center">
+                  <Link
+                    className="forgot-password font-sans underline text-[#1D1D1D]"
+                    to="/dance-gavin-dance-edyego-clone/forgot-password"
+                  >
+                    Forgot password?
+                  </Link>
                 </div>
-              )}
-              <label className="input">
-                <input
-                  className="input__field"
-                  type="text"
-                  placeholder=" "
-                  value={values.email}
-                  onChange={handleChange("email")}
-                />
-                <span className="input__label font-sans text-[18px] text-gray-700">
-                  E-mail
-                </span>
-              </label>
-              <div className="invisible-line-between py-[0.56rem]"></div>
-              <label className="input">
-                <input
-                  className="input__field"
-                  type="password"
-                  placeholder=" "
-                  value={values.password}
-                  onChange={handleChange("password")}
-                />
-                <span className="input__label font-sans text-[18px] text-gray-700">
-                  Password
-                </span>
-              </label>
 
-              <div className="forgot-password-container py-3 flex justify-center">
-                <Link
-                  className="forgot-password font-sans underline text-[#1D1D1D]"
-                  to="/dance-gavin-dance-edyego-clone/forgot-password"
+                <div
+                  className="login-button button-action fill-animation bg-[#E84841]  p-[0.88rem]"
+                  onClick={handleSubmit}
                 >
-                  Forgot password?
-                </Link>
-              </div>
-
-              <div
-                className="login-button button-action fill-animation bg-[#E84841]  p-[0.88rem]"
-                onClick={handleSubmit}
-              >
-                <div className="login-action-text text-white text-center">
-                  {loading ? (
-                    <Stack
-                      sx={{
-                        color: "grey.500",
-                        height: "25px",
-                        textAlign: "center",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: "10px",
-                        padding: "0 0",
-                        margin: "0 0",
-                      }}
-                      spacing={2}
-                    >
-                      <CircularProgress color="inherit" />
-                    </Stack>
-                  ) : (
-                    "LOGIN"
-                  )}
+                  <div className="login-action-text text-white text-center">
+                    {loading ? (
+                      <Stack
+                        sx={{
+                          color: "grey.500",
+                          height: "25px",
+                          textAlign: "center",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "10px",
+                          padding: "0 0",
+                          margin: "0 0",
+                        }}
+                        spacing={2}
+                      >
+                        <CircularProgress color="inherit" />
+                      </Stack>
+                    ) : (
+                      "LOGIN"
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              <div className="new-customer-link flex gap-2 text-gray-700 mt-6 justify-center mb-16">
-                <div className=" font-sans">New customer?</div>
+                <div className="new-customer-link flex gap-2 text-gray-700 mt-6 justify-center mb-16">
+                  <div className=" font-sans">New customer?</div>
 
-                <Link
-                  to="/dance-gavin-dance-edyego-clone/signup"
-                  className="font-sans underline"
-                >
-                  Create an account
-                </Link>
+                  <Link
+                    to="/dance-gavin-dance-edyego-clone/signup"
+                    className="font-sans underline"
+                  >
+                    Create an account
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+      {/* user is logged in page */}
+      {typeof authUser?.uid === "string" && (
+        <div className="user-is-logged-in-container bg-[#25c3c8] p-10">
+          <div className="content-container flex justify-evenly">
+            <div className="profile-container ">
+              <div className="profile-card-container">
+                <div className="title">Profile details</div>
+                <div className="profile-content flex gap-5">
+                  <div className="profile-image-container">
+                    {typeof authUser.photoURL === "string" && (
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={authUser.photoURL}
+                        // sx={{ width: 56, height: 56 }}
+                      />
+                    )}
+                    {authUser.photoURL === null && (
+                      <Avatar>{authUser.displayName[0]}</Avatar>
+                    )}
+                  </div>
+                  <div className="details">
+                    <div className="fullname flex gap-4">
+                      <div>Name:</div>
+                      <div>{authUser.displayName}</div>
+                    </div>
+                    <div className="email flex gap-4">
+                      <div>Email</div>
+                      <div>{authUser.email}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="orders-made-container">
+              {userObject?.orders == null && (
+                <div className="empty-orders-container">
+                  <div className="empty-orders-card">
+                    <div className="title">NO ORDERS</div>
+                    <div className="second-title">
+                      You have not placed any orders yet.
+                    </div>
+                    <div className="action-button-container flex">
+                      <Link
+                        to="/dance-gavin-dance-edyego-clone/collections/dance-gavin-dance"
+                        className="action-button text-white fill-animation login-button button-action p-5 bg-[#E6433C]"
+                      >
+                        START SHOPPING
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {userObject?.orders != null && (
+                <div className="user-orders"></div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

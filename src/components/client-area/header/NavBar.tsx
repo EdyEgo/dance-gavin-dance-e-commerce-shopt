@@ -10,7 +10,7 @@ import SearchIconMobile from "@mui/icons-material/Search";
 import UserProfileIcon from "@mui/icons-material/PersonOutline";
 // import ArrowRightSharpIcon from "@mui/icons-material/ArrowRightSharp";
 import ArrowRightSharpIcon from "@mui/icons-material/PlayArrow";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   changeDrawerStateByDirectionId,
   changeDrawerTypeMenu,
@@ -19,6 +19,9 @@ import {
 interface ClientNavBarProps {}
 type Anchor = "top" | "left" | "bottom" | "right";
 const ClientNavBar: React.FC<ClientNavBarProps> = () => {
+  const authUser = useSelector((state: any) => state.auth.user);
+  console.log("my user is not auth bruh", authUser);
+
   const dispatch = useDispatch();
   function openDrawerByDirection(
     drawerDirection: Anchor,

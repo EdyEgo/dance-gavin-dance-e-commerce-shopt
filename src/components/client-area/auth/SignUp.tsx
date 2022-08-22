@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -29,17 +30,20 @@ export default function SignUp() {
   });
 
   const navigateTo = useNavigate();
+  const authUser = useSelector((state: any) => state.auth.user);
 
   const [loading, setLoading] = React.useState(false);
 
   const [errorMessage, setErrorMessage] = React.useState<null | string>(null);
+  console.log("my user is", authUser);
+  if (typeof authUser?.uid === "string") {
+    // if the user is signed up then redirect to home
+    navigateTo("/dance-gavin-dance-edyego-clone");
+  }
 
   async function handleSubmit(event: any) {
     event.preventDefault();
 
-    console.log("sry but for now there is no sign up  here");
-
-    return;
     if (loading) {
       return;
     }
@@ -74,7 +78,7 @@ export default function SignUp() {
       );
       return;
     }
-    // navigateTo("/dance-gavin-dance-edyego-clone");
+    navigateTo("/dance-gavin-dance-edyego-clone");
   }
 
   async function handleProviderSubmit(providerName: string) {

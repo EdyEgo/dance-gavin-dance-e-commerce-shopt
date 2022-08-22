@@ -341,7 +341,8 @@ input {
 /* login pag */
 .login-container {
   background-color: #25c3c8;
-  min-height: 573px;
+  /* min-height: 573px; */
+  min-height: 50vh;
 }
 
 /* fill animation  */
