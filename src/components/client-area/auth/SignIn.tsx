@@ -17,6 +17,7 @@ import {
   validateEmail,
   validatePasswordFormat,
 } from "../../../composables/authFormHelpers";
+import FitCurrencyIcon from "../../../composables/generalHelpers/FitCurrencyIcon";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -30,7 +31,7 @@ export default function SignIn() {
     showPassword: false,
   });
   const authUser = useSelector((state: any) => state.auth.user);
-  const userObject = useSelector((state: any) => state);
+  const userObject = useSelector((state: any) => state.users.currentUser);
 
   // when you make an order and you are logged in update the user object too
 
@@ -292,34 +293,61 @@ export default function SignIn() {
               )}
               {userObject?.orders != null && (
                 <div className="user-orders">
-                  {Object.entries(userObject.orders).map(
-                    ([orderId, orderObjectValue]: any) => {
-                      // deliveredAt: null,
-                      // orderedAt: serverTimestamp(),
-                      // totalToPay: proccessPaymentObject.totalToPay,
-                      // totalQuantityItems: proccessPaymentObject.totalQuantityItems,
-                      return (
-                        <div className="order-item">
-                          <div className="ordered-at-container">
-                            <div>Ordered at:</div>
-                            <div>
-                              {typeof orderObjectValue.orderedAt === "object"
-                                ? orderObjectValue.orderedAt.toDate()
-                                : orderObjectValue.orderedAt}
+                  <div className="orders-tite">Orders list:</div>
+                  <div className="order-list">
+                    {Object.entries(userObject.orders).map(
+                      ([orderId, orderObjectValue]: any) => {
+                        console.log(
+                          "ai frate",
+                          orderObjectValue,
+                          new Date(orderObjectValue.orderedAt.toDate())
+                        );
+                        return (
+                          <div className="order-item">
+                            <div className="order-id flex flex-col gap-2 py-4">
+                              <div className="order-title-id">Order Id:</div>
+                              <div className="order-id font-sans font-bold">
+                                {orderId}
+                              </div>
+                            </div>
+                            <div className="order-container-details">
+                              {/* <div className="ordered-at-container">
+                                <div>Ordered at:</div>
+                                <div>
+                                  {orderObjectValue.orderedAt?.seconds != null
+                                    ? orderObjectValue.orderedAt.toDate()
+                                    : orderObjectValue.orderedAt}
+                                </div>
+                              </div> */}
+                              <div className="totalToPay-container flex gap-4">
+                                <div>Total to pay:</div>
+                                <div className="price-container flex gap-2 items-center">
+                                  <FitCurrencyIcon
+                                    productsSelectedCurrency={
+                                      orderObjectValue.totalToPay
+                                        .productsSelectedCurrency
+                                    }
+                                  />
+
+                                  <div className="price-number">
+                                    {
+                                      orderObjectValue.totalToPay
+                                        .totalToPayNumber
+                                    }
+                                  </div>
+                                </div>
+                                {/* <div>{orderObjectValue.totalToPay}</div> */}
+                              </div>
+                              <div className="totalQuantityItems-container flex gap-4">
+                                <div>Total products ordered:</div>
+                                <div>{orderObjectValue.totalQuantityItems}</div>
+                              </div>
                             </div>
                           </div>
-                          <div className="totalToPay-container">
-                            <div>Total to pay:</div>
-                            <div>{orderObjectValue.totalToPay}</div>
-                          </div>
-                          <div className="totalQuantityItems-container">
-                            <div>Total products ordered:</div>
-                            <div>{orderObjectValue.totalQuantityItems}</div>
-                          </div>
-                        </div>
-                      );
-                    }
-                  )}
+                        );
+                      }
+                    )}
+                  </div>
                 </div>
               )}
             </div>
