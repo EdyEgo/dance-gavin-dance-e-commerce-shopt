@@ -64,14 +64,17 @@ export const cartSlice = createSlice({
       );
       // if product allready to cart remove his quantity
       if (productAlreadyInCart !== -1) {
+        const productFoundToCart =
+          state.productsAddedToCart[productAlreadyInCart];
+
+        state.totalQuantityItems -= productFoundToCart.quantity;
+        state.totalQuantityItems += payload.quantity;
+
         state.productsAddedToCart.splice(productAlreadyInCart, 1, {
           ...payload,
           totalQuantityPrice: priceCalculatedByQantity,
         });
-        const productFoundToCart =
-          state.productsAddedToCart[productAlreadyInCart];
-        state.totalQuantityItems -= productFoundToCart.quantity;
-        state.totalQuantityItems += payload.quantity;
+
         return;
       }
 
