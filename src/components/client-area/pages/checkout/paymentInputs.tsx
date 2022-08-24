@@ -12,6 +12,7 @@ import {
   clearUserCart,
 } from "../../../../api/dataBaseCartMethods";
 import { refreshCartToDefaultStates } from "../../../../store/cart";
+import { updateUserOrderObject } from "../../../../store//users";
 import { refreshCheckoutToDefaultStates } from "../../../../store/checkout";
 import { sendEmail } from "../../../../composables/emailSender"; // testing email sender
 
@@ -20,6 +21,9 @@ interface PaymentInputsProps {
 }
 
 const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
+  // when you place an order that product must have the productQuantityAvailable decremented and the sold property incremented !!!!
+  // and add to the user object in the orders property the order that he made in store
+
   const useid = useId();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -71,20 +75,6 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
   });
 
   function informationsCheckoutAreValid() {
-    //  const {
-    //   address,
-    //   apartament,
-    //   city,
-    //   company,
-
-    //   email,
-    //   firstName,
-    //   lastName,
-    //   region,
-    //   phone,
-    //   postalCode,
-    //  } = informationsCheckout
-
     const informationsCheckoutEntries = Object.entries(informationsCheckout);
 
     for (const inputKeyValuePair of informationsCheckoutEntries) {
@@ -112,7 +102,7 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
     //setPaymentMessage if the payment was successfull
     // refresh the cart and checkout store
 
-    const { error } = await proccessPayment({
+    const { error, data } = await proccessPayment({
       rememberMe: rememberMe.current,
       accountLoggedInUid:
         typeof authUser?.uid === "string" ? authUser?.uid : null,
@@ -127,6 +117,7 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
             totalQuantityPrice: productObject.totalQuantityPrice,
           };
         }),
+        totalQuantityItems,
         shippingMethod: {
           name: shippingMethodSelected.name,
           priceValues: {
@@ -151,6 +142,17 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
         setPaymentMessage("");
       }, 3000);
       return;
+    }
+
+    // updateUserOrderObject , totalQuantityItems
+    if (data) {
+      // add order
+      dispatch(
+        updateUserOrderObject({
+          orderId: data.orderId,
+          orderObject: data.orderObject,
+        })
+      );
     }
 
     setPaymentMessage("Order");

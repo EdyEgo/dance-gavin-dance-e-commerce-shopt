@@ -49,6 +49,13 @@ export async function proccessPayment({
       inputObject: proccessPaymentObject,
     });
 
+    const orderObjectValue = {
+      deliveredAt: null,
+      orderedAt: serverTimestamp(),
+      totalToPay: proccessPaymentObject.totalToPay,
+      totalQuantityItems: proccessPaymentObject.totalQuantityItems,
+    };
+
     if (accountLoggedInUid != null) {
       // rememberMe
 
@@ -57,10 +64,7 @@ export async function proccessPayment({
         paymentInforamtion?: any;
       } = {
         orders: {
-          [orderObject.id]: {
-            deliveredAt: null,
-            orderedAt: serverTimestamp(),
-          },
+          [orderObject.id]: orderObjectValue,
         },
       };
 
@@ -87,12 +91,19 @@ export async function proccessPayment({
 
       await postNewDocument({
         collectionSelected: "users",
+        documentName: accountLoggedInUid,
         inputObject: postInUserObjectDatabase,
       });
     }
     // orderObject.id
-
-    return { error: false };
+    // increment the sold property of the product and decrement the available product number property (i don t remember the name of that property)
+    return {
+      data: {
+        orderId: orderObject.id,
+        orderObject: { ...orderObjectValue, orderedAt: new Date() },
+      },
+      error: false,
+    };
   } catch (e: any) {
     return { error: true, message: e.message };
   }

@@ -65,34 +65,34 @@ const ProductPage: React.FC<ProductPageProps> = () => {
       sizeSelected: selectedSize != null ? { ...selectedSize } : null,
       ...productFound,
     };
-    if (userObject?.uid != null) {
-      // user is  logged in
-      console.log("remember to  fetch the user object from users");
+    // if (userObject?.uid != null) {
+    //   // user is  logged in
+    //   console.log("remember to  fetch the user object from users");
 
-      const { error, message } = await addToUserCart({
-        userUid: userObject.uid,
-        userCurrentCart: [],
-        productObject: productToAddToCart,
-      });
+    //   const { error, message } = await addToUserCart({
+    //     userUid: userObject.uid,
+    //     userCurrentCart: [],
+    //     productObject: productToAddToCart,
+    //   });
 
-      if (error) {
-        setErrorMessage(message);
-        setLoading(false);
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 3000);
-      }
+    //   if (error) {
+    //     setErrorMessage(message);
+    //     setLoading(false);
+    //     setTimeout(() => {
+    //       setErrorMessage(null);
+    //     }, 3000);
+    //   }
 
-      dispatch(
-        changeDrawerStateByDirectionId({
-          direction: "right",
-          newStatus: true,
-        })
-      );
+    //   dispatch(
+    //     changeDrawerStateByDirectionId({
+    //       direction: "right",
+    //       newStatus: true,
+    //     })
+    //   );
 
-      dispatch(changeDrawerTypeMenu({ menuTypeSelected: "cart" }));
-      return;
-    }
+    //   dispatch(changeDrawerTypeMenu({ menuTypeSelected: "cart" }));
+    //   return;
+    // }
 
     dispatch(addProductToCart(productToAddToCart));
     setLoading(false);

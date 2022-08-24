@@ -43,9 +43,6 @@ export default function SignIn() {
   async function handleSubmit(event: any) {
     event.preventDefault();
 
-    console.log("sry but for now there is no login here");
-
-    return;
     if (loading) {
       return;
     }
@@ -79,7 +76,7 @@ export default function SignIn() {
       return;
     }
 
-    // navigateTo("/dance-gavin-dance-edyego-clone");
+    navigate("/dance-gavin-dance-edyego-clone");
   }
   async function handleProviderSubmit(providerName: string) {
     const providerList: {
@@ -232,12 +229,12 @@ export default function SignIn() {
       )}
       {/* user is logged in page */}
       {typeof authUser?.uid === "string" && (
-        <div className="user-is-logged-in-container bg-[#25c3c8] p-10">
-          <div className="content-container flex justify-evenly">
-            <div className="profile-container ">
+        <div className="user-is-logged-in-container bg-[#25c3c8] p-10 h-[62vh] flex justify-center items-center">
+          <div className="content-container flex justify-evenly w-full">
+            <div className="profile-container">
               <div className="profile-card-container">
-                <div className="title">Profile details</div>
-                <div className="profile-content flex gap-5">
+                <div className="title py-3 text-[1.2rem] ">Profile details</div>
+                <div className="profile-content flex gap-5 items-center">
                   <div className="profile-image-container">
                     {typeof authUser.photoURL === "string" && (
                       <Avatar
@@ -250,7 +247,7 @@ export default function SignIn() {
                       <Avatar>{authUser.displayName[0]}</Avatar>
                     )}
                   </div>
-                  <div className="details">
+                  <div className="details flex flex-col gap-4">
                     <div className="fullname flex gap-4">
                       <div>Name:</div>
                       <div>{authUser.displayName}</div>
@@ -278,8 +275,8 @@ export default function SignIn() {
               {userObject?.orders == null && (
                 <div className="empty-orders-container">
                   <div className="empty-orders-card">
-                    <div className="title">NO ORDERS</div>
-                    <div className="second-title">
+                    <div className="title py-3">NO ORDERS</div>
+                    <div className="second-title py-3">
                       You have not placed any orders yet.
                     </div>
                     <div className="action-button-container flex">
@@ -294,7 +291,36 @@ export default function SignIn() {
                 </div>
               )}
               {userObject?.orders != null && (
-                <div className="user-orders"></div>
+                <div className="user-orders">
+                  {Object.entries(userObject.orders).map(
+                    ([orderId, orderObjectValue]: any) => {
+                      // deliveredAt: null,
+                      // orderedAt: serverTimestamp(),
+                      // totalToPay: proccessPaymentObject.totalToPay,
+                      // totalQuantityItems: proccessPaymentObject.totalQuantityItems,
+                      return (
+                        <div className="order-item">
+                          <div className="ordered-at-container">
+                            <div>Ordered at:</div>
+                            <div>
+                              {typeof orderObjectValue.orderedAt === "object"
+                                ? orderObjectValue.orderedAt.toDate()
+                                : orderObjectValue.orderedAt}
+                            </div>
+                          </div>
+                          <div className="totalToPay-container">
+                            <div>Total to pay:</div>
+                            <div>{orderObjectValue.totalToPay}</div>
+                          </div>
+                          <div className="totalQuantityItems-container">
+                            <div>Total products ordered:</div>
+                            <div>{orderObjectValue.totalQuantityItems}</div>
+                          </div>
+                        </div>
+                      );
+                    }
+                  )}
+                </div>
               )}
             </div>
           </div>

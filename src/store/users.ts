@@ -14,9 +14,22 @@ export const usersSlice = createSlice({
     changeCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+    updateUserOrderObject(state, { payload }) {
+      const orderId = payload.orderId;
+      const orderObject = payload.orderObject;
+
+      const userHasAnOrderObject = Object.hasOwn(state.currentUser, "orders");
+
+      if (!userHasAnOrderObject) {
+        state.currentUser["orders"] = {};
+      }
+
+      state.currentUser.orders[orderId] = orderObject;
+    },
   },
 });
 
-export const { clearCurrentUser, changeCurrentUser } = usersSlice.actions;
+export const { clearCurrentUser, changeCurrentUser, updateUserOrderObject } =
+  usersSlice.actions;
 
 export default usersSlice.reducer;
