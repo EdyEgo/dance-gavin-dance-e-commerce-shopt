@@ -17,7 +17,6 @@ import {
   addSizeFiltersSelected,
 } from "../store/productFiltersSearch";
 
-
 import ProductItem from "../composables/generalHelpers/productItem";
 import AccordionList from "../composables/generalHelpers/accordionList";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";

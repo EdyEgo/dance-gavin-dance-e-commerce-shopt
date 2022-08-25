@@ -36,8 +36,6 @@ export default function SignIn() {
   // when you make an order and you are logged in update the user object too
 
   const [loading, setLoading] = React.useState(false);
-  console.log("clear the cart and checkout and user loggin in", authUser);
-  console.log("userObject", userObject);
 
   const [errorMessage, setErrorMessage] = React.useState<null | string>(null);
 
@@ -230,9 +228,9 @@ export default function SignIn() {
       )}
       {/* user is logged in page */}
       {typeof authUser?.uid === "string" && (
-        <div className="user-is-logged-in-container bg-[#25c3c8] p-10 h-[62vh] flex justify-center items-center">
-          <div className="content-container flex justify-evenly w-full">
-            <div className="profile-container">
+        <div className="user-is-logged-in-container bg-[#25c3c8] p-10 min-h-[62vh]">
+          <div className="content-container  ">
+            <div className="profile-container border border-gray-400 p-5">
               <div className="profile-card-container">
                 <div className="title py-3 text-[1.2rem] ">Profile details</div>
                 <div className="profile-content flex gap-5 items-center">
@@ -272,7 +270,7 @@ export default function SignIn() {
                 </div>
               </div>
             </div>
-            <div className="orders-made-container">
+            <div className="orders-made-container pt-5">
               {userObject?.orders == null && (
                 <div className="empty-orders-container">
                   <div className="empty-orders-card">
@@ -293,17 +291,12 @@ export default function SignIn() {
               )}
               {userObject?.orders != null && (
                 <div className="user-orders">
-                  <div className="orders-tite">Orders list:</div>
+                  <div className="orders-tite ">Orders list:</div>
                   <div className="order-list">
                     {Object.entries(userObject.orders).map(
                       ([orderId, orderObjectValue]: any) => {
-                        console.log(
-                          "ai frate",
-                          orderObjectValue,
-                          new Date(orderObjectValue.orderedAt.toDate())
-                        );
                         return (
-                          <div className="order-item">
+                          <div className="order-item border-b border-gray-400 p-2">
                             <div className="order-id flex flex-col gap-2 py-4">
                               <div className="order-title-id">Order Id:</div>
                               <div className="order-id font-sans font-bold">
@@ -311,14 +304,18 @@ export default function SignIn() {
                               </div>
                             </div>
                             <div className="order-container-details">
-                              {/* <div className="ordered-at-container">
+                              <div className="ordered-at-container flex gap-4">
                                 <div>Ordered at:</div>
                                 <div>
                                   {orderObjectValue.orderedAt?.seconds != null
-                                    ? orderObjectValue.orderedAt.toDate()
-                                    : orderObjectValue.orderedAt}
+                                    ? new Date(
+                                        orderObjectValue.orderedAt.toDate()
+                                      ).toDateString()
+                                    : new Date(
+                                        orderObjectValue.orderedAt
+                                      ).toDateString()}
                                 </div>
-                              </div> */}
+                              </div>
                               <div className="totalToPay-container flex gap-4">
                                 <div>Total to pay:</div>
                                 <div className="price-container flex gap-2 items-center">

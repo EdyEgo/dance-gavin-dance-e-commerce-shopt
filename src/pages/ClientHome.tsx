@@ -151,8 +151,8 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
 
   return (
     <div className="container-home bg-[#E84A42] ">
-      <section className="flex items-center justify-center text-white hero-section-contianer ">
-        <div className="flex flex-col text-center hero-titles-container gap-7 ">
+      <section className="flex items-start justify-center text-white hero-section-contianer ">
+        <div className="flex flex-col text-center hero-titles-container gap-7 mt-[20%]">
           <div className="tracking-widest hero-titles__first-title">
             OUT EVERYWHERE
           </div>
@@ -168,21 +168,6 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
           <div className="title text-center text-[42px]">JACKPOT JUICER</div>
         </div>
         <div className="flex flex-wrap albums-list-container justify-evenly">
-          {/* {productsList != null &&
-            productsList.length >= 1 &&
-            // <ProductItem
-            //   selectedCurrency={selectedCurrency}
-            //   productPropertiesValues={productsList[0]}
-            // />
-
-            productsList.map((productItemObject: any) => {
-              return (
-                <ProductItem
-                  selectedCurrency={selectedCurrency}
-                  productPropertiesValues={productItemObject}
-                />
-              );
-            })} */}
           {returnTwentyProducts("normal")}
         </div>
         <Link

@@ -3,7 +3,6 @@ import NavBar from "./header/NavBar";
 import SignUp from "./auth/SignUp";
 import SignIn from "./auth/SignIn";
 import ClientHome from "../../pages/ClientHome";
-import Footer from "./footer/index";
 import MenuDrawer from "./header/MenuDrawer";
 import ForgotPassword from "./auth/ForgotPassword";
 import MusicPage from "../../pages/MusicPage";

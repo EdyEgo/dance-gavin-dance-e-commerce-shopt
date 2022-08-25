@@ -15,8 +15,7 @@ const Footer: React.FC<FooterProps> = () => {
 
   return (
     <div className="footer-container  text-white p-12">
-      {/* h-96  */}
-      <div className="footer-header flex justify-between ">
+      <div className="footer-header flex flex-wrap justify-between ">
         <div className="footer-header__left-half flex flex-col gap-1 mb-16 ">
           <div className="title font-extrabold mb-5">SUPPORT</div>
           <div className="items-list font-extralight flex flex-col gap-3 ">
@@ -93,8 +92,8 @@ const Footer: React.FC<FooterProps> = () => {
           </div>
         </div>
       </div>
-      <div className="footer-middle flex justify-between items-center text-sm mb-14">
-        <div className="footer-middle-left-side flex gap-3 text-[17px] font-semibold">
+      <div className="footer-middle flex flex-wrap justify-between items-center text-sm mb-14">
+        <div className="footer-middle-left-side flex flex-wrap gap-3 text-[17px] font-semibold">
           <div className="font-serif">Dance Gavin Dance</div>
           <div className="separator-square flex items-end p-1">
             <div className="square h-1 w-1 bg-gray-100 opacity-50"></div>

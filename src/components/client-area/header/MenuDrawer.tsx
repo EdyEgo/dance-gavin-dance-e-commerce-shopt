@@ -112,9 +112,6 @@ export default function LeftMenuDrawer() {
     );
   }
 
-  console.log(
-    "still need to edit the cart in loged in mode if the user is in his account !!!"
-  );
   function returnFitTypeMenu() {
     const menuTypes: { [menuType: string]: () => any } = {
       cart: () => {
@@ -137,6 +134,7 @@ export default function LeftMenuDrawer() {
                       <CloseOutlinedIcon
                         onClick={() => {
                           changeLeftDrawerState(false, "right");
+                          changeLeftDrawerState(false, "left");
                         }}
                       />
                     </div>
@@ -306,7 +304,6 @@ export default function LeftMenuDrawer() {
     };
     return menuTypes[drawersMenuTypeState]();
   }
-
   return (
     <div className="w-0 h-0">
       {(["left", "right", "top", "bottom"] as const).map((anchor) => (
@@ -318,7 +315,7 @@ export default function LeftMenuDrawer() {
             onClose={toggleDrawer(anchor, false)}
             sx={{
               "& .MuiPaper-root": {
-                width: "33%",
+                width: window.screen.width <= 1140 ? "100%" : "33%",
               },
             }}
           >

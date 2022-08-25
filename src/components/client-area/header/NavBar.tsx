@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import ImageWebp from "../../general-helpers/ImageWebp";
-import footerImage from "../../../images/footer.webp";
 import albumImage from "../../../images/album-image.webp";
 import navMiddleImageWbp from "../../../images/left-nav-bar-logo.webp";
 import navMiddleImagePng from "../../../images/nav-bar-middle-logo.png";
@@ -20,7 +19,6 @@ interface ClientNavBarProps {}
 type Anchor = "top" | "left" | "bottom" | "right";
 const ClientNavBar: React.FC<ClientNavBarProps> = () => {
   const authUser = useSelector((state: any) => state.auth.user);
-  console.log("my user is not auth bruh", authUser);
 
   const dispatch = useDispatch();
   function openDrawerByDirection(
@@ -53,7 +51,12 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
               <BurgetMenuMobile fontSize="small" />
             </div>
             <div className="mobile-serach-icon-container">
-              <SearchIconMobile fontSize="small" />
+              <SearchIconMobile
+                fontSize="small"
+                onClick={() => {
+                  openDrawerByDirection("right", "search");
+                }}
+              />
             </div>
           </div>
           <div className="nav-bar-section-left__desktop-version desktop">
@@ -72,20 +75,24 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
         <div className="nav-bar-section-middle">
           <div className="nav-bar-section-middle__mobile-version mobile">
             <div className="mobile-phone">
-              <ImageWebp
-                srcWebp={navMiddleImageWbp}
-                src={navMiddleImagePng}
-                width="125"
-                height="auto"
-              />
+              <Link to="/dance-gavin-dance-edyego-clone">
+                <ImageWebp
+                  srcWebp={navMiddleImageWbp}
+                  src={navMiddleImagePng}
+                  width="125"
+                  height="auto"
+                />
+              </Link>
             </div>
             <div className="mobile-tablet">
-              <ImageWebp
-                srcWebp={navMiddleImageWbp}
-                src={navMiddleImagePng}
-                width="225"
-                height="auto"
-              />
+              <Link to="/dance-gavin-dance-edyego-clone">
+                <ImageWebp
+                  srcWebp={navMiddleImageWbp}
+                  src={navMiddleImagePng}
+                  width="225"
+                  height="auto"
+                />
+              </Link>
             </div>
           </div>
           <div className="nav-bar-section-middle__desktop-version desktop">

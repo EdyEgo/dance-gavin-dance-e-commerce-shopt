@@ -62,7 +62,7 @@ const QuantityProductSelector: React.FC<QuantityProductSelectorProps> = ({
         } `}
       >
         <div
-          className="decrement cursor-pointer"
+          className="decrement cursor-pointer flex items-center"
           onClick={() => {
             if (currentQuantity) {
               const newCurrentValue = currentQuantity - 1;
@@ -116,7 +116,7 @@ const QuantityProductSelector: React.FC<QuantityProductSelectorProps> = ({
               ? "No more stock"
               : ""
           }
-          className="increment cursor-pointer"
+          className="increment cursor-pointer flex items-center"
           ref={popperRef}
           onClick={(event: any) => {
             if (currentQuantity) {

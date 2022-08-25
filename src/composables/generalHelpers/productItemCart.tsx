@@ -187,11 +187,10 @@ const ProductItemCart: React.FC<ProductItemCartProps> = ({
       </div>
       <div className="cart-product-price flex items-start w-[20%]">
         <div className="price flex items-center gap-1 justify-center">
-          <div className="price-currency">
-            <FitCurrencyIcon
-              productsSelectedCurrency={productsSelectedCurrency}
-            />
-          </div>
+          <FitCurrencyIcon
+            productsSelectedCurrency={productsSelectedCurrency}
+          />
+
           <div className="price-number font-sans font-medium">
             {productAdded.totalQuantityPrice}
           </div>

@@ -459,7 +459,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                 <div className="font-sans font-medium quantity-title">
                   Quantity:
                 </div>
-                <div className="quantity-counter w-[25%]">
+                <div className="quantity-counter w-[45%]">
                   <QuantitySelector setQuantityRef={setNewQuantity} />
                 </div>
               </div>
