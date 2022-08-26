@@ -44,7 +44,7 @@ const Footer: React.FC<FooterProps> = () => {
         </div>
         <div className="footer-header__middle-half">
           <div className="title mb-5">FOLLOW</div>
-          <div className="items-list flex items-center">
+          <div className="items-list flex flex-wrap items-center">
             <div className="social-media-item  border border-[#EC6A63] p-4 py-2">
               <a
                 href="https://www.facebook.com/DanceGavinDance/"
@@ -79,7 +79,10 @@ const Footer: React.FC<FooterProps> = () => {
               </a>
             </div>
             <div className="social-media-item border border-[#EC6A63] p-4 py-2">
-              <a href="#" className="social-media-link">
+              <a
+                href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k?si=GtU3HEcaSeu-yHrwJHIbhA&nd=1"
+                className="social-media-link"
+              >
                 <AppleIcon />
               </a>
             </div>
@@ -106,7 +109,7 @@ const Footer: React.FC<FooterProps> = () => {
         </div>
         <div className="footer-middle-right-side flex justify-between items-center gap-5">
           <div className="we-accept-money-title ">We accept</div>
-          <div className="cards-list flex gap-4">
+          <div className="cards-list flex flex-wrap gap-4">
             <div className="paypal">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

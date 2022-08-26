@@ -96,6 +96,8 @@ export default function StickyHeadTable({
     setPage(0);
   };
 
+  const applyMobileStyles = window.screen.width <= 721;
+
   return (
     <Paper sx={{ width: "100%" }}>
       <TableContainer>
@@ -104,6 +106,59 @@ export default function StickyHeadTable({
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
+                if (applyMobileStyles) {
+                  return (
+                    <div
+                      className={`flex flex-col  items-start  ${
+                        backgroundPreselected != null
+                          ? backgroundPreselected
+                          : "bg-[#E84A42]"
+                      } ${
+                        hovePreselected != null
+                          ? hovePreselected
+                          : "hover:bg-red-500"
+                      }`}
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row.code}
+                      style={{ border: "" }}
+                    >
+                      {columns.map((column) => {
+                        const value = row[column.id];
+
+                        return (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            style={{
+                              color: "white",
+                              border: "transparent",
+                              fontSize: "1.225rem",
+                            }}
+                          >
+                            {value === "TICKETS" || value === "VIP" ? (
+                              <div className="action-button flex justify-end">
+                                <a
+                                  href="https://www.ticketmaster.com/event/09005CD6ADB650FF?irgwc=1&clickid=yakXqGSNrxyITSM23oyBG2qwUkD1qRUpmw9%3A240&camefrom=CFC_BUYAT_219208&impradid=219208&REFERRAL_ID=tmfeedbuyat219208&wt.mc_id=aff_BUYAT_219208&utm_source=219208-Bandsintown&impradname=Bandsintown&utm_medium=affiliate&ircid=4272"
+                                  className={`btn border border-white py-2 px-16 cursor-pointer ${
+                                    buttonsPreselectedHoverEffect != null
+                                      ? buttonsPreselectedHoverEffect
+                                      : "hover:bg-red-600"
+                                  } hover:border-gray-200 transition-all ease-out`}
+                                >
+                                  {value}
+                                </a>
+                              </div>
+                            ) : (
+                              <div className="no-action ">{value}</div>
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                      <div className="line border border-gray-400 w-full  rounded-sm"></div>
+                    </div>
+                  );
+                }
                 return (
                   <TableRow
                     className={`${

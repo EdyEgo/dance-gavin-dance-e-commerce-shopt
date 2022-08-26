@@ -569,8 +569,8 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
       <div className="title text-center text-[45px] my-8 font-bold">
         {titleUpperCase}
       </div>
-      <div className="content-filtered-container md:flex p-11 md:gap-8 relative overflow-visible">
-        <div className="filters-container border-b border-[#20ABBB] md:border-b-0 mb-10 md:pb-0 md:w-[20%] md:sticky top-[15%] self-start">
+      <div className="content-filtered-container md:flex p-9 md:gap-4 relative overflow-visible">
+        <div className="filters-container border-b border-[#20ABBB] md:border-b-0 mb-10 md:pb-0 md:w-[30%] md:sticky top-[15%] self-start">
           <div className="filters-title tracking-widest text-[1.2rem] p-4 border-b border-[#20ABB0]">
             FILTERS
           </div>
@@ -683,12 +683,12 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
               )}
             </div>
 
-            <div className="accordion-container  ">
+            <div className="accordion-container ">
               <AccordionList />
             </div>
           </div>
         </div>
-        <div className="products-container  md:w-[80%]">
+        <div className="products-container  md:w-[70%]">
           <div className="filters-view-container">
             <div className="filters flex justify-between">
               <div className="total-products ml-[0.89%]">

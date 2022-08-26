@@ -330,6 +330,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
       productListElements.push(
         <ProductItem
           key={"recomendedProduct" + useId + i}
+          customStyles={"md:w-[33%]"} // test
           correctPriceForSelectedCurrency={correctPriceForSelectedCurrency}
           numberItemsAvailable={numberItemsAvailable}
           selectedCurrency={productsSelectedCurrency}
@@ -355,8 +356,8 @@ const ProductPage: React.FC<ProductPageProps> = () => {
               </div>
             </div>
           </div>
-          <div className="product-details-container flex gap-14 px-[9%] pb-20 pt-10">
-            <div className="image-showcase-container w-[50%]">
+          <div className="product-details-container flex flex-wrap gap-14 px-[9%] pb-20 pt-10">
+            <div className="image-showcase-container lg:w-[50%]">
               {productFound.picturesURL.length <= 1 && (
                 <img src={productFound.picturesURL[0]} alt="" />
               )}
@@ -364,7 +365,7 @@ const ProductPage: React.FC<ProductPageProps> = () => {
                 <ProductImageShowcase imageListURL={productFound.picturesURL} />
               )}
             </div>
-            <div className="product-details w-[43%]">
+            <div className="product-details lg:w-[43%]">
               <div className="product-title-container">
                 <div className="product-title text-[1.7rem] tracking-tight">
                   {productFound.productName}
@@ -525,19 +526,19 @@ const ProductPage: React.FC<ProductPageProps> = () => {
 
           <div className="recommended-products bg-black text-[#23C0C5] pb-[2.7%]">
             <div className="pt-4 mb-8 title-container">
-              <div className="title text-center text-[2.7rem]">
+              <div className="title text-center md:text-[2.7rem]">
                 SELECTED FOR YOU
               </div>
             </div>
-            <div className="flex flex-wrap justify-center gap-6 recommended-products-list ">
+            {/* flex flex-wrap   gap-6 */}
+            {/* grid grid-cols-2 gap-3 md:flex md:flex-wrap */}
+            <div className="grid grid-cols-2 gap-2 md:gap-4 px-3 md:px-0 md:flex md:flex-wrap justify-center recommended-products-list ">
               {createRecomendedProductsList()}
             </div>
           </div>
         </div>
       )}
-      {productFound == null && (
-        <div className="product-does-not-exists">Product does not exists</div>
-      )}
+      {productFound == null && <div className="product-does-not-exists"></div>}
     </div>
   );
 };

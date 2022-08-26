@@ -118,7 +118,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
     };
     if (userObject?.uid != null) {
       // user is  logged in
-      console.log("remember to  fetch the user object from users");
+
       const { error, message } = await addToUserCart({
         userUid: userObject.uid,
         userCurrentCart: [],

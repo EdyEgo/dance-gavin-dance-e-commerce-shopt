@@ -17,7 +17,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
   const useid = useId();
   const [transformNumber, setTransformNumber] = useState(0);
 
-  const SLIDE_NUMBER = 19.1;
+  const SLIDE_NUMBER = window.screen.width <= 745 ? 23 : 19.1; //19.1;
   // const maximumOfSlides = childrenItemsList.length;
 
   const [slidesMade, setSlidesMade] = useState(0);
@@ -98,12 +98,12 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
       </div>
       <div
         style={styles}
-        className={`slider-items flex absolute w-[305%] gap-8 `}
+        className={`slider-items   flex absolute w-[305%] gap-8 `}
       >
         {/* {createAlbumsElements()} */}
 
         <div
-          className={`album-show-container flex ${
+          className={`album-show-container md:flex ${
             slidesMade === 0
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -120,8 +120,8 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB] w-[442px] flex items-center justify-center">
-            <div className="details-wrapper w-[100%]">
+          <div className="details-container bg-[#27C6CB]  w-[442px] flex items-center justify-center">
+            <div className="details-wrapper w-full">
               <div className="details flex flex-col gap-8 justify-start items-start ml-16">
                 <div className="album-name font-sans font-bold text-[19px]">
                   AFTERBURNER
@@ -144,7 +144,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container flex ${
+          className={`album-show-container md:flex ${
             slidesMade === 1
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -180,7 +180,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container flex ${
+          className={`album-show-container md:flex ${
             slidesMade === 2
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -215,7 +215,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container flex ${
+          className={`album-show-container md:flex ${
             slidesMade === 3
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -250,7 +250,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container flex ${
+          className={`album-show-container md:flex ${
             slidesMade === 4
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
