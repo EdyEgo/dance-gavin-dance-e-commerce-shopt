@@ -147,7 +147,7 @@ export default function StickyHeadTable({
                               </a>
                             </div>
                           ) : (
-                            <div className="no-action">{value}</div>
+                            <div className="no-action ">{value}</div>
                           )}
                         </TableCell>
                       );

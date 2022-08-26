@@ -18,7 +18,7 @@ import {
 interface ClientNavBarProps {}
 type Anchor = "top" | "left" | "bottom" | "right";
 const ClientNavBar: React.FC<ClientNavBarProps> = () => {
-  const authUser = useSelector((state: any) => state.auth.user);
+  // const authUser = useSelector((state: any) => state.auth.user);
 
   const dispatch = useDispatch();
   function openDrawerByDirection(
@@ -45,7 +45,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
             <div
               className="cursor-pointer mobile-menu-icon-container"
               onClick={() => {
-                openDrawerByDirection("left", "cart");
+                openDrawerByDirection("left", "menu");
               }}
             >
               <BurgetMenuMobile fontSize="small" />

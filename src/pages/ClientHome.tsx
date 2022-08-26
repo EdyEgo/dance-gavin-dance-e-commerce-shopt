@@ -63,8 +63,6 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
   //   },
   // };
 
-  const [allMerchSelectedTab, setAllMerchSelectedTab] = useState("tees");
-
   function returnPriceAndSizeAutoSelected(productItemObject: any) {
     // this should return the number of  items available
     const productCurrencyList: string[] = productItemObject.productCurrencyList;
@@ -139,6 +137,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
       productListElements.push(
         <ProductItem
           key={type + productIndex + useid}
+          customStyles={"md:w-[33%]"} // test
           correctPriceForSelectedCurrency={correctPriceForSelectedCurrency}
           numberItemsAvailable={numberItemsAvailable}
           selectedCurrency={selectedCurrency}
@@ -167,7 +166,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         <div className="title-container my-14">
           <div className="title text-center text-[42px]">JACKPOT JUICER</div>
         </div>
-        <div className="flex flex-wrap albums-list-container justify-evenly">
+        <div className="jackpot-juicer-home-products-list grid grid-cols-2 gap-3 md:flex md:flex-wrap albums-list-container md:justify-evenly">
           {returnTwentyProducts("normal")}
         </div>
         <Link

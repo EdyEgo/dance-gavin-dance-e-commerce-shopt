@@ -121,7 +121,8 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({
       </div>
       <div className="all-merch__products-list my-4">
         {/*  */}
-        <div className="slider-container relative h-[469px] overflow-hidden ">
+        <div className="slider-container relative min-h-[120vh] md:min-h-[469px] overflow-hidden ">
+          {/* h-[469px] */}
           {slidesMade !== 0 && (
             <div
               className={` arrow-left-container arrow-slider  absolute left-[0.5%] z-10 cursor-pointer top-[30%] bg-[#25c3c8]  border border-gray-600`}
@@ -134,7 +135,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({
           )}
           <div
             style={styles}
-            className={`slider-items flex items-start absolute w-[305%] gap-8 `}
+            className={`slider-items grid grid-cols-6 gap-3 md:flex md:items-start absolute w-[305%] md:gap-8 `}
           >
             {childrenItemsList}
           </div>

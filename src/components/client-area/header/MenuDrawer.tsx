@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import ShippingIcon from "../../../images/shipping/RoutePlusGray.svg";
+import MenuOptionsDrawer from "./menuOptionsDrawer";
 
 import {
   changeDrawerStateByDirectionId,
@@ -298,6 +299,13 @@ export default function LeftMenuDrawer() {
         return (
           <div className="search-menu-container bg-[#22BDC3]">
             <SearchProducts />
+          </div>
+        );
+      },
+      menu: () => {
+        return (
+          <div className="options-menu-container bg-[#22BDC3]">
+            <MenuOptionsDrawer />
           </div>
         );
       },
