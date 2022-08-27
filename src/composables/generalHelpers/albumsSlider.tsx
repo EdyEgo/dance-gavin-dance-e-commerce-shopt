@@ -17,7 +17,32 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
   const useid = useId();
   const [transformNumber, setTransformNumber] = useState(0);
 
-  const SLIDE_NUMBER = window.screen.width <= 745 ? 23 : 19.1; //19.1;
+  // const SLIDE_NUMBER = window.screen.width <= 745 ? 23 : 19.1;  // we have another problem at 650
+  // const SLIDE_NUMBER =
+  //   window.screen.width <= 745 ? (window.screen.width <= 650 ? 32 : 23) : 19.1; // we have another problem at 650
+
+  // const SLIDE_NUMBER =
+  //   window.screen.width <= 745 ? (window.screen.width <= 650 ? 34 : 23) : 19.1; // we have another problem at 650
+
+  function findSlideNumberByScreenWidth() {
+    const screenWidth = window.screen.width;
+
+    if (screenWidth <= 460) {
+      return 25;
+    }
+
+    if (screenWidth <= 640) {
+      return 20;
+    }
+    if (screenWidth <= 750) {
+      return 23;
+    }
+
+    return 19.1;
+  }
+
+  const SLIDE_NUMBER = findSlideNumberByScreenWidth();
+
   // const maximumOfSlides = childrenItemsList.length;
 
   const [slidesMade, setSlidesMade] = useState(0);
@@ -89,7 +114,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
       <div
         className={`${
           slidesMade === 0 ? "text-gray-600" : ""
-        } arrow-left-container arrow-slider  absolute right-[1%] z-10 cursor-pointer top-[27.5%] bg-[#25c3c8]  border border-gray-600`}
+        } arrow-left-container arrow-slider  absolute p-4 right-[1%] z-10 cursor-pointer top-[38%]  md:top-[17.5%] lg:top-[27.5%] bg-[#25c3c8]  border border-gray-600`}
         onClick={() => {
           incrementOrDecrementPercentageTransformNumber(true);
         }}
@@ -98,19 +123,19 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
       </div>
       <div
         style={styles}
-        className={`slider-items   flex absolute w-[305%] gap-8 `}
+        className={`slider-items   flex absolute w-[305%]  gap-8 `}
       >
         {/* {createAlbumsElements()} */}
 
         <div
-          className={`album-show-container md:flex ${
+          className={`album-show-container h-full  sm:w-full md:flex ${
             slidesMade === 0
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
           }`}
         >
           <div
-            className="image-container"
+            className="image-container "
             style={filterImagesObject != null ? filterImagesObject : {}}
           >
             <ImageWebp
@@ -120,9 +145,9 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB]  w-[442px] flex items-center justify-center">
+          <div className="details-container bg-[#27C6CB] w-[100%] p-5 sm:p-0 sm:w-[442px] flex items-center justify-center">
             <div className="details-wrapper w-full">
-              <div className="details flex flex-col gap-8 justify-start items-start ml-16">
+              <div className="details flex  gap-8 justify-start items-start sm:ml-16 sm:flex-col">
                 <div className="album-name font-sans font-bold text-[19px]">
                   AFTERBURNER
                 </div>
@@ -134,7 +159,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
                 </Link> */}
                 <a
                   href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
-                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                  className="action-button-link invisible sm:visible bg-black text-center p-4 lg:w-[50%] text-[#24C1C6]"
                 >
                   STREAM
                 </a>
@@ -144,7 +169,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container md:flex ${
+          className={`album-show-container w-[32%]  sm:w-full md:flex ${
             slidesMade === 1
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -161,16 +186,16 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB] w-[442px] flex items-center justify-center">
+          <div className="details-container bg-[#27C6CB] w-[100%] p-5 sm:p-0 sm:w-[442px] flex items-center justify-center">
             <div className="details-wrapper w-[100%]">
-              <div className="details flex flex-col gap-8 justify-start items-start ml-16">
+              <div className="details flex  gap-8 justify-start items-start sm:ml-16 sm:flex-col">
                 <div className="album-name font-sans font-bold text-[19px]">
                   ARTIFICIAL SELECTION
                 </div>
 
                 <a
                   href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
-                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                  className="action-button-link invisible sm:visible bg-black text-center p-4 lg:w-[50%] text-[#24C1C6]"
                 >
                   STREAM
                 </a>
@@ -180,7 +205,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container md:flex ${
+          className={`album-show-container w-[32%] sm:w-full md:flex ${
             slidesMade === 2
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -197,15 +222,15 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB] w-[442px] flex items-center justify-center">
+          <div className="details-container bg-[#27C6CB] w-[100%] p-5 sm:p-0 sm:w-[442px] flex items-center justify-center">
             <div className="details-wrapper w-[100%]">
-              <div className="details flex flex-col gap-8 justify-start items-start ml-16">
+              <div className="details flex  gap-8 justify-start items-start sm:ml-16 sm:flex-col">
                 <div className="album-name font-sans font-bold text-[19px]">
                   INSTANT GRATIFICATION
                 </div>
                 <a
                   href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
-                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                  className="action-button-link invisible sm:visible bg-black text-center p-4 lg:w-[50%] text-[#24C1C6]"
                 >
                   STREAM
                 </a>
@@ -215,7 +240,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container md:flex ${
+          className={`album-show-container w-[32%] sm:w-full md:flex ${
             slidesMade === 3
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -232,15 +257,15 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB] w-[442px] flex items-center justify-center">
+          <div className="details-container bg-[#27C6CB] w-[100%] p-5 sm:p-0 sm:w-[442px] flex items-center justify-center">
             <div className="details-wrapper w-[100%]">
-              <div className="details flex flex-col gap-8 justify-start items-start ml-16">
+              <div className="details flex  gap-8 justify-start items-start sm:ml-16 sm:flex-col">
                 <div className="album-name font-sans font-bold text-[19px]">
                   MOTHERSHIP
                 </div>
                 <a
                   href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
-                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                  className="action-button-link invisible sm:visible bg-black text-center p-4 lg:w-[50%] text-[#24C1C6]"
                 >
                   STREAM
                 </a>
@@ -250,7 +275,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container md:flex ${
+          className={`album-show-container w-[32%] sm:w-full md:flex ${
             slidesMade === 4
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -267,15 +292,15 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
               height="auto"
             />
           </div>
-          <div className="details-container bg-[#27C6CB] w-[442px] flex items-center justify-center">
+          <div className="details-container bg-[#27C6CB] w-[100%] p-5 sm:p-0 sm:w-[442px] flex items-center justify-center">
             <div className="details-wrapper w-[100%]">
-              <div className="details flex flex-col gap-8 justify-start items-start ml-16">
+              <div className="details flex  gap-8 justify-start items-start sm:ml-16 sm:flex-col">
                 <div className="album-name font-sans font-bold text-[19px]">
                   TREE CITY SESSIONS 2
                 </div>
                 <a
                   href="https://open.spotify.com/artist/6guC9FqvlVboSKTI77NG2k"
-                  className="action-button-link p-4 bg-black text-center w-[50%] text-[#24C1C6]"
+                  className="aaction-button-link invisible sm:visible bg-black text-center p-4 lg:w-[50%] text-[#24C1C6]"
                 >
                   STREAM
                 </a>
@@ -290,7 +315,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
       <div
         className={`${
           slidesMade === 4 ? "text-gray-600" : ""
-        } arrow-right-container arrow-slider absolute  right-[1%] top-[40%] z-10 cursor-pointer bg-[#25c3c8]  border border-gray-600`}
+        } arrow-right-container p-4 arrow-slider absolute  right-[1%] top-[50%] md:top-[30%] lg:top-[40%] z-10 cursor-pointer bg-[#25c3c8]  border border-gray-600`}
         onClick={() => {
           incrementOrDecrementPercentageTransformNumber(false);
         }}

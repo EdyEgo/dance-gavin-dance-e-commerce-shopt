@@ -251,10 +251,17 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
           title="Dance Gavin Dance video"
           className="pointer-events-none"
           allowFullScreen
+          allow="autoplay; encrypted-media"
           width="100%"
           height="655"
-          src="https://www.youtube.com/embed/GvHDaSw8k74?autoplay=1&mute=1&controls=0&loop=0"
+          src="https://www.youtube.com/embed/GvHDaSw8k74?playsinline=1&autoplay=1&controls=0&mute=1&loop=1&
+          playlist=GvHDaSw8k74&enablejsapi=1&rel=0&
+          modestbranding=1&origin=https%3A%2F%2Fdancegavindanceband.com"
         ></iframe>
+        {/* https://www.youtube.com/embed/GvHDaSw8k74?autoplay=1&mute=1&controls=0&loop=0 */}
+        {/* //https://www.youtube.com/embed/GvHDaSw8k74?playsinline=1&autoplay=1&controls=0&mute=1&loop=1&
+playlist=GvHDaSw8k74&enablejsapi=1&rel=0&
+modestbranding=1&origin=https%3A%2F%2Fdancegavindanceband.com */}
 
         <div className="play-button-link-container absolute top-[40%] right-[46%] flex items-center justify-center">
           <a

@@ -69,6 +69,15 @@ input[type="number"] {
   .mobile {
     display: none;
   }
+
+  /* slider client home */
+  .arrow-slider {
+    opacity: 0;
+  }
+  .slider-container:hover > .arrow-slider {
+    animation: 0.1s arrows-slider-showing-up ease-out;
+    animation-fill-mode: forwards;
+  }
   /* .desktop {
     display: block;
   } */
@@ -497,15 +506,6 @@ home slider test
 */
 
 /* end home slider  test*/
-
-/* slider client home */
-.arrow-slider {
-  opacity: 0;
-}
-.slider-container:hover > .arrow-slider {
-  animation: 0.1s arrows-slider-showing-up ease-out;
-  animation-fill-mode: forwards;
-}
 
 /* album slider */
 

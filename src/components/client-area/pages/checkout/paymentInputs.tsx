@@ -14,7 +14,7 @@ import {
 import { refreshCartToDefaultStates } from "../../../../store/cart";
 import { updateUserOrderObject } from "../../../../store//users";
 import { refreshCheckoutToDefaultStates } from "../../../../store/checkout";
-import { sendEmail } from "../../../../composables/emailSender"; // testing email sender
+import { sendEmail } from "../../../../composables/emailSender";
 
 interface PaymentInputsProps {
   totalToPayNumber: number;
