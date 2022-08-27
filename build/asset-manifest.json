@@ -1,20 +1,27 @@
 {
   "files": {
-    "main.css": "/dance-gavin-dance-edyego-clone/static/css/main.8205ae1a.css",
-    "main.js": "/dance-gavin-dance-edyego-clone/static/js/main.6434f615.js",
+    "main.css": "/dance-gavin-dance-edyego-clone/static/css/main.6f7ee12e.css",
+    "main.js": "/dance-gavin-dance-edyego-clone/static/js/main.c2d20212.js",
     "static/js/787.b5002084.chunk.js": "/dance-gavin-dance-edyego-clone/static/js/787.b5002084.chunk.js",
+    "static/media/hero-picture.jpg": "/dance-gavin-dance-edyego-clone/static/media/hero-picture.67058e4ffc5f7a35ba01.jpg",
     "static/media/nav-bar-middle-logo.png": "/dance-gavin-dance-edyego-clone/static/media/nav-bar-middle-logo.6c8b5b59779142a4536d.png",
+    "static/media/dgd-afterburner_1000x.webp": "/dance-gavin-dance-edyego-clone/static/media/dgd-afterburner_1000x.ec0be80754c5a2a494ed.webp",
     "static/media/home-page-hero.webp": "/dance-gavin-dance-edyego-clone/static/media/home-page-hero.5818bdbe7bbd2f06f9e7.webp",
+    "static/media/dgd-artificial-selection_640x.jpg": "/dance-gavin-dance-edyego-clone/static/media/dgd-artificial-selection_640x.fe3c75f41b4c90cc21c9.jpg",
     "static/media/footer.webp": "/dance-gavin-dance-edyego-clone/static/media/footer.d22c8e88798eaf293043.webp",
+    "static/media/dgd-tree-city-sessions-2_640x.jpg": "/dance-gavin-dance-edyego-clone/static/media/dgd-tree-city-sessions-2_640x.a7a096035c130c18bc95.jpg",
+    "static/media/dgd-instant-gratification_640x.jpg": "/dance-gavin-dance-edyego-clone/static/media/dgd-instant-gratification_640x.89ced6f3ea29b25f96fa.jpg",
+    "static/media/dgd-mothership_640x.jpg": "/dance-gavin-dance-edyego-clone/static/media/dgd-mothership_640x.20a386fb76f5bf4d094c.jpg",
     "static/media/album-image.webp": "/dance-gavin-dance-edyego-clone/static/media/album-image.654a9574d962467393f9.webp",
     "static/media/left-nav-bar-logo.webp": "/dance-gavin-dance-edyego-clone/static/media/left-nav-bar-logo.ad6d3d6c1a2adb9020f2.webp",
+    "static/media/RoutePlusGray.svg": "/dance-gavin-dance-edyego-clone/static/media/RoutePlusGray.e1f4518f47c021da790853cafb53fa40.svg",
     "index.html": "/dance-gavin-dance-edyego-clone/index.html",
-    "main.8205ae1a.css.map": "/dance-gavin-dance-edyego-clone/static/css/main.8205ae1a.css.map",
-    "main.6434f615.js.map": "/dance-gavin-dance-edyego-clone/static/js/main.6434f615.js.map",
+    "main.6f7ee12e.css.map": "/dance-gavin-dance-edyego-clone/static/css/main.6f7ee12e.css.map",
+    "main.c2d20212.js.map": "/dance-gavin-dance-edyego-clone/static/js/main.c2d20212.js.map",
     "787.b5002084.chunk.js.map": "/dance-gavin-dance-edyego-clone/static/js/787.b5002084.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8205ae1a.css",
-    "static/js/main.6434f615.js"
+    "static/css/main.6f7ee12e.css",
+    "static/js/main.c2d20212.js"
   ]
 }
