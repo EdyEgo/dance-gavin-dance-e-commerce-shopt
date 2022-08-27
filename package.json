@@ -1,8 +1,8 @@
 {
-  "name": "reduce-issues",
+  "name": "dance-gavin-dance-edyego-clone",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://edyego.github.io/reduce-issues/",
+  "homepage": "https://edyego.github.io/dance-gavin-dance-edyego-clone/",
   "dependencies": {
     "@craco/craco": "^5.0.0",
     "@emotion/react": "^11.9.0",
@@ -65,10 +65,12 @@
     ]
   },
   "devDependencies": {
+    "@emailjs/browser": "^3.6.2",
     "@types/react": "^18.0.9",
     "autoprefixer": "^9.8.8",
     "gh-pages": "^4.0.0",
     "postcss": "^7.0.39",
+    "react-slideshow-image": "^4.0.4",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
   }
 }
