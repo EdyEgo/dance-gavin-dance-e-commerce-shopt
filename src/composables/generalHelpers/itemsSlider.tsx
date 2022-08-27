@@ -125,7 +125,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({
           {/* h-[469px] */}
           {slidesMade !== 0 && (
             <div
-              className={` arrow-left-container arrow-slider  absolute left-[0.5%] z-10 cursor-pointer top-[30%] bg-[#25c3c8]  border border-gray-600`}
+              className={`hidden xl:block arrow-left-container arrow-slider  absolute left-[0.5%] z-10 cursor-pointer top-[30%] bg-[#25c3c8]  border border-gray-600`}
               onClick={() => {
                 incrementOrDecrementPercentageTransformNumber(true);
               }}
@@ -141,7 +141,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({
           </div>
           {slidesMade !== 2 && (
             <div
-              className={` arrow-right-container arrow-slider absolute right-[0.5%] top-[30%] z-10 cursor-pointer bg-[#25c3c8]  border border-gray-600`}
+              className={`hidden xl:block arrow-right-container arrow-slider absolute right-[0.5%] top-[30%] z-10 cursor-pointer bg-[#25c3c8]  border border-gray-600`}
               onClick={() => {
                 incrementOrDecrementPercentageTransformNumber(false);
               }}
