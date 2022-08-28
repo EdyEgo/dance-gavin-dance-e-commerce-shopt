@@ -208,55 +208,65 @@ const PaymentInputs: React.FC<PaymentInputsProps> = ({ totalToPayNumber }) => {
       <div className="payment-list">
         <div className="payment-informations-and-contact-container">
           <div className="payment-information-and-contact bg-white rounded-md">
-            <div className="contact flex justify-between p-2">
-              <div className="title-contact font-sans font-bold">Contact</div>
-              <div className="email-text font-sans font-medium">
-                {informationsCheckout.email}
+            <div className="contact-email flex flex-wrap justify-between items-center  border-t border-[#D9D9D9] p-2">
+              <div className="first-half w-[63%] flex flex-col lg:flex-col xl:flex-row lg:items-start gap-1 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
+                <div className="title-contact font-sans font-bold">Contact</div>
+                <div className="email-text font-sans">
+                  {informationsCheckout.email}
+                </div>
               </div>
+
               <Link
-                className="text-[#39C4C9] font-sans font-medium"
+                className="text-[#39C4C9] font-sans font-medium text-right"
                 to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Information&changeInput=email"
               >
                 Change
               </Link>
             </div>
-            <div className="ship-to flex justify-between border-t border-[#D9D9D9] p-2">
-              <div className="title-ship-to font-sans font-bold">Ship to</div>
-              <div className="ship-to-text font-sans font-medium">
-                {informationsCheckout.address}, {informationsCheckout.city},{" "}
-                {informationsCheckout.postalCode},{" "}
-                {informationsCheckout.country}
+
+            <div className="ship-to flex flex-wrap justify-between items-center  border-t border-[#D9D9D9] p-2">
+              <div className="first-half w-[73%] flex flex-col lg:flex-col xl:flex-row lg:items-start gap-1 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
+                <div className="title-ship-to font-sans font-bold">Ship to</div>
+                <div className="shipt-to-text font-sans">
+                  {informationsCheckout.address}, {informationsCheckout.city},
+                  {informationsCheckout.postalCode},
+                  {informationsCheckout.country}
+                </div>
               </div>
+
               <Link
-                className="text-[#39C4C9] font-sans font-medium"
-                to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Shipping"
+                className="text-[#39C4C9] font-sans font-medium text-right"
+                to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Information&changeInput=address"
               >
                 Change
               </Link>
             </div>
 
-            <div className="ship-method flex justify-between border-t border-[#D9D9D9] p-2">
-              <div className="title-shipping-to font-sans font-bold">
-                Method
-              </div>
-              <div className="shipping-method-container flex gap-2">
-                <div className="name font-sans font-medium">
-                  {shippingMethodSelected.name}
-                </div>
-                <div className="price-container flex items-center gap-1">
-                  <FitCurrencyIcon
-                    productsSelectedCurrency={
-                      shippingMethodSelected.currencySelected
-                    }
-                  />
+            <div className="contact-email flex flex-wrap justify-between items-center  border-t border-[#D9D9D9] p-2">
+              <div className="first-half w-[69%] flex flex-col lg:flex-col xl:flex-row lg:items-start gap-1 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
+                <div className="title-contact font-sans font-bold">Method</div>
+                <div className="email-text font-sans">
+                  <div className="shipping-method-container flex gap-2">
+                    <div className="name font-sans font-medium">
+                      {shippingMethodSelected.name}
+                    </div>
+                    <div className="price-container flex items-center gap-1">
+                      <FitCurrencyIcon
+                        productsSelectedCurrency={
+                          shippingMethodSelected.currencySelected
+                        }
+                      />
 
-                  <div className="price-number font-sans font-medium">
-                    {shippingMethodSelected.priceValue}
+                      <div className="price-number font-sans font-medium">
+                        {shippingMethodSelected.priceValue}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
               <Link
-                className="text-[#39C4C9] font-sans font-medium"
+                className="text-[#39C4C9] font-sans font-medium text-right"
                 to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Shipping"
               >
                 Change

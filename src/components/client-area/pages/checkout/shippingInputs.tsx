@@ -33,25 +33,33 @@ const ShippingInputs: React.FC<ShippingInputsProps> = () => {
       <div className="shipping-inputs">
         <div className="shipping-informations-and-contact-container">
           <div className="shipping-information-and-contact bg-white rounded-md mb-12">
-            <div className="contact flex justify-between p-2">
-              <div className="title-contact font-sans font-bold">Contact</div>
-              <div className="email-text">{informationsCheckout.email}</div>
+            <div className="contact flex flex-wrap justify-between p-2 items-center ">
+              <div className="first-half w-[63%] flex flex-col lg:flex-col xl:flex-row lg:items-start gap-1 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
+                <div className="title-contact font-sans font-bold">Contact</div>
+                <div className="email-text font-sans">
+                  {informationsCheckout.email}
+                </div>
+              </div>
+
               <Link
-                className="text-[#39C4C9] font-sans font-medium"
+                className="text-[#39C4C9] font-sans font-medium text-right"
                 to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Information&changeInput=email"
               >
                 Change
               </Link>
             </div>
-            <div className="ship-to flex justify-between border-t border-[#D9D9D9] p-2">
-              <div className="title-ship-to font-sans font-bold">Ship to</div>
-              <div className="email-text font-sans font-bold">
-                {informationsCheckout.address}, {informationsCheckout.city},{" "}
-                {informationsCheckout.postalCode},{" "}
-                {informationsCheckout.country}
+            <div className="ship-to flex flex-wrap justify-between items-center  border-t border-[#D9D9D9] p-2">
+              <div className="first-half w-[73%] flex flex-col lg:flex-col xl:flex-row lg:items-start gap-1 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
+                <div className="title-ship-to font-sans font-bold">Ship to</div>
+                <div className="shipt-to-text font-sans">
+                  {informationsCheckout.address}, {informationsCheckout.city},
+                  {informationsCheckout.postalCode},
+                  {informationsCheckout.country}
+                </div>
               </div>
+
               <Link
-                className="text-[#39C4C9] font-sans font-medium"
+                className="text-[#39C4C9] font-sans font-medium text-right"
                 to="/dance-gavin-dance-edyego-clone/checkout?checkoutStep=Information&changeInput=address"
               >
                 Change
@@ -114,7 +122,7 @@ const ShippingInputs: React.FC<ShippingInputsProps> = () => {
           )}
         </div>
       </div>
-      <div className="actions-buttons-container flex justify-between items-center">
+      <div className="actions-buttons-container flex flex-wrap  gap-4 sm:gap-0 lg:gap-4 justify-between items-center px-10">
         <div className="return-to-shop-button">
           <Link
             className="return-shop-button font-sans flex items-center gap-2 text-[#21A7AC] hover:text-[#22BDC3]"

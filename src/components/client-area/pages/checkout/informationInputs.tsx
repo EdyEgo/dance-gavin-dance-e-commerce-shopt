@@ -54,40 +54,6 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
     inputsValues.current[inputName] = newValue;
   }
 
-  // function setCheckoutStoreValues(event:any,typeInput: | "email"
-  // | "country"
-  // | "firstName"
-  // | "lastName"
-  // | "company"
-  // | "address"
-  // | "apartament"
-  // | "postcode"
-  // | "region"
-  // | "city"
-  // | "phone") {
-
-  //   // const typesCheckoutInformationStore = {
-  //   //   email: () => {},
-  //   //   country: () => {},
-  //   //   firstName: () => {},
-  //   //   lastName: () => {},
-  //   //   company: () => {},
-  //   //   apartament: () => {},
-  //   //   postalCode: () => {},
-  //   //   city: () => {},
-  //   //   region: () => {},
-  //   //   phone: () => {},
-  //   // };
-
-  // dispatch(
-  //   changeInformationsPage({
-  //     informationType:typeInput,
-  //     newInformationValue:event.target.value
-  //   })
-  // )
-
-  // }
-
   const adreessInputRef = React.useRef<any>(null);
 
   const emailInputRef = React.useRef<any>(null);
@@ -223,8 +189,8 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
               />
             </div>
 
-            <div className="full-name-container flex gap-1 justify-center px-4 pt-5">
-              <div className="first-name">
+            <div className="full-name-container flex flex-col gap-1 justify-center  pt-5">
+              <div className="first-name ">
                 <CheckoutInput
                   labelName={"First name"}
                   setValue={changeInputsValues}
@@ -233,7 +199,7 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
                   value={inputsValues.current.firstName}
                 />
               </div>
-              <div className="last-name">
+              <div className="last-name ">
                 <CheckoutInput
                   labelName={"Last name"}
                   setValue={changeInputsValues}
@@ -274,7 +240,7 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
                 value={inputsValues.current.apartament}
               />
             </div>
-            <div className="address-city-container flex gap-1 justify-center px-5">
+            <div className="address-city-container flex flex-col">
               <div className="postal-code">
                 <CheckoutInput
                   labelName={"Postal code"}
@@ -316,7 +282,7 @@ const InformationInputs: React.FC<InformationInputsProps> = () => {
           </div>
         </div>
 
-        <div className="actions-buttons-container flex justify-between items-center">
+        <div className="actions-buttons-container flex flex-wrap gap-4 sm:gap-0 justify-between items-center px-10">
           <div className="return-to-shop-button">
             <Link
               className="return-shop-button font-sans flex items-center gap-2 text-[#21A7AC] hover:text-[#22BDC3]"
