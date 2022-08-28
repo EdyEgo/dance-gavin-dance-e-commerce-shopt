@@ -1,4 +1,4 @@
-import React, { useState, useId } from "react";
+import React, { useState, useRef, useId } from "react";
 import { Link } from "react-router-dom";
 import ImageWebp from "../../components/general-helpers/ImageWebp";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -26,6 +26,10 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
 
   function findSlideNumberByScreenWidth() {
     const screenWidth = window.screen.width;
+
+    if (screenWidth <= 320) {
+      return 33;
+    }
 
     if (screenWidth <= 460) {
       return 25;
@@ -128,14 +132,14 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         {/* {createAlbumsElements()} */}
 
         <div
-          className={`album-show-container h-full  sm:w-full md:flex ${
+          className={`album-show-container h-full w-[30%] sm:w-full md:flex ${
             slidesMade === 0
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
           }`}
         >
           <div
-            className="image-container "
+            className="image-container"
             style={filterImagesObject != null ? filterImagesObject : {}}
           >
             <ImageWebp
@@ -169,7 +173,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container w-[32%]  sm:w-full md:flex ${
+          className={`album-show-container h-full w-[30%] sm:w-full md:flex ${
             slidesMade === 1
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -205,7 +209,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container w-[32%] sm:w-full md:flex ${
+          className={`album-show-container w-[30%] sm:w-full md:flex ${
             slidesMade === 2
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -240,7 +244,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container w-[32%] sm:w-full md:flex ${
+          className={`album-show-container w-[30%] sm:w-full md:flex ${
             slidesMade === 3
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"
@@ -275,7 +279,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({ filterImagesObject }) => {
         </div>
 
         <div
-          className={`album-show-container w-[32%] sm:w-full md:flex ${
+          className={`album-show-container w-[30%] sm:w-full md:flex ${
             slidesMade === 4
               ? "album-item-slide-light"
               : "album-item-slide-shadow pointer-events-none"

@@ -109,7 +109,7 @@ export default function StickyHeadTable({
                 if (applyMobileStyles) {
                   return (
                     <div
-                      className={`flex flex-col  items-start  ${
+                      className={`flex flex-col  items-center  ${
                         backgroundPreselected != null
                           ? backgroundPreselected
                           : "bg-[#E84A42]"
@@ -155,7 +155,7 @@ export default function StickyHeadTable({
                           </TableCell>
                         );
                       })}
-                      <div className="line border border-gray-400 w-full  rounded-sm"></div>
+                      <div className="line border-[0.1em] border-red-400 w-full  rounded-sm"></div>
                     </div>
                   );
                 }

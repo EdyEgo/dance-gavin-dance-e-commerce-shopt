@@ -88,7 +88,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({
   return (
     <section className="all-merch bg-[#25c3c8] text-black p-14">
       <div className="all-merch__title text-center">
-        <div className="hero-titles__first-title tracking-widest text-[42px] ">
+        <div className="hero-titles__first-title tracking-widest text-[1.6rem] md:text-[2.1rem] ">
           ALL MERCH
         </div>
       </div>
@@ -99,12 +99,14 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({
               return (
                 <Tab
                   style={{
-                    fontSize: "18px",
+                    fontSize: "0.7rem",
                     color: "black",
                     fontWeight: 900,
                     fontFamily: " serif",
+
                     // cooper-black-std,// old font family
                   }}
+                  className="all-merch-tab"
                   onClick={() => {
                     selectTabWithItems(merchName);
                   }}
@@ -135,7 +137,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({
           )}
           <div
             style={styles}
-            className={`slider-items grid grid-cols-6 gap-3 md:flex md:items-start absolute w-[305%] md:gap-8 `}
+            className={`slider-items grid  grid-cols-6 gap-3 md:flex md:items-start md:gap-8 absolute w-[305%]  `}
           >
             {childrenItemsList}
           </div>
@@ -150,8 +152,6 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({
             </div>
           )}
         </div>
-
-        {/*  */}
       </div>
       <Link
         to="collections/dance-gavin-dance"

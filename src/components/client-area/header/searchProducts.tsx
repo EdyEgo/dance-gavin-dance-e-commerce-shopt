@@ -13,15 +13,12 @@ const SearchProducts: React.FC<SearchProductsProps> = () => {
   const dispatch = useDispatch();
   const useid = useId();
   const ariaLabel = { "aria-label": "description" };
-  //   const[searchValue,setSearchValue] = useState("")
 
   const productsList = useSelector((state: any) => state.products.productsList);
 
   const selectedCurrency = useSelector(
     (state: any) => state.productFiltersSearch.selectedCurrency
   );
-
-  console.log("all of my products", productsList);
 
   const searchValue = useRef("");
   const lastSearchTimeOut = useRef<any>(null);
@@ -84,8 +81,6 @@ const SearchProducts: React.FC<SearchProductsProps> = () => {
     // return productsListFound;
   }
 
-  console.log("i have changed somehow", foundProducts);
-
   function returnPriceAndSizeAutoSelected(productItemObject: any) {
     // this should return the number of  items available
     const productCurrencyList: string[] = productItemObject.productCurrencyList;
@@ -144,8 +139,8 @@ const SearchProducts: React.FC<SearchProductsProps> = () => {
   return (
     <div className="search-products-container">
       <div className="search-products__header border-[#21A5AA] border-b pb-2">
-        <div className="content-container flex items-center gap-10">
-          <div className="search flex gap-4 items-center px-10 py-5">
+        <div className="content-container flex justify-center items-center gap-7">
+          <div className="search flex gap-4 items-center py-5">
             <div className="icon-search-container">
               <SearchIcon />
             </div>
@@ -157,7 +152,7 @@ const SearchProducts: React.FC<SearchProductsProps> = () => {
                 inputRef={searchRef}
                 className="text-[2rem]"
                 sx={{ fontSize: "1.4rem" }}
-                placeholder="What are you looking for?"
+                placeholder="New search:"
                 inputProps={ariaLabel}
               />
             </div>

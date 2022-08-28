@@ -281,15 +281,15 @@ input[type="number"] {
 
 /* homepage  hero  */
 
-.hero-section-contianer {
-  /* background: url("./images//home-page-hero.webp") no-repeat; */
-  background: linear-gradient(rgba(43, 40, 40, 0.204), rgba(43, 40, 40, 0.227)),
-    url("./images//home-page-hero.webp") no-repeat;
-  background-size: 100%;
-  min-height: 716px;
+/* .hero-section-contianer { */
+/* background: url("./images//home-page-hero.webp") no-repeat; */
+/* background: linear-gradient(rgba(43, 40, 40, 0.204), rgba(43, 40, 40, 0.227)), */
+/* url("./images//home-page-hero.webp") no-repeat; */
+/* background-size: 100%; */
+/* min-height: 716px; */
 
-  /* filter: brightness(80%); */
-}
+/* filter: brightness(80%); */
+/* } */
 
 /* use flex wrap on footer link */
 /* end homepage hero */

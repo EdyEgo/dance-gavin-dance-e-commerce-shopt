@@ -111,37 +111,16 @@ export default function SignUp() {
   return (
     <div className="login-page-container ">
       <div className="login-container flex flex-col gap-16  items-center">
-        <div className="login-container__title text-center mt-16 ">
-          <div className="first-title text-[55px] text-[#1D1D1D]">REGISTER</div>
+        <div className="login-container__title text-center mt-12">
+          <div className="first-title  text-[1.8rem] md:text-[2.2rem] text-[#1D1D1D]">
+            REGISTER
+          </div>
           <div className="second-title mt-3  font-sans text-lg text-[#1D1D1D]">
             Please fill in the fields below:
           </div>
         </div>
-        <div className="login-container__inputs w-[30%]">
-          <div className="inputs-container ">
-            {/* <TextField
-            margin="normal"
-            value={values.email}
-            onChange={handleChange("email")}
-            fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            value={values.password}
-            onChange={handleChange("password")}
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          /> */}
-
+        <div className="login-container__inputs flex w-full justify-center">
+          <div className="inputs-container  w-[90%] max-w-[36rem]">
             <div className="card">
               {errorMessage != null && (
                 <div className="error-message-container flex items-center gap-2 text-[#e4ffa6] bg-[#36c7c4]  p-6 mb-7">

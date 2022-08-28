@@ -107,15 +107,17 @@ export default function SignIn() {
   return (
     <div className="login-page-container ">
       {authUser?.uid == null && (
-        <div className="login-container flex flex-col gap-16  items-center ">
-          <div className="login-container__title text-center mt-16">
-            <div className="first-title text-[55px] text-[#1D1D1D]">LOGIN</div>
+        <div className="login-container flex flex-col gap-16 w-full items-center ">
+          <div className="login-container__title text-center mt-12">
+            <div className="first-title text-[1.8rem] md:text-[2.2rem] text-[#1D1D1D]">
+              LOGIN
+            </div>
             <div className="second-title mt-3 font-sans text-lg text-[#1D1D1D]">
               Please enter your e-mail and password:
             </div>
           </div>
-          <div className="login-container__inputs w-[30%]">
-            <div className="inputs-container ">
+          <div className="login-container__inputs flex w-full justify-center">
+            <div className="inputs-container w-[90%] max-w-[36rem]">
               {/* <TextField
               margin="normal"
               value={values.email}

@@ -7,6 +7,8 @@ import ItemsSlider from "../composables/generalHelpers/itemsSlider";
 import AlbumSlider from "../composables/generalHelpers/albumsSlider";
 import TourTable from "../composables/generalHelpers/tourTable";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import HeroImage from "../images/home-page-hero.webp";
+// ./images//home-page-hero.webp
 
 interface ClientHomeProps {}
 
@@ -150,12 +152,13 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
 
   return (
     <div className="container-home bg-[#E84A42] ">
-      <section className="flex items-start justify-center text-white hero-section-contianer ">
-        <div className="flex flex-col text-center hero-titles-container gap-7 mt-[20%]">
-          <div className="tracking-widest hero-titles__first-title">
+      <section className="flex items-start justify-center text-white hero-section-contianer-canceled py-2 relative">
+        <img src={HeroImage} alt="" />
+        <div className="flex flex-col justify-center items-center text-center hero-titles-container gap-7 absolute w-full h-full">
+          <div className="tracking-widest md:text-[1.4rem] hero-titles__first-title">
             OUT EVERYWHERE
           </div>
-          <h1 className="text-4xl hero-titles__second-second-title">
+          <h1 className="text-[1.4rem] md:text-4xl hero-titles__second-second-title">
             JACKPOT JUICER
           </h1>
         </div>
@@ -164,9 +167,11 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
       <section className="albums-list text-[#F9F175] px-12">
         {/*  bg-[#25c3c8] */}
         <div className="title-container my-14">
-          <div className="title text-center text-[42px]">JACKPOT JUICER</div>
+          <div className="title text-center text-[1.4rem] md:text-[2.1rem]">
+            JACKPOT JUICER
+          </div>
         </div>
-        <div className="jackpot-juicer-home-products-list grid grid-cols-2 gap-3 md:flex md:flex-wrap albums-list-container md:justify-evenly">
+        <div className="jackpot-juicer-home-products-list albums-list-container sm:grid sm:grid-cols-2 sm:gap-3 md:flex md:flex-wrap  md:justify-evenly">
           {returnTwentyProducts("normal")}
         </div>
         <Link
@@ -208,7 +213,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         <div className="title-container text-center text-[2.7rem] py-16 text-[#27C6CB]">
           RECENT RELEASES
         </div>
-        <div className="px-8 albums-slide-show-container">
+        <div className="px-2 albums-slide-show-container">
           <AlbumSlider />
         </div>
         <div className="p-4 albums-tabs-container">
@@ -251,23 +256,17 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
           title="Dance Gavin Dance video"
           className="pointer-events-none"
           allowFullScreen
-          allow="autoplay; encrypted-media"
+          allow="autoplay"
           width="100%"
           height="655"
-          src="https://www.youtube.com/embed/GvHDaSw8k74?playsinline=1&autoplay=1&controls=0&mute=1&loop=1&
-          playlist=GvHDaSw8k74&enablejsapi=1&rel=0&
-          modestbranding=1&origin=https%3A%2F%2Fdancegavindanceband.com"
+          src="https://www.youtube.com/embed/GvHDaSw8k74?playsinline=1&autoplay=1&controls=0&mute=1&loop=1&playlist=GvHDaSw8k74&enablejsapi=1&rel=0&modestbranding=1&origin=https%3A%2F%2Fdancegavindanceband.com"
         ></iframe>
-        {/* https://www.youtube.com/embed/GvHDaSw8k74?autoplay=1&mute=1&controls=0&loop=0 */}
-        {/* //https://www.youtube.com/embed/GvHDaSw8k74?playsinline=1&autoplay=1&controls=0&mute=1&loop=1&
-playlist=GvHDaSw8k74&enablejsapi=1&rel=0&
-modestbranding=1&origin=https%3A%2F%2Fdancegavindanceband.com */}
 
-        <div className="play-button-link-container absolute top-[40%] right-[46%] flex items-center justify-center">
+        <div className="play-button-link-container absolute top-[44%] md:top-[41%] w-full flex items-center justify-center">
           <a
             title="Play video"
             href="https://www.youtube.com/watch?v=GvHDaSw8k74&ab_channel=riserecords"
-            className="play-button-link p-10 border rounded-full bg-[#ffffffd6]"
+            className="play-button-link p-5 md:p-10 border rounded-full bg-[#ffffffd6]"
           >
             <PlayArrowIcon fontSize="large" />
           </a>
