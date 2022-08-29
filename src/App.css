@@ -605,3 +605,13 @@ home slider test
 }
 
 /* end checkout input */
+
+/* .MuiTabs-indicator styles */
+.MuiTabs-indicator {
+  background-color: black !important;
+}
+
+/* .MuiBox-root > .MuiTabs-root > .MuiTabs-scroller > .MuiTabs-indicator {
+  background-color: red !important;
+} */
+/*  */

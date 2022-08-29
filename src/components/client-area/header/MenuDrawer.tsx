@@ -304,7 +304,7 @@ export default function LeftMenuDrawer() {
       },
       menu: () => {
         return (
-          <div className="options-menu-container bg-[#22BDC3]">
+          <div className="options-menu-container h-full bg-[#22BDC3]">
             <MenuOptionsDrawer />
           </div>
         );

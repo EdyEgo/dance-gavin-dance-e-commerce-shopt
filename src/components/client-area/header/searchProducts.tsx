@@ -162,6 +162,7 @@ const SearchProducts: React.FC<SearchProductsProps> = () => {
             <CloseOutlinedIcon
               onClick={() => {
                 changeLeftDrawerState(false, "right");
+                changeLeftDrawerState(false, "left");
               }}
             />
           </div>
@@ -176,9 +177,9 @@ const SearchProducts: React.FC<SearchProductsProps> = () => {
           )}
         </div>
 
-        <div className="products-list flex flex-col gap-4 items-start justify-center px-12 py-4">
+        <div className="products-list flex flex-col gap-4  justify-center px-12 py-4">
           {foundProducts?.length != null && foundProducts.length <= 0 && (
-            <div className="serach-result-empty flex flex-col justify-center items-center gap-8 mt-[40%]">
+            <div className="search-result-empty flex flex-col justify-center items-center gap-8 mt-[40%]">
               <div className="first-title">No results could be found.</div>
               <div
                 onClick={() => {

@@ -497,15 +497,15 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
     // const filteredProductsObjects: any[] = [];
 
     if (filteredProducts.length != null && filteredProducts.length > 0) {
-      filteredProductsCreatedArray = filteredProducts.map(
-        (productItemObject: any) => {
+      filteredProductsCreatedArray = filteredProducts.reduce(
+        (prev: any, productItemObject: any) => {
           const productPassesAllFilters =
             productObjectPassesAllFilters(productItemObject);
 
           // const productPassesPriceFilter =
 
           if (!productPassesAllFilters) {
-            return "";
+            return prev;
           }
 
           const {
@@ -526,7 +526,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
           if (fitMax && fitMin && passesAvailability) {
             productsNumber += 1;
 
-            return {
+            const toPush = {
               productItemObject,
               price: correctPriceForSelectedCurrency,
               sold,
@@ -543,9 +543,12 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
                 />
               ),
             };
+            prev.push(toPush);
+            return prev;
           }
-          return "";
-        }
+          return prev;
+        },
+        []
       );
     }
 
@@ -566,7 +569,7 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
           <div className="text-[15px] font-sans">{titleUpperCase}</div>
         </div>
       </div>
-      <div className="title text-center text-[45px] my-8 font-bold">
+      <div className="title text-center text-[1.6rem] md:text-[2.8125rem] my-8 font-bold">
         {titleUpperCase}
       </div>
       <div className="content-filtered-container md:flex p-9 md:gap-4 relative overflow-visible">
@@ -692,19 +695,19 @@ const FilteredProductsPage: React.FC<FilteredProductsPageProps> = () => {
           <div className="filters-view-container">
             <div className="filters flex justify-between">
               <div className="total-products ml-[0.89%]">
-                {filteredProducts.length > 0 && (
+                {filteredProductsList.length > 0 && (
                   <div className="contains-products  ">
-                    {filteredProducts.length > 1 ? (
+                    {filteredProductsList.length > 1 ? (
                       <div className="flex gap-2">
                         <div className="font-sans">
-                          {filteredProducts.length}
+                          {filteredProductsList.length}
                         </div>
                         <div className="font-sans">products</div>
                       </div>
                     ) : (
                       <div className="flex gap-2">
                         <div className="font-sans">
-                          {filteredProducts.length}
+                          {filteredProductsList.length}
                         </div>
                         <div className="font-sans">product</div>
                       </div>

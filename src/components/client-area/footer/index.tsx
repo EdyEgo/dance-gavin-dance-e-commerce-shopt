@@ -88,15 +88,15 @@ const Footer: React.FC<FooterProps> = () => {
             </div>
           </div>
         </div>
-        <div className="footer-header__right-half">
+        <div className="footer-header__right-half py-4 md:py-4">
           <div className="title mb-5">STAY UP TO DATE</div>
           <div className="items-list text-[14px]">
             <EmailSubscriptionInput />
           </div>
         </div>
       </div>
-      <div className="footer-middle flex flex-wrap justify-between items-center text-sm mb-14">
-        <div className="footer-middle-left-side flex flex-wrap gap-3 text-[17px] font-semibold">
+      <div className="footer-middle flex flex-wrap justify-between items-center text-sm mb-14 ">
+        <div className="footer-middle-left-side flex flex-wrap gap-3 text-[17px] font-semibold py-4 md:py-4">
           <div className="font-serif">Dance Gavin Dance</div>
           <div className="separator-square flex items-end p-1">
             <div className="square h-1 w-1 bg-gray-100 opacity-50"></div>
@@ -107,7 +107,7 @@ const Footer: React.FC<FooterProps> = () => {
           </div>
           <div className="font-serif">Designed by Prodan Septimiu(EdyEgo)</div>
         </div>
-        <div className="footer-middle-right-side flex justify-between items-center gap-5">
+        <div className="footer-middle-right-side flex justify-between items-center gap-5 py-4 md:py-4">
           <div className="we-accept-money-title ">We accept</div>
           <div className="cards-list flex flex-wrap gap-4">
             <div className="paypal">

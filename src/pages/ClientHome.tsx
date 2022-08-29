@@ -153,7 +153,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
   return (
     <div className="container-home bg-[#E84A42] ">
       <section className="flex items-start justify-center text-white hero-section-contianer-canceled py-2 relative">
-        <img src={HeroImage} alt="" />
+        <img src={HeroImage} alt="" className="w-full" />
         <div className="flex flex-col justify-center items-center text-center hero-titles-container gap-7 absolute w-full h-full">
           <div className="tracking-widest md:text-[1.4rem] hero-titles__first-title">
             OUT EVERYWHERE
@@ -171,7 +171,7 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
             JACKPOT JUICER
           </div>
         </div>
-        <div className="jackpot-juicer-home-products-list albums-list-container sm:grid sm:grid-cols-2 sm:gap-3 md:flex md:flex-wrap  md:justify-evenly">
+        <div className="jackpot-juicer-home-products-list albums-list-container flex flex-col gap-8 sm:grid sm:grid-cols-2 sm:gap-3 md:flex md:flex-row md:flex-wrap  md:justify-evenly">
           {returnTwentyProducts("normal")}
         </div>
         <Link
@@ -251,18 +251,18 @@ const ClientHome: React.FC<ClientHomeProps> = () => {
         </div>
       </section>
 
-      <div className="relative section-song-autoplay">
+      <div className="relative section-song-autoplay h-[40vh] md:h-[60vh] lg:h-[90vh]">
         <iframe
           title="Dance Gavin Dance video"
           className="pointer-events-none"
           allowFullScreen
           allow="autoplay"
           width="100%"
-          height="655"
+          height="100%"
           src="https://www.youtube.com/embed/GvHDaSw8k74?playsinline=1&autoplay=1&controls=0&mute=1&loop=1&playlist=GvHDaSw8k74&enablejsapi=1&rel=0&modestbranding=1&origin=https%3A%2F%2Fdancegavindanceband.com"
         ></iframe>
 
-        <div className="play-button-link-container absolute top-[44%] md:top-[41%] w-full flex items-center justify-center">
+        <div className="play-button-link-container absolute top-0 w-full h-full flex items-center justify-center">
           <a
             title="Play video"
             href="https://www.youtube.com/watch?v=GvHDaSw8k74&ab_channel=riserecords"

@@ -86,7 +86,7 @@ const ItemsSlider: React.FC<ItemsSliderProps> = ({
   // or just use intersections
 
   return (
-    <section className="all-merch bg-[#25c3c8] text-black p-14">
+    <section className="all-merch bg-[#25c3c8] text-black p-2 sm:p-10 md:p-14">
       <div className="all-merch__title text-center">
         <div className="hero-titles__first-title tracking-widest text-[1.6rem] md:text-[2.1rem] ">
           ALL MERCH

@@ -24,68 +24,71 @@ const MenuDrawerOptions: React.FC<MenuDrawerOptionsProps> = () => {
   }
 
   return (
-    <div className="menu-options-container">
-      <div className="flex justify-between p-3 cart-header-container">
-        <div className="cursor-pointer close-cart-menu">
-          <CloseOutlinedIcon
+    <div className="menu-options-container h-full flex flex-col justify-between">
+      <div className="upper-half pl-5">
+        <div className="flex justify-between py-3 cart-header-container">
+          <div className="cursor-pointer close-cart-menu">
+            <CloseOutlinedIcon
+              onClick={() => {
+                changeLeftDrawerState(false, "right");
+                changeLeftDrawerState(false, "left");
+              }}
+            />
+          </div>
+        </div>
+        <div className="options-list flex flex-col gap-4 text-[1.3rem] mt-2">
+          <Link
             onClick={() => {
-              changeLeftDrawerState(false, "right");
-              changeLeftDrawerState(false, "left");
+              closeDrawer();
             }}
-          />
+            className="item-link pb-4 border-b border-[#21A5AA]"
+            to="/dance-gavin-dance-edyego-clone/collections/dance-gavin-dance"
+          >
+            Shop
+          </Link>
+          <Link
+            onClick={() => {
+              closeDrawer();
+            }}
+            className="item-link pb-4 border-b border-[#21A5AA]"
+            to="/dance-gavin-dance-edyego-clone/pages/music"
+          >
+            Music
+          </Link>
+
+          <Link
+            onClick={() => {
+              closeDrawer();
+            }}
+            className="item-link  pb-4 border-b border-[#21A5AA]"
+            to="/dance-gavin-dance-edyego-clone/pages/tour"
+          >
+            Tour
+          </Link>
+
+          <Link
+            onClick={() => {
+              closeDrawer();
+            }}
+            className="item-link  pb-4 border-b border-[#21A5AA]"
+            to="/dance-gavin-dance-edyego-clone/pages/swanfest"
+          >
+            Swanfest
+          </Link>
+
+          <Link
+            onClick={() => {
+              closeDrawer();
+            }}
+            className="item-link  pb-4 "
+            to="/dance-gavin-dance-edyego-clone/collections/tour-merch"
+          >
+            Tour Merch
+          </Link>
         </div>
       </div>
-      <div className="options-list flex flex-col gap-4 text-[1.5rem] p-5">
-        <Link
-          onClick={() => {
-            closeDrawer();
-          }}
-          className="item-link pb-2 border-b border-[#21A5AA]"
-          to="/dance-gavin-dance-edyego-clone/collections/dance-gavin-dance"
-        >
-          Shop
-        </Link>
-        <Link
-          onClick={() => {
-            closeDrawer();
-          }}
-          className="item-link pb-2 border-b border-[#21A5AA]"
-          to="/dance-gavin-dance-edyego-clone/pages/music"
-        >
-          Music
-        </Link>
 
-        <Link
-          onClick={() => {
-            closeDrawer();
-          }}
-          className="item-link  pb-2 border-b border-[#21A5AA]"
-          to="/dance-gavin-dance-edyego-clone/pages/tour"
-        >
-          Tour
-        </Link>
-
-        <Link
-          onClick={() => {
-            closeDrawer();
-          }}
-          className="item-link  pb-2 border-b border-[#21A5AA]"
-          to="/dance-gavin-dance-edyego-clone/pages/swanfest"
-        >
-          Swanfest
-        </Link>
-
-        <Link
-          onClick={() => {
-            closeDrawer();
-          }}
-          className="item-link  pb-2 "
-          to="/dance-gavin-dance-edyego-clone/collections/tour-merch"
-        >
-          Tour Merch
-        </Link>
-      </div>
-      <div className="options-menu-drawer__footer border-t border-[#21A5AA] mt-10">
+      <div className="options-menu-drawer__footer border-t border-[#21A5AA] pl-5">
         {/* <div className="account-container flex items-center gap-4 py-5 px-2">
           <UserProfileIcon />
           <div className="font-sans font-semibold">Account</div>
@@ -94,11 +97,11 @@ const MenuDrawerOptions: React.FC<MenuDrawerOptionsProps> = () => {
           onClick={() => {
             closeDrawer();
           }}
-          className="account-container flex items-center gap-4 py-5 px-2"
+          className="account-container flex items-center gap-4 py-5 "
           to="/dance-gavin-dance-edyego-clone/login"
         >
-          <UserProfileIcon fontSize="large" />
-          <div className="font-sans font-semibold text-[1.4rem]">Account</div>
+          <UserProfileIcon fontSize="medium" />
+          <div className="font-sans font-light text-[1.3rem]">Account</div>
         </Link>
       </div>
     </div>

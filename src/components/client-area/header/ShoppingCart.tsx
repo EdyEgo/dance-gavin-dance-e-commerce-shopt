@@ -7,14 +7,12 @@ export default function ShoppingCart({
 }: {
   desktopMode?: boolean;
 }) {
-
- 
   const productsAddedToCart = useSelector(
     (state: any) => state.cart.productsAddedToCart.length
   );
 
   return (
-    <div className="cursor-pointer badge-container">
+    <div className="cursor-pointer badge-container flex items-center">
       <Badge
         sx={{
           "& .BaseBadge-badge": {

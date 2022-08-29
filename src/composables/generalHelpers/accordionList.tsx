@@ -31,28 +31,6 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 // }
 
 export default function SimpleAccordion() {
-  //   {
-  //   availabilityOptions,
-  //   priceRange,
-  //   productTypeOptions,
-  //   sizeOptions,
-  // }: {
-  //   productTypeOptions: {
-  //     [key: string]: listValuesFiltersItems
-  //   };
-  //   sizeOptions: {
-  //     [key: string]: listValuesFiltersItems
-  //   };
-  //   priceRange: [number, number];
-  //   availabilityOptions: {
-  //     inStock: { name: "In stock"; numberItems: number; selected: boolean };
-  //     outOfStock: {
-  //       name: "Out of Stock";
-  //       numberItems: number;
-  //       selected: boolean;
-  //     };
-  //   };
-  // }
   const dispatch = useDispatch();
   const useid = useId();
   const productsSelectedCurrency = useSelector(
@@ -223,11 +201,10 @@ export default function SimpleAccordion() {
                         : capitalizeFirstLetter(name)}
                     </div>
                     <div className="items-available font-sans">
-                      {"("}
-                      {itemsNumberAvailable > 1
+                      ({itemsNumberAvailable})
+                      {/* {itemsNumberAvailable > 1
                         ? itemsNumberAvailable - 1
-                        : itemsNumberAvailable}
-                      {")"}
+                        : itemsNumberAvailable} */}
                     </div>
                   </div>
                 );
@@ -350,7 +327,7 @@ export default function SimpleAccordion() {
               </div>
               <div className="number-items font-sans">
                 {"("}
-                {availabilityOptions.inStock.numberItems - 1}
+                {availabilityOptions.inStock.numberItems}
                 {")"}
               </div>
             </div>

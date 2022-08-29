@@ -19,20 +19,18 @@ export default function TabsWrappedLabel({
   };
 
   return (
-    <Box sx={{}}>
+    <Box
+      sx={{
+        "&: .MuiBox-root > .MuiTabs-root > .MuiTabs-scroller > .MuiTabs-indicator":
+          { backgroundColor: "black" },
+      }}
+    >
       <Tabs
         value={value}
         onChange={handleChange}
         indicatorColor="primary"
         aria-label="wrapped label tabs example"
       >
-        {/* <Tab
-          value="one"
-          label="New Arrivals in the Longest Text of Nonfiction that should appear in the next line"
-          wrapped
-        />
-        <Tab value="two" label="Item Two" />
-        <Tab value="three" label="Item Three" /> */}
         {children}
       </Tabs>
     </Box>

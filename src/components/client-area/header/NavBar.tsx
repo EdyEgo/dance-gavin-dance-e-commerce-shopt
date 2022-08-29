@@ -40,21 +40,21 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
   return (
     <nav className="relative text-white nav-bar">
       <div className="flex justify-between p-6 nav-bar-sections-container pt-9 md:px-10">
-        <div className="nav-bar-section-left ">
+        <div className="nav-bar-section-left flex items-center">
           <div className="flex items-center gap-5 nav-bar-section-left__mobile-version mobile">
             <div
-              className="cursor-pointer mobile-menu-icon-container"
+              className="cursor-pointer mobile-menu-icon-container flex items-center"
               onClick={() => {
                 openDrawerByDirection("left", "menu");
               }}
             >
               <BurgetMenuMobile fontSize="small" />
             </div>
-            <div className="mobile-serach-icon-container">
+            <div className="mobile-search-icon-container  flex items-center">
               <SearchIconMobile
                 fontSize="small"
                 onClick={() => {
-                  openDrawerByDirection("right", "search");
+                  openDrawerByDirection("left", "search");
                 }}
               />
             </div>
@@ -72,7 +72,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
             </div>
           </div>
         </div>
-        <div className="nav-bar-section-middle">
+        <div className="nav-bar-section-middle flex items-center">
           <div className="nav-bar-section-middle__mobile-version mobile">
             <div className="mobile-phone">
               <Link to="/dance-gavin-dance-edyego-clone">
@@ -243,16 +243,19 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
             </div>
           </div>
         </div>
-        <div className="nav-bar-section-right">
-          <div className="flex items-center gap-5 nav-bar-section-right__mobile-version mobile">
-            <div className="mobile-tablet">
-              <Link to="/dance-gavin-dance-edyego-clone/login">
+        <div className="nav-bar-section-right flex items-center">
+          <div className="flex   gap-5 nav-bar-section-right__mobile-version mobile">
+            <div className="mobile-tablet ">
+              <Link
+                className="flex  items-center  "
+                to="/dance-gavin-dance-edyego-clone/login"
+              >
                 <UserProfileIcon fontSize="small" />
               </Link>
             </div>
 
             <div
-              className="shoping-cart"
+              className="shoping-cart flex items-center"
               onClick={() => {
                 openDrawerByDirection("right", "cart");
               }}
@@ -273,7 +276,7 @@ const ClientNavBar: React.FC<ClientNavBarProps> = () => {
             </Link>
 
             <div
-              className="shoping-cart"
+              className="shoping-cart "
               onClick={() => {
                 openDrawerByDirection("right", "cart");
               }}
