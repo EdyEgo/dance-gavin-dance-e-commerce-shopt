@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-Live version link : https://edyego.github.io/reduce-issues/
+Live version link : https://edyego.github.io/dance-gavin-dance-edyego-clone/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
